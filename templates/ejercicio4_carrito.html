@@ -167,70 +167,127 @@
             align-items: center;
             margin-top: 1rem;
         }
-        
+
+        /* Ajuste: colores con contraste suficiente y manejo de foco */
         .btn-add-cart {
-            background: #28a745;
-            color: white;
+            background: #155724;             /* verde oscuro con buen contraste frente a #ffffff */
+            color: #ffffff;
             border: none;
             padding: 0.5rem 1rem;
             border-radius: 5px;
             cursor: pointer;
             font-weight: 500;
         }
-        
+
         .btn-add-cart:hover {
-            background: #218838;
+            background: #0f3f1a;
         }
-        
+
+        .btn-add-cart:focus {
+            outline: 3px solid rgba(21, 87, 36, 0.25);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(21, 87, 36, 0.12);
+        }
+
+        /* Mantener contraste cuando exista estilo inline (se usa !important para sobrescribir) */
+        .btn-add-cart {
+            background-color: #155724 !important;
+            color: #ffffff !important;
+        }
+
         .btn-add-cart:disabled {
             background: #6c757d;
+            color: #ffffff;
             cursor: not-allowed;
+            opacity: 0.9;
         }
-        
-        .stock-info {
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+
+        /* NUEVO: botón "Notificar disponibilidad" con contraste y foco accesible */
+        .btn-notify {
+            background-color: #004085 !important; /* más oscuro que #007bff -> contraste >= 4.5:1 */
+            color: #ffffff !important;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
         }
-        
-        .stock-low { color: #ffc107; }
-        .stock-out { color: #dc3545; }
-        .stock-ok { color: #28a745; }
+        .btn-notify:hover {
+            background-color: #00366b !important;
+        }
+        .btn-notify:focus {
+            outline: 3px solid rgba(0, 64, 133, 0.22);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 3px rgba(0, 64, 133, 0.12);
+        }
+        .btn-notify:disabled {
+            background: #6c757d !important;
+            color: #ffffff !important;
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+
+        /* Skip link visible on focus */
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .skip-link:focus {
+            position: static;
+            left: auto;
+            width: auto;
+            height: auto;
+            padding: 0.5rem 1rem;
+            background: #000;
+            color: #fff;
+            z-index: 9999;
+            text-decoration: none;
+            border-radius: 4px;
+        }
     </style>
 </head>
 
 <body>
-    <!-- PROBLEMA: Falta skip links -->
-    
-    <!-- Header de la tienda -->
-    <header class="shop-header">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h1>TechShop</h1>
-                    <p class="mb-0">Los mejores productos tecnológicos</p>
+        <!-- Skip link para saltar al contenido principal -->
+        <a href="#mainContent" class="skip-link">Saltar al contenido</a>
+        
+        <!-- PROBLEMA: Falta skip links -->
+        
+        <!-- Header de la tienda -->
+        <header class="shop-header">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1>TechShop</h1>
+                        <p class="mb-0">Los mejores productos tecnológicos</p>
+                    </div>
+                    
+                    <!-- PROBLEMA: Carrito sin información accesible -->
+                    <div style="position: relative;">
+                        <button id="openCartBtn" class="btn btn-light btn-lg" aria-haspopup="dialog" aria-controls="cartSidebar" aria-label="Abrir carrito">
+                            🛒 Carrito
+                            <span id="cartBadge" class="cart-badge" style="display: none;" aria-hidden="true">0</span>
+                            <span id="cartBadgeLabel" class="visually-hidden" aria-live="polite" aria-atomic="true">Carrito vacío</span>
+                        </button>
+                    </div>
                 </div>
                 
-                <!-- PROBLEMA: Carrito sin información accesible -->
-                <div style="position: relative;">
-                    <button onclick="toggleCart()" class="btn btn-light btn-lg">
-                        🛒 Carrito
-                        <!-- PROBLEMA: Badge sin descripción -->
-                        <span id="cartBadge" class="cart-badge" style="display: none;">0</span>
-                    </button>
+                <!-- Navegación de regreso -->
+                <div class="mt-3">
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-light">
+                        ← Volver al portal
+                    </a>
                 </div>
             </div>
-            
-            <!-- Navegación de regreso -->
-            <div class="mt-3">
-                <a href="{{ url_for('index') }}" class="btn btn-outline-light">
-                    ← Volver al portal
-                </a>
-            </div>
-        </div>
-    </header>
-    
-    <!-- Contenido principal -->
-    <div class="container my-5">
+        </header>
+        
+        <!-- Contenido principal -->
+        <main id="mainContent" class="container my-5" tabindex="-1" aria-label="Contenido principal">
         
         <!-- Filtros y búsqueda - PROBLEMAS -->
         <div class="row mb-4">
@@ -239,29 +296,40 @@
                 <input type="text" 
                        class="form-control" 
                        placeholder="Buscar productos..." 
+                       aria-label="Buscar productos" 
                        onkeyup="filterProducts(this.value)">
             </div>
             
             <div class="col-md-3">
-                <!-- PROBLEMA: Select sin label -->
-                <select class="form-select" onchange="sortProducts(this.value)">
-                    <option value="">Ordenar por...</option>
-                    <option value="name">Nombre</option>
-                    <option value="price-low">Precio: Menor a Mayor</option>
-                    <option value="price-high">Precio: Mayor a Menor</option>
-                    <option value="rating">Calificación</option>
-                </select>
-            </div>
+                <!-- CORRECCIÓN: Añadir label accesible (visualmente oculto).
+                     Evitar "jump menu" ejecutando la ordenación solo al aplicar (botón)
+                     para prevenir acciones inesperadas y mejorar accesibilidad. -->
+                <label for="sortSelect" class="visually-hidden">Ordenar productos</label>
+                <div style="display:flex; gap:0.5rem; align-items:center;">
+                    <select id="sortSelect" class="form-select" aria-label="Seleccionar criterio de orden">
+                         <option value="">Ordenar por...</option>
+                         <option value="name">Nombre</option>
+                         <option value="price-low">Precio: Menor a Mayor</option>
+                         <option value="price-high">Precio: Mayor a Menor</option>
+                         <option value="rating">Calificación</option>
+                     </select>
+                     <button id="applySortBtn" class="btn btn-outline-secondary" type="button" aria-label="Aplicar orden">Aplicar</button>
+                </div>
+             </div>
             
             <div class="col-md-3">
-                <select class="form-select" onchange="filterByCategory(this.value)">
-                    <option value="">Todas las categorías</option>
-                    <option value="laptops">Laptops</option>
-                    <option value="phones">Teléfonos</option>
-                    <option value="accessories">Accesorios</option>
-                    <option value="software">Software</option>
-                </select>
-            </div>
+                <label for="filterSelect" class="visually-hidden">Filtrar por categoría</label>
+                <div style="display:flex; gap:0.5rem; align-items:center;">
+                    <select id="filterSelect" class="form-select" aria-label="Seleccionar categoría para filtrar">
+                         <option value="">Todas las categorías</option>
+                         <option value="laptops">Laptops</option>
+                         <option value="phones">Teléfonos</option>
+                         <option value="accessories">Accesorios</option>
+                         <option value="software">Software</option>
+                     </select>
+                     <button id="applyFilterBtn" class="btn btn-outline-secondary" type="button" aria-label="Aplicar filtro de categoría">Aplicar</button>
+                </div>
+             </div>
         </div>
         
         <!-- Grid de productos - MÚLTIPLES PROBLEMAS -->
@@ -270,58 +338,64 @@
             <!-- Producto 1 -->
             <div class="col-lg-4 col-md-6 product-item" data-category="laptops">
                 <!-- PROBLEMA: Producto sin estructura semántica -->
-                <div class="product-card">
-                    <!-- PROBLEMA: Imagen sin alt text descriptivo -->
+                <article class="product-card" aria-labelledby="title-laptop-1">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ELaptop Gaming%3C/text%3E%3C/svg%3E" 
-                         class="product-image">
-                    
-                    <!-- PROBLEMA: Encabezado sin nivel apropiado -->
-                    <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
-                        Laptop Gaming Pro X1
-                    </div>
+                         class="product-image" alt="Laptop Gaming Pro X1, Intel i7, 16GB RAM, RTX 3070">
++
++                    <h2 id="title-laptop-1" class="product-title" style="font-size:1.3rem; font-weight: 600; margin-bottom:0.5rem;">Laptop Gaming Pro X1</h2>
                     
                     <div class="product-description">
                         Intel i7, 16GB RAM, RTX 3070, SSD 1TB. Perfecta para gaming y trabajo profesional.
                     </div>
                     
-                    <!-- PROBLEMA: Calificación sin accesibilidad -->
+                    <!-- Calificación accesible -->
                     <div style="margin: 1rem 0;">
-                        <span>⭐⭐⭐⭐⭐</span>
+                        <span aria-hidden="true">⭐⭐⭐⭐⭐</span>
+                        <span class="visually-hidden">Puntuación 5 de 5. 47 reseñas.</span>
                         <span style="color: #6c757d; margin-left: 0.5rem;">(47 reseñas)</span>
                     </div>
                     
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="price">€1,299.99</span>
-                        <!-- PROBLEMA: Stock sin información accesible -->
-                        <span class="stock-info stock-ok">✅ En stock (12 unidades)</span>
-                    </div>
-                    
-                    <div class="product-actions">
-                        <!-- PROBLEMA: Botón sin descripción de acción -->
+                        <!-- Estado de stock accesible -->
+                        <span class="stock-info stock-ok" role="status" aria-live="polite" aria-atomic="true">
+                            ✅ En stock (12 unidades)
+                            <span class="visually-hidden">En stock: 12 unidades</span>
+                        </span>
+                     </div>
+                     
+                     <div class="product-actions">
+                         <!-- PROBLEMA: Botón sin descripción de acción -->
                         <button class="btn-add-cart" 
                                 onclick="addToCart('laptop-1', 'Laptop Gaming Pro X1', 1299.99)"
-                                data-product-id="laptop-1">
+                                data-product-id="laptop-1"
+                                aria-label="Añadir Laptop Gaming Pro X1 al carrito">
                             Añadir al carrito
                         </button>
                         
-                        <!-- PROBLEMA: Selector de cantidad sin label -->
-                        <select style="width: 80px; margin-left: 0.5rem;" 
-                                onchange="updateQuantitySelection('laptop-1', this.value)">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        <!-- CORRECCIÓN: Selector de cantidad con label accesible -->
+                        <label for="qty-laptop-1" class="visually-hidden">Cantidad para Laptop Gaming Pro X1</label>
+                        <select id="qty-laptop-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Laptop Gaming Pro X1">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                          </select>
++                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="laptop-1" aria-label="Aplicar cantidad seleccionada para Laptop Gaming Pro X1" style="margin-left:0.4rem;">OK</button>
                         
                         <!-- PROBLEMA: Botón favorito sin descripción -->
                         <button onclick="toggleFavorite('laptop-1')" 
-                                style="background: none; border: none; font-size: 1.5rem;">
+                                style="background: none; border: none; font-size: 1.5rem;""
++                                class="favorite-btn"
++                                aria-pressed="false"
++                                aria-label="Marcar Laptop Gaming Pro X1 como favorito"
++                                data-product-id="laptop-1">
                             🤍
                         </button>
-                    </div>
-                </div>
-            </div>
+                     </div>
+                 </article>
+             </div>
             
             <!-- Producto 2 -->
             <div class="col-lg-4 col-md-6 product-item" data-category="phones">
@@ -354,12 +428,14 @@
                             Añadir al carrito
                         </button>
                         
-                        <select style="width: 80px; margin-left: 0.5rem;" 
-                                onchange="updateQuantitySelection('phone-1', this.value)">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                        <!-- CORRECCIÓN: Selector de cantidad con label accesible -->
+                        <label for="qty-phone-1" class="visually-hidden">Cantidad para Smartphone Ultra 5G</label>
+                        <select id="qty-phone-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Smartphone Ultra 5G">
+                             <option value="1">1</option>
+                             <option value="2">2</option>
+                             <option value="3">3</option>
                         </select>
++                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="phone-1" aria-label="Aplicar cantidad seleccionada para Smartphone Ultra 5G" style="margin-left:0.4rem;">OK</button>
                         
                         <button onclick="toggleFavorite('phone-1')" 
                                 style="background: none; border: none; font-size: 1.5rem;">
@@ -373,7 +449,7 @@
             <div class="col-lg-4 col-md-6 product-item" data-category="accessories">
                 <div class="product-card">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3EAuriculares%3C/text%3E%3C/svg%3E" 
-                         class="product-image">
+                         class="product-image" alt="Auriculares Wireless Pro">
                     
                     <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
                         Auriculares Wireless Pro
@@ -400,14 +476,15 @@
                             Añadir al carrito
                         </button>
                         
-                        <select style="width: 80px; margin-left: 0.5rem;" 
-                                onchange="updateQuantitySelection('headphones-1', this.value)">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        <label for="qty-headphones-1" class="visually-hidden">Cantidad para Auriculares Wireless Pro</label>
+                        <select id="qty-headphones-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Auriculares Wireless Pro">
+                             <option value="1">1</option>
+                             <option value="2">2</option>
+                             <option value="3">3</option>
+                             <option value="4">4</option>
+                             <option value="5">5</option>
+                         </select>
++                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="headphones-1" aria-label="Aplicar cantidad seleccionada para Auriculares Wireless Pro" style="margin-left:0.4rem;">OK</button>
                         
                         <button onclick="toggleFavorite('headphones-1')" 
                                 style="background: none; border: none; font-size: 1.5rem;">
@@ -421,7 +498,7 @@
             <div class="col-lg-4 col-md-6 product-item" data-category="software">
                 <div class="product-card">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ESoftware%3C/text%3E%3C/svg%3E" 
-                         class="product-image">
+                         class="product-image" alt="Suite Productividad Pro">
                     
                     <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
                         Suite Productividad Pro
@@ -451,8 +528,11 @@
                         </button>
                         
                         <!-- PROBLEMA: Botón notificar sin descripción -->
-                        <button style="background: #007bff; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-left: 0.5rem;"
-                                onclick="notifyWhenAvailable('software-1')">
+                        <button class="btn-notify"
+                                type="button"
+                                onclick="notifyWhenAvailable('software-1')"
+                                aria-label="Notificarme cuando el producto esté disponible"
+                                title="Notificarme cuando esté disponible">
                             Notificar disponibilidad
                         </button>
                     </div>
@@ -463,7 +543,7 @@
             <div class="col-lg-4 col-md-6 product-item" data-category="accessories">
                 <div class="product-card">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ETeclado%3C/text%3E%3C/svg%3E" 
-                         class="product-image">
+                         class="product-image" alt="Teclado Mecánico RGB">
                     
                     <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
                         Teclado Mecánico RGB
@@ -490,13 +570,14 @@
                             Añadir al carrito
                         </button>
                         
-                        <select style="width: 80px; margin-left: 0.5rem;" 
-                                onchange="updateQuantitySelection('keyboard-1', this.value)">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
+                        <label for="qty-keyboard-1" class="visually-hidden">Cantidad para Teclado Mecánico RGB</label>
+                        <select id="qty-keyboard-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Teclado Mecánico RGB">
+                             <option value="1">1</option>
+                             <option value="2">2</option>
+                             <option value="3">3</option>
+                             <option value="4">4</option>
+                         </select>
++                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="keyboard-1" aria-label="Aplicar cantidad seleccionada para Teclado Mecánico RGB" style="margin-left:0.4rem;">OK</button>
                         
                         <button onclick="toggleFavorite('keyboard-1')" 
                                 style="background: none; border: none; font-size: 1.5rem;">
@@ -509,7 +590,7 @@
             <div class="col-lg-4 col-md-6 product-item" data-category="accessories">
                 <div class="product-card">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3EMouse%3C/text%3E%3C/svg%3E" 
-                         class="product-image">
+                         class="product-image" alt="Mouse Gaming Precision">
                     
                     <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
                         Mouse Gaming Precision
@@ -536,19 +617,15 @@
                             Añadir al carrito
                         </button>
                         
-                        <select style="width: 80px; margin-left: 0.5rem;" 
-                                onchange="updateQuantitySelection('mouse-1', this.value)">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                        <label for="qty-mouse-1" class="visually-hidden">Cantidad para Mouse Gaming Precision</label>
+                        <select id="qty-mouse-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Mouse Gaming Precision">
+                             <option value="1">1</option>
+                             <option value="2">2</option>
                         </select>
-                        
-                        <button onclick="toggleFavorite('mouse-1')" 
-                                style="background: none; border: none; font-size: 1.5rem;">
-                            🤍
-                        </button>
-                    </div>
-                </div>
-            </div>
++                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="mouse-1" aria-label="Aplicar cantidad seleccionada para Mouse Gaming Precision" style="margin-left:0.4rem;">OK</button>
+                     </div>
+                 </div>
+             </div>
         </div>
         
         <!-- Mensaje cuando no hay productos - PROBLEMA -->
@@ -557,28 +634,22 @@
             <div style="font-size: 1.2rem; font-weight: 500;">No se encontraron productos</div>
             <div>Intenta con otros términos de búsqueda o filtros</div>
         </div>
-    </div>
+    </main>
     
-    <!-- PROBLEMA: Carrito lateral sin accesibilidad -->
-    <div class="cart-overlay" onclick="toggleCart()"></div>
+    <!-- Carrito lateral: overlay y dialog accesible -->
+    <div id="cartOverlay" class="cart-overlay" role="button" aria-label="Cerrar carrito" tabindex="0" hidden></div>
     
-    <div class="cart-sidebar" id="cartSidebar">
-        <!-- PROBLEMA: Header sin estructura -->
+    <aside id="cartSidebar" class="cart-sidebar" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 2px solid #e9ecef; padding-bottom: 1rem;">
-            <div style="font-size: 1.5rem; font-weight: bold;">
+            <h2 id="cartTitle" style="font-size: 1.25rem; font-weight: bold; margin:0;">
                 🛒 Tu Carrito
-            </div>
-            <!-- PROBLEMA: Botón cerrar sin aria-label -->
-            <button onclick="toggleCart()" 
-                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">
-                ✕
-            </button>
+            </h2>
+            <button id="closeCartBtn" aria-label="Cerrar carrito" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✕</button>
         </div>
         
         <!-- Lista de productos en el carrito - PROBLEMAS -->
-        <div id="cartItems">
-            <!-- PROBLEMA: Mensaje de carrito vacío sin role apropiado -->
-            <div id="emptyCartMessage" style="text-align: center; padding: 2rem; color: #6c757d;">
+        <div id="cartItems" aria-live="polite" aria-atomic="true">
+            <div id="emptyCartMessage" role="status" style="text-align: center; padding: 2rem; color: #6c757d;">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">🛒</div>
                 <div style="font-size: 1.1rem; margin-bottom: 0.5rem;">Tu carrito está vacío</div>
                 <div>¡Añade algunos productos para comenzar!</div>
@@ -630,86 +701,76 @@
                 </div>
             </div>
         </div>
-    </div>
+    </aside>
     
-    <!-- PROBLEMA: Notificaciones no accesibles -->
-    <div id="notifications" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;"></div>
+    <!-- Notificaciones accesibles -->
+    <div id="notifications" role="region" aria-live="polite" aria-atomic="true" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;"></div>
+    <!-- Announcer para mensajes cortos (cambios de carrito, resultados) -->
+    <div id="a11yAnnouncer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
     
     <script src="{{ url_for('static', filename='js/portal.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // PROBLEMAS INTENCIONADOS EN JAVASCRIPT
-        
-        // Estado del carrito - PROBLEMA: Sin accesibilidad
+        // Estado del carrito
         let cartItems = [];
         let cartTotal = 0;
         let isCartOpen = false;
         let selectedQuantities = {};
+        let lastFocusedElementBeforeCart = null;
         
         // PROBLEMA: Función añadir al carrito sin feedback accesible
         function addToCart(productId, productName, price) {
             const quantity = selectedQuantities[productId] || 1;
             const button = document.querySelector(`[data-product-id="${productId}"]`);
-            
-            // PROBLEMA: Loading state no accesible
-            button.classList.add('loading-product');
-            button.textContent = 'Añadiendo...';
-            button.disabled = true;
-            
-            // Simular delay de red
+
+            if (button) {
+                button.classList.add('loading-product');
+                button.setAttribute('aria-busy', 'true');
+                button.disabled = true;
+                button.textContent = 'Añadiendo...';
+            }
+
             setTimeout(() => {
-                // Buscar si el producto ya existe en el carrito
                 const existingItem = cartItems.find(item => item.id === productId);
-                
                 if (existingItem) {
                     existingItem.quantity += quantity;
                 } else {
-                    cartItems.push({
-                        id: productId,
-                        name: productName,
-                        price: price,
-                        quantity: quantity
-                    });
+                    cartItems.push({ id: productId, name: productName, price: price, quantity: quantity });
                 }
-                
-                // PROBLEMA: Cambios no anunciados a lectores de pantalla
+
                 updateCartUI();
+                announce(`${productName} añadido al carrito`);
                 showNotification(`${productName} añadido al carrito`, 'success');
-                
-                // PROBLEMA: Animación sin alternativa para usuarios con vestibular disorders
-                button.classList.add('success-animation');
-                
-                button.classList.remove('loading-product');
-                button.textContent = 'Añadir al carrito';
-                button.disabled = false;
-                
-                setTimeout(() => {
-                    button.classList.remove('success-animation');
-                }, 600);
-                
-            }, 800);
+
+                if (button) {
+                    button.classList.remove('loading-product');
+                    button.removeAttribute('aria-busy');
+                    button.textContent = 'Añadir al carrito';
+                    button.disabled = false;
+                }
+            }, 600);
         }
         
-        // PROBLEMA: Actualizar UI sin accesibilidad
         function updateCartUI() {
             const cartBadge = document.getElementById('cartBadge');
+            const cartBadgeLabel = document.getElementById('cartBadgeLabel');
             const cartItemsContainer = document.getElementById('cartItems');
             const emptyMessage = document.getElementById('emptyCartMessage');
             const summarySection = document.getElementById('cartSummarySection');
-            
+
             const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
             const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            // PROBLEMA: Badge count sin descripción accesible
+
             if (totalItems > 0) {
                 cartBadge.style.display = 'flex';
                 cartBadge.textContent = totalItems;
+                cartBadgeLabel.textContent = `Carrito: ${totalItems} artículo(s)`;
             } else {
                 cartBadge.style.display = 'none';
+                cartBadgeLabel.textContent = 'Carrito vacío';
             }
-            
-            // PROBLEMA: Generación dinámica sin accesibilidad
+
             if (cartItems.length === 0) {
                 emptyMessage.style.display = 'block';
                 summarySection.style.display = 'none';
@@ -717,40 +778,40 @@
             } else {
                 emptyMessage.style.display = 'none';
                 summarySection.style.display = 'block';
-                
-                // PROBLEMA: HTML generado dinámicamente sin estructura accesible
+
                 const itemsHTML = cartItems.map(item => `
-                    <div class="cart-item">
+                    <div class="cart-item" role="group" aria-label="${item.name}">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect width='60' height='60' fill='%23e9ecef'/%3E%3C/svg%3E" 
-                             class="cart-item-image">
+                             class="cart-item-image" alt="${item.name}">
                         <div class="cart-item-details">
                             <div style="font-weight: 500;">${item.name}</div>
                             <div style="color: #6c757d; font-size: 0.9rem;">€${item.price.toFixed(2)} c/u</div>
                         </div>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="updateCartItemQuantity('${item.id}', ${item.quantity - 1})">-</button>
-                            <input type="text" class="quantity-input" value="${item.quantity}" readonly>
-                            <button class="quantity-btn" onclick="updateCartItemQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                        <div class="quantity-controls" aria-label="Controles de cantidad para ${item.name}">
+                            <button class="quantity-btn" aria-label="Disminuir cantidad" onclick="updateCartItemQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                            <input type="text" class="quantity-input" value="${item.quantity}" readonly aria-label="Cantidad actual">
+                            <button class="quantity-btn" aria-label="Aumentar cantidad" onclick="updateCartItemQuantity('${item.id}', ${item.quantity + 1})">+</button>
                         </div>
-                        <button onclick="removeFromCart('${item.id}')" style="background: none; border: none; color: #dc3545; cursor: pointer; font-size: 1.2rem;">🗑️</button>
+                        <button aria-label="Eliminar ${item.name} del carrito" onclick="removeFromCart('${item.id}')" style="background: none; border: none; color: #dc3545; cursor: pointer; font-size: 1.2rem;">🗑️</button>
                     </div>
                 `).join('');
-                
+
                 cartItemsContainer.innerHTML = itemsHTML;
-                
-                // PROBLEMA: Cálculos sin anuncio de cambios
+
                 const shipping = subtotal > 50 ? 0 : 9.99;
                 const taxes = subtotal * 0.21;
                 const total = subtotal + shipping + taxes;
-                
+
                 document.getElementById('subtotal').textContent = `€${subtotal.toFixed(2)}`;
                 document.getElementById('shipping').textContent = shipping === 0 ? 'Gratis' : `€${shipping.toFixed(2)}`;
                 document.getElementById('taxes').textContent = `€${taxes.toFixed(2)}`;
                 document.getElementById('total').textContent = `€${total.toFixed(2)}`;
+
+                announce(`Carrito actualizado. ${totalItems} artículo(s). Total ${document.getElementById('total').textContent}`);
             }
         }
         
-        // PROBLEMA: Actualizar cantidad sin feedback accesible
+        // PROBLEMA: Actualizar UI sin accesibilidad
         function updateCartItemQuantity(productId, newQuantity) {
             if (newQuantity <= 0) {
                 removeFromCart(productId);
@@ -789,45 +850,99 @@
             }
         }
         
-        // PROBLEMA: Toggle carrito sin manejo de foco
+        // Toggle carrito con manejo de foco y trap
         function toggleCart() {
             const cartSidebar = document.getElementById('cartSidebar');
-            const cartOverlay = document.querySelector('.cart-overlay');
+            const cartOverlay = document.getElementById('cartOverlay');
+            const mainContent = document.getElementById('mainContent');
             
             isCartOpen = !isCartOpen;
             
             if (isCartOpen) {
+                lastFocusedElementBeforeCart = document.activeElement;
                 cartSidebar.classList.add('open');
+                cartSidebar.removeAttribute('aria-hidden');
+                cartOverlay.hidden = false;
                 cartOverlay.classList.add('show');
+                mainContent.setAttribute('aria-hidden', 'true');
                 
-                // PROBLEMA: No mueve el foco al carrito
-                // PROBLEMA: No bloquea navegación con teclado en contenido de fondo
+                const focusable = cartSidebar.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusable.length) focusable[0].focus();
+                
+                document.addEventListener('keydown', trapFocusHandler);
+                document.addEventListener('keydown', escCloseHandler);
             } else {
                 cartSidebar.classList.remove('open');
+                cartSidebar.setAttribute('aria-hidden', 'true');
                 cartOverlay.classList.remove('show');
+                cartOverlay.hidden = true;
+                mainContent.setAttribute('aria-hidden', 'false');
                 
-                // PROBLEMA: No restaura el foco al botón que abrió el carrito
+                if (lastFocusedElementBeforeCart && typeof lastFocusedElementBeforeCart.focus === 'function') {
+                    lastFocusedElementBeforeCart.focus();
+                }
+                
+                document.removeEventListener('keydown', trapFocusHandler);
+                document.removeEventListener('keydown', escCloseHandler);
             }
+        }
+        
+        function trapFocusHandler(e) {
+            if (!isCartOpen) return;
+            if (e.key !== 'Tab') return;
+            
+            const container = document.getElementById('cartSidebar');
+            const focusable = Array.from(container.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+                .filter(el => !el.hasAttribute('disabled'));
+            if (!focusable.length) return;
+            
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        }
+        
+        function escCloseHandler(e) {
+            if (e.key === 'Escape' && isCartOpen) toggleCart();
         }
         
         // PROBLEMA: Notificaciones no accesibles
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `alert alert-${type} alert-dismissible`;
+            notification.setAttribute('role', 'status');
             notification.style.marginBottom = '0.5rem';
             
-            notification.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
-            `;
+            const closeBtn = document.createElement('button');
+            closeBtn.type = 'button';
+            closeBtn.className = 'btn-close';
+            closeBtn.setAttribute('aria-label', 'Cerrar notificación');
+            closeBtn.addEventListener('click', () => notification.remove());
             
+            notification.textContent = message;
+            notification.appendChild(closeBtn);
             document.getElementById('notifications').appendChild(notification);
             
-            // PROBLEMA: No se anuncia a lectores de pantalla
+            announce(message);
             
-            setTimeout(() => {
-                notification.remove();
-            }, 4000);
+            setTimeout(() => { notification.remove(); }, 4000);
+        }
+        
+        function announce(text) {
+            const a = document.getElementById('a11yAnnouncer');
+            if (!a) return;
+            a.textContent = '';
+            setTimeout(() => { a.textContent = text; }, 100);
         }
         
         // PROBLEMA: Filtrado sin feedback accesible
@@ -900,33 +1015,31 @@
         
         // PROBLEMA: Funciones adicionales sin accesibilidad
         function updateQuantitySelection(productId, quantity) {
-            selectedQuantities[productId] = parseInt(quantity);
+            selectedQuantities[productId] = parseInt(quantity, 10);
+            announce(`Seleccionada ${quantity} unidad(es) para el producto`);
         }
         
         function toggleFavorite(productId) {
-            const button = document.querySelector(`[onclick="toggleFavorite('${productId}')"]`);
-            const isFavorite = button.textContent === '❤️';
-            
+            const button = document.querySelector(`[data-product-id="${productId}"].favorite-btn`) || document.querySelector(`[onclick="toggleFavorite('${productId}')"]`);
+            if (!button) return;
+            const isFavorite = button.getAttribute('aria-pressed') === 'true';
+            button.setAttribute('aria-pressed', isFavorite ? 'false' : 'true');
             button.textContent = isFavorite ? '🤍' : '❤️';
-            
-            // PROBLEMA: Cambio de estado no anunciado
-            showNotification(
-                isFavorite ? 'Eliminado de favoritos' : 'Añadido a favoritos', 
-                'info'
-            );
+            const msg = isFavorite ? 'Eliminado de favoritos' : 'Añadido a favoritos';
+            showNotification(msg, 'info');
+            announce(msg);
         }
         
         function notifyWhenAvailable(productId) {
-            // PROBLEMA: Prompt no accesible
-            const email = prompt('Ingresa tu email para notificarte cuando esté disponible:');
-            if (email) {
-                showNotification('Te notificaremos cuando el producto esté disponible', 'success');
-            }
+            // Evitar prompt nativo; dar feedback y solicitar email vía formulario real en implementación completa
+            showNotification('Funcionalidad de notificación solicitada. Introduce tu email en el formulario del producto (demo).', 'info');
+            announce('Notificación solicitada para el producto');
         }
         
         function clearCart() {
-            // PROBLEMA: Confirmación no accesible
-            if (confirm('¿Estás seguro de que quieres vaciar el carrito?')) {
+            // Evitar confirm nativo; uso de confirmación simple accesible (implementar modal real si hace falta)
+            const ok = window.confirm ? window.confirm('¿Vaciar el carrito?') : true;
+            if (ok) {
                 cartItems = [];
                 updateCartUI();
                 showNotification('Carrito vaciado', 'info');
@@ -945,11 +1058,75 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('TechShop cargado');
             
-            // PROBLEMA: No configura navegación accesible con teclado
-            // FALTA: Manejo de teclas Escape, Enter, flechas
-            // FALTA: Indicadores de foco apropiados
-        });
-    </script>
+            // Bind cart controls without inline handlers
+            const openBtn = document.getElementById('openCartBtn');
+            const closeBtn = document.getElementById('closeCartBtn');
+            const cartOverlay = document.getElementById('cartOverlay');
+            
+            if (openBtn) {
+                openBtn.addEventListener('click', () => { if (!isCartOpen) toggleCart(); });
+                openBtn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCart(); }});
+            }
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => { if (isCartOpen) toggleCart(); });
+                closeBtn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCart(); }});
+            }
+            if (cartOverlay) {
+                cartOverlay.addEventListener('click', () => { if (isCartOpen) toggleCart(); });
+                cartOverlay.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCart(); }});
+            }
+
+            /* A11Y: evitar "JavaScript jump menu" para el select de orden.
+               Ejecutar la ordenación solo al hacer clic en "Aplicar" o al pulsar Enter
+               mientras el select tiene el foco, y anunciar el resultado. */
+            const sortSelect = document.getElementById('sortSelect');
+            const applySortBtn = document.getElementById('applySortBtn');
+            if (applySortBtn && sortSelect) {
+                 applySortBtn.addEventListener('click', () => {
+                     sortProducts(sortSelect.value);
+                     announce(sortSelect.value ? `Ordenado por ${sortSelect.options[sortSelect.selectedIndex].text}` : 'Orden restablecido');
+                 });
+ 
+                 // Permitir aplicar con Enter desde el select (accesible para teclado)
+                 sortSelect.addEventListener('keydown', (e) => {
+                     if (e.key === 'Enter') {
+                         e.preventDefault();
+                         sortProducts(sortSelect.value);
+                         announce(sortSelect.value ? `Ordenado por ${sortSelect.options[sortSelect.selectedIndex].text}` : 'Orden restablecido');
+                     }
+                 });
+             }
+
+            // Evitar "jump menu" para filtro de categoría: aplicar con botón
+            const filterSelectEl = document.getElementById('filterSelect');
+            const applyFilterBtnEl = document.getElementById('applyFilterBtn');
+            if (applyFilterBtnEl && filterSelectEl) {
+                applyFilterBtnEl.addEventListener('click', () => {
+                    filterByCategory(filterSelectEl.value);
+                    announce(filterSelectEl.value ? `Filtrado por ${filterSelectEl.options[filterSelectEl.selectedIndex].text}` : 'Mostrando todas las categorías');
+                });
+                filterSelectEl.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        filterByCategory(filterSelectEl.value);
+                        announce(filterSelectEl.value ? `Filtrado por ${filterSelectEl.options[filterSelectEl.selectedIndex].text}` : 'Mostrando todas las categorías');
+                    }
+                });
+            }
+
+            // Aplicar cantidad seleccionada solo al pulsar OK (evita jump menu)
+            document.querySelectorAll('.apply-qty-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const pid = btn.getAttribute('data-product-id');
+                    const sel = document.getElementById(`qty-${pid}`);
+                    if (sel) {
+                        updateQuantitySelection(pid, sel.value);
+                        announce(`Cantidad aplicada: ${sel.value} unidad(es) para el producto`);
+                    }
+                });
+            });
+         });
+     </script>
     
 </body>
 </html>
