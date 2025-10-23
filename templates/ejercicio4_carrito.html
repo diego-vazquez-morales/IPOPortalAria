@@ -341,8 +341,8 @@
                 <article class="product-card" aria-labelledby="title-laptop-1">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ELaptop Gaming%3C/text%3E%3C/svg%3E" 
                          class="product-image" alt="Laptop Gaming Pro X1, Intel i7, 16GB RAM, RTX 3070">
-+
-+                    <h2 id="title-laptop-1" class="product-title" style="font-size:1.3rem; font-weight: 600; margin-bottom:0.5rem;">Laptop Gaming Pro X1</h2>
+
+                    <h2 id="title-laptop-1" class="product-title" style="font-size:1.3rem; font-weight: 600; margin-bottom:0.5rem;">Laptop Gaming Pro X1</h2>
                     
                     <div class="product-description">
                         Intel i7, 16GB RAM, RTX 3070, SSD 1TB. Perfecta para gaming y trabajo profesional.
@@ -382,15 +382,15 @@
                               <option value="4">4</option>
                               <option value="5">5</option>
                           </select>
-+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="laptop-1" aria-label="Aplicar cantidad seleccionada para Laptop Gaming Pro X1" style="margin-left:0.4rem;">OK</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="laptop-1" aria-label="Aplicar cantidad seleccionada para Laptop Gaming Pro X1" style="margin-left:0.4rem;">OK</button>
                         
                         <!-- PROBLEMA: Botón favorito sin descripción -->
                         <button onclick="toggleFavorite('laptop-1')" 
-                                style="background: none; border: none; font-size: 1.5rem;""
-+                                class="favorite-btn"
-+                                aria-pressed="false"
-+                                aria-label="Marcar Laptop Gaming Pro X1 como favorito"
-+                                data-product-id="laptop-1">
+                                style="background: none; border: none; font-size: 1.5rem;"
+                                class="favorite-btn"
+                                aria-pressed="false"
+                                aria-label="Marcar Laptop Gaming Pro X1 como favorito"
+                                data-product-id="laptop-1">
                             🤍
                         </button>
                      </div>
@@ -399,17 +399,15 @@
             
             <!-- Producto 2 -->
             <div class="col-lg-4 col-md-6 product-item" data-category="phones">
-                <div class="product-card">
+                <article class="product-card" aria-labelledby="title-phone-1">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ESmartphone%3C/text%3E%3C/svg%3E" 
-                         class="product-image" alt="Smartphone">
-                    
-                    <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
-                        Smartphone Ultra 5G
-                    </div>
-                    
-                    <div class="product-description">
-                        Pantalla OLED 6.7", Cámara triple 108MP, Batería 5000mAh, 256GB almacenamiento.
-                    </div>
+                         class="product-image" alt="Smartphone Ultra 5G — OLED 6.7, triple cámara 108MP, batería 5000mAh, 256GB">
+
+                    <h2 id="title-phone-1" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Smartphone Ultra 5G</h2>
+                     
+                     <div class="product-description">
+                         Pantalla OLED 6.7", Cámara triple 108MP, Batería 5000mAh, 256GB almacenamiento.
+                     </div>
                     
                     <div style="margin: 1rem 0;">
                         <span>⭐⭐⭐⭐☆</span>
@@ -417,8 +415,10 @@
                     </div>
                     
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="price">€899.99</span>
-                        <span class="stock-info stock-low">⚠️ Pocas unidades (3 restantes)</span>
+                        <span class="price" data-price="899.99">€899.99</span>
+                        <span class="stock-info stock-low" role="status" aria-live="polite" aria-atomic="true">⚠️ Pocas unidades (3 restantes)
+                            <span class="visually-hidden">Pocas unidades: 3 restantes</span>
+                        </span>
                     </div>
                     
                     <div class="product-actions">
@@ -435,25 +435,23 @@
                              <option value="2">2</option>
                              <option value="3">3</option>
                         </select>
-+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="phone-1" aria-label="Aplicar cantidad seleccionada para Smartphone Ultra 5G" style="margin-left:0.4rem;">OK</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="phone-1" aria-label="Aplicar cantidad seleccionada para Smartphone Ultra 5G" style="margin-left:0.4rem;">OK</button>
                         
                         <button onclick="toggleFavorite('phone-1')" 
                                 style="background: none; border: none; font-size: 1.5rem;">
                             🤍
                         </button>
                     </div>
-                </div>
+                </article>
             </div>
             
             <!-- Producto 3 -->
             <div class="col-lg-4 col-md-6 product-item" data-category="accessories">
-                <div class="product-card">
+                <article class="product-card" aria-labelledby="title-headphones-1">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3EAuriculares%3C/text%3E%3C/svg%3E" 
-                         class="product-image" alt="Auriculares Wireless Pro">
-                    
-                    <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
-                        Auriculares Wireless Pro
-                    </div>
+                         class="product-image" alt="Auriculares Wireless Pro — cancelación de ruido, 30h, Bluetooth 5.2, IPX4">
+
+                    <h2 id="title-headphones-1" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Auriculares Wireless Pro</h2>
                     
                     <div class="product-description">
                         Cancelación de ruido activa, 30h de batería, Bluetooth 5.2, resistentes al agua IPX4.
@@ -465,8 +463,11 @@
                     </div>
                     
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="price">€199.99</span>
-                        <span class="stock-info stock-ok">✅ En stock (25 unidades)</span>
+                        <span class="price" data-price="199.99">€199.99</span>
+                        <span class="stock-info stock-ok" role="status" aria-live="polite" aria-atomic="true">
+                            ✅ En stock (25 unidades)
+                            <span class="visually-hidden">En stock: 25 unidades</span>
+                        </span>
                     </div>
                     
                     <div class="product-actions">
@@ -484,25 +485,23 @@
                              <option value="4">4</option>
                              <option value="5">5</option>
                          </select>
-+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="headphones-1" aria-label="Aplicar cantidad seleccionada para Auriculares Wireless Pro" style="margin-left:0.4rem;">OK</button>
+                       <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="headphones-1" aria-label="Aplicar cantidad seleccionada para Auriculares Wireless Pro" style="margin-left:0.4rem;">OK</button>
                         
                         <button onclick="toggleFavorite('headphones-1')" 
                                 style="background: none; border: none; font-size: 1.5rem;">
                             🤍
                         </button>
                     </div>
-                </div>
+                </article>
             </div>
             
             <!-- Producto 4 - AGOTADO -->
             <div class="col-lg-4 col-md-6 product-item" data-category="software">
-                <div class="product-card">
+                <article class="product-card" aria-labelledby="title-software-1">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ESoftware%3C/text%3E%3C/svg%3E" 
-                         class="product-image" alt="Suite Productividad Pro">
-                    
-                    <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
-                        Suite Productividad Pro
-                    </div>
+                         class="product-image" alt="Suite Productividad Pro — editor, hojas de cálculo, presentaciones, licencia completa">
+
+                    <h2 id="title-software-1" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Suite Productividad Pro</h2>
                     
                     <div class="product-description">
                         Licencia completa: Editor de documentos, hojas de cálculo, presentaciones y más herramientas.
@@ -514,9 +513,11 @@
                     </div>
                     
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="price">€149.99</span>
-                        <!-- PROBLEMA: Estado agotado sin información accesible -->
-                        <span class="stock-info stock-out">❌ Agotado</span>
+                        <span class="price" data-price="149.99">€149.99</span>
+                        <!-- Estado agotado con texto alternativo -->
+                        <span class="stock-info stock-out" role="status" aria-live="polite" aria-atomic="true">❌ Agotado
+                            <span class="visually-hidden">Producto agotado</span>
+                        </span>
                     </div>
                     
                     <div class="product-actions">
@@ -536,40 +537,43 @@
                             Notificar disponibilidad
                         </button>
                     </div>
-                </div>
+                </article>
             </div>
             
             <!-- Más productos similares... -->
             <div class="col-lg-4 col-md-6 product-item" data-category="accessories">
-                <div class="product-card">
+                <article class="product-card" aria-labelledby="title-keyboard-2">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ETeclado%3C/text%3E%3C/svg%3E" 
-                         class="product-image" alt="Teclado Mecánico RGB">
-                    
-                    <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
-                        Teclado Mecánico RGB
-                    </div>
+                         class="product-image" alt="Teclado Mecánico RGB — switches Cherry MX, retroiluminación RGB, construcción de aluminio">
+
+                    <h2 id="title-keyboard-2" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Teclado Mecánico RGB</h2>
                     
                     <div class="product-description">
-                        Switches Cherry MX, Retroiluminación RGB personalizable, Construcción aluminio premium.
+                        Switches Cherry MX, retroiluminación RGB personalizable, construcción de aluminio premium.
                     </div>
                     
                     <div style="margin: 1rem 0;">
-                        <span>⭐⭐⭐⭐⭐</span>
+                        <span aria-hidden="true">⭐⭐⭐⭐⭐</span>
+                        <span class="visually-hidden">Puntuación 5 de 5. 73 reseñas.</span>
                         <span style="color: #6c757d; margin-left: 0.5rem;">(73 reseñas)</span>
                     </div>
-                    
+
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="price">€129.99</span>
-                        <span class="stock-info stock-ok">✅ En stock (18 unidades)</span>
+                        <span class="price" data-price="129.99">€129.99</span>
+                        <span class="stock-info stock-ok" role="status" aria-live="polite" aria-atomic="true">
+                            ✅ En stock (18 unidades)
+                            <span class="visually-hidden">En stock: 18 unidades</span>
+                        </span>
                     </div>
-                    
+
                     <div class="product-actions">
                         <button class="btn-add-cart" 
                                 onclick="addToCart('keyboard-1', 'Teclado Mecánico RGB', 129.99)"
-                                data-product-id="keyboard-1">
+                                data-product-id="keyboard-1"
+                                aria-label="Añadir Teclado Mecánico RGB al carrito">
                             Añadir al carrito
                         </button>
-                        
+
                         <label for="qty-keyboard-1" class="visually-hidden">Cantidad para Teclado Mecánico RGB</label>
                         <select id="qty-keyboard-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Teclado Mecánico RGB">
                              <option value="1">1</option>
@@ -577,55 +581,55 @@
                              <option value="3">3</option>
                              <option value="4">4</option>
                          </select>
-+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="keyboard-1" aria-label="Aplicar cantidad seleccionada para Teclado Mecánico RGB" style="margin-left:0.4rem;">OK</button>
-                        
-                        <button onclick="toggleFavorite('keyboard-1')" 
-                                style="background: none; border: none; font-size: 1.5rem;">
-                            🤍
-                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="keyboard-1" aria-label="Aplicar cantidad seleccionada para Teclado Mecánico RGB" style="margin-left:0.4rem;">OK</button>
+
+                        <button class="favorite-btn" data-product-id="keyboard-1" aria-pressed="false" aria-label="Marcar Teclado Mecánico RGB como favorito" style="background:none;border:none;font-size:1.5rem;">🤍</button>
                     </div>
-                </div>
+                </article>
             </div>
             
             <div class="col-lg-4 col-md-6 product-item" data-category="accessories">
-                <div class="product-card">
+                <article class="product-card" aria-labelledby="title-mouse-2">
                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3EMouse%3C/text%3E%3C/svg%3E" 
-                         class="product-image" alt="Mouse Gaming Precision">
-                    
-                    <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
-                        Mouse Gaming Precision
-                    </div>
-                    
+                         class="product-image" alt="Mouse Gaming Precision — 16.000 DPI, 11 botones programables, ergonomía avanzada">
+
+                    <h2 id="title-mouse-2" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Mouse Gaming Precision</h2>
+
                     <div class="product-description">
-                        16,000 DPI, 11 botones programables, Ergonomía avanzada, Sensor óptico de alta precisión.
+                        16,000 DPI, 11 botones programables, ergonomía avanzada y sensor óptico de alta precisión.
                     </div>
-                    
+
                     <div style="margin: 1rem 0;">
-                        <span>⭐⭐⭐⭐☆</span>
+                        <span aria-hidden="true">⭐⭐⭐⭐☆</span>
+                        <span class="visually-hidden">Puntuación 4 de 5. 41 reseñas.</span>
                         <span style="color: #6c757d; margin-left: 0.5rem;">(41 reseñas)</span>
                     </div>
-                    
+
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="price">€79.99</span>
-                        <span class="stock-info stock-low">⚠️ Últimas unidades (2 restantes)</span>
+                        <span class="price" data-price="79.99">€79.99</span>
+                        <span class="stock-info stock-low" role="status" aria-live="polite" aria-atomic="true">
+                            ⚠️ Últimas unidades (2 restantes)
+                            <span class="visually-hidden">Últimas unidades: 2 restantes</span>
+                        </span>
                     </div>
-                    
+
                     <div class="product-actions">
                         <button class="btn-add-cart" 
                                 onclick="addToCart('mouse-1', 'Mouse Gaming Precision', 79.99)"
-                                data-product-id="mouse-1">
+                                data-product-id="mouse-1"
+                                aria-label="Añadir Mouse Gaming Precision al carrito">
                             Añadir al carrito
                         </button>
-                        
+
                         <label for="qty-mouse-1" class="visually-hidden">Cantidad para Mouse Gaming Precision</label>
                         <select id="qty-mouse-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Mouse Gaming Precision">
                              <option value="1">1</option>
                              <option value="2">2</option>
                         </select>
-+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="mouse-1" aria-label="Aplicar cantidad seleccionada para Mouse Gaming Precision" style="margin-left:0.4rem;">OK</button>
-                     </div>
-                 </div>
-             </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="mouse-1" aria-label="Aplicar cantidad seleccionada para Mouse Gaming Precision" style="margin-left:0.4rem;">OK</button>
+                    </div>
+                </article>
+            </div>
         </div>
         
         <!-- Mensaje cuando no hay productos - PROBLEMA -->
@@ -712,7 +716,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // Estado del carrito
+        /* Formateo monetario accesible y mejoras para precios */
+        function formatCurrency(value) {
+            try {
+                return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value);
+            } catch (e) {
+                return `€${value.toFixed(2)}`;
+            }
+        }
+
+         // Estado del carrito
         let cartItems = [];
         let cartTotal = 0;
         let isCartOpen = false;
@@ -802,11 +815,19 @@
                 const taxes = subtotal * 0.21;
                 const total = subtotal + shipping + taxes;
 
-                document.getElementById('subtotal').textContent = `€${subtotal.toFixed(2)}`;
-                document.getElementById('shipping').textContent = shipping === 0 ? 'Gratis' : `€${shipping.toFixed(2)}`;
-                document.getElementById('taxes').textContent = `€${taxes.toFixed(2)}`;
-                document.getElementById('total').textContent = `€${total.toFixed(2)}`;
+                // Usar formato accesible y añadir aria-labels
+                document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+                document.getElementById('subtotal').setAttribute('aria-label', `Subtotal ${formatCurrency(subtotal)}`);
 
+                document.getElementById('shipping').textContent = shipping === 0 ? 'Gratis' : formatCurrency(shipping);
+                document.getElementById('shipping').setAttribute('aria-label', `Envío ${shipping === 0 ? 'Gratis' : formatCurrency(shipping)}`);
+
+                document.getElementById('taxes').textContent = formatCurrency(taxes);
+                document.getElementById('taxes').setAttribute('aria-label', `Impuestos ${formatCurrency(taxes)}`);
+
+                document.getElementById('total').textContent = formatCurrency(total);
+                document.getElementById('total').setAttribute('aria-label', `Total ${formatCurrency(total)}`);
+ 
                 announce(`Carrito actualizado. ${totalItems} artículo(s). Total ${document.getElementById('total').textContent}`);
             }
         }
@@ -975,30 +996,31 @@
         
         // PROBLEMA: Ordenamiento sin feedback
         function sortProducts(sortBy) {
-            const grid = document.getElementById('productsGrid');
-            const products = Array.from(grid.querySelectorAll('.product-item'));
-            
-            products.sort((a, b) => {
-                switch (sortBy) {
-                    case 'name':
-                        const nameA = a.querySelector('.product-card > div').textContent;
-                        const nameB = b.querySelector('.product-card > div').textContent;
-                        return nameA.localeCompare(nameB);
-                        
-                    case 'price-low':
-                    case 'price-high':
-                        const priceA = parseFloat(a.querySelector('.price').textContent.replace(/[€,]/g, ''));
-                        const priceB = parseFloat(b.querySelector('.price').textContent.replace(/[€,]/g, ''));
+             const grid = document.getElementById('productsGrid');
+             const products = Array.from(grid.querySelectorAll('.product-item'));
+             
+             products.sort((a, b) => {
+                 switch (sortBy) {
+                     case 'name':
+
+                        const nameA = a.querySelector('.product-title') ? a.querySelector('.product-title').textContent : '';
+                        const nameB = b.querySelector('.product-title') ? b.querySelector('.product-title').textContent : '';
+                       return nameA.localeCompare(nameB, 'es');
+                         
+                     case 'price-low':
+                     case 'price-high':
+                         const priceA = parseFloat(a.querySelector('.price').dataset.price || 0);
+                        const priceB = parseFloat(b.querySelector('.price').dataset.price || 0);
                         return sortBy === 'price-low' ? priceA - priceB : priceB - priceA;
-                        
-                    default:
-                        return 0;
-                }
-            });
-            
-            // PROBLEMA: Cambio de orden no anunciado
-            products.forEach(product => grid.appendChild(product));
-        }
+                         
+                     default:
+                         return 0;
+                 }
+             });
+             
+             // PROBLEMA: Cambio de orden no anunciado
+             products.forEach(product => grid.appendChild(product));
+         }
         
         // PROBLEMA: Filtro por categoría sin feedback
         function filterByCategory(category) {
@@ -1116,14 +1138,22 @@
 
             // Aplicar cantidad seleccionada solo al pulsar OK (evita jump menu)
             document.querySelectorAll('.apply-qty-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const pid = btn.getAttribute('data-product-id');
-                    const sel = document.getElementById(`qty-${pid}`);
-                    if (sel) {
-                        updateQuantitySelection(pid, sel.value);
-                        announce(`Cantidad aplicada: ${sel.value} unidad(es) para el producto`);
-                    }
-                });
+                 btn.addEventListener('click', (e) => {
+                     const pid = btn.getAttribute('data-product-id');
+                     const sel = document.getElementById(`qty-${pid}`);
+                     if (sel) {
+                         updateQuantitySelection(pid, sel.value);
+                         announce(`Cantidad aplicada: ${sel.value} unidad(es) para el producto`);
+                     }
+                 });
+             });
+
+            // A11Y: añadir aria-labels a precios estáticos en productos usando data-price
+            document.querySelectorAll('.price').forEach(p => {
+                const v = parseFloat(p.dataset.price || 0);
+                if (!isNaN(v)) {
+                    p.setAttribute('aria-label', formatCurrency(v));
+                }
             });
          });
      </script>
