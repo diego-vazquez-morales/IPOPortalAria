@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ titulo }}</title>
     <meta name="description" content="{{ descripcion }}">
-    
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <link rel="stylesheet" href="../static/css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <style>
         .shop-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 2rem 0;
         }
-        
+
         .product-card {
             border: 1px solid #dee2e6;
             border-radius: 10px;
@@ -24,12 +25,12 @@
             background: white;
             transition: all 0.3s ease;
         }
-        
+
         .product-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
-        
+
         .product-image {
             width: 100%;
             height: 200px;
@@ -37,13 +38,13 @@
             border-radius: 8px;
             margin-bottom: 1rem;
         }
-        
+
         .price {
             font-size: 1.5rem;
             font-weight: bold;
             color: #007bff;
         }
-        
+
         .cart-sidebar {
             position: fixed;
             right: -400px;
@@ -51,32 +52,32 @@
             width: 400px;
             height: 100vh;
             background: white;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
             z-index: 1050;
             transition: right 0.3s ease;
             overflow-y: auto;
             padding: 2rem;
         }
-        
+
         .cart-sidebar.open {
             right: 0;
         }
-        
+
         .cart-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1040;
             display: none;
         }
-        
+
         .cart-overlay.show {
             display: block;
         }
-        
+
         .cart-item {
             display: flex;
             align-items: center;
@@ -84,24 +85,24 @@
             border-bottom: 1px solid #e9ecef;
             gap: 1rem;
         }
-        
+
         .cart-item-image {
             width: 60px;
             height: 60px;
             object-fit: cover;
             border-radius: 5px;
         }
-        
+
         .cart-item-details {
             flex: 1;
         }
-        
+
         .quantity-controls {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        
+
         .quantity-btn {
             width: 30px;
             height: 30px;
@@ -114,7 +115,7 @@
             cursor: pointer;
             font-weight: bold;
         }
-        
+
         .quantity-input {
             width: 50px;
             text-align: center;
@@ -122,14 +123,14 @@
             border-radius: 3px;
             padding: 0.25rem;
         }
-        
+
         .cart-summary {
             background: #f8f9fa;
             padding: 1.5rem;
             border-radius: 8px;
             margin-top: 1rem;
         }
-        
+
         .cart-badge {
             position: absolute;
             top: -8px;
@@ -144,22 +145,30 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .loading-product {
             opacity: 0.6;
             pointer-events: none;
         }
-        
+
         .success-animation {
             animation: successPulse 0.6s ease;
         }
-        
+
         @keyframes successPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
-        
+
         /* PROBLEMAS INTENCIONADOS */
         .product-actions {
             display: flex;
@@ -170,7 +179,8 @@
 
         /* Ajuste: colores con contraste suficiente y manejo de foco */
         .btn-add-cart {
-            background: #155724;             /* verde oscuro con buen contraste frente a #ffffff */
+            background: #155724;
+            /* verde oscuro con buen contraste frente a #ffffff */
             color: #ffffff;
             border: none;
             padding: 0.5rem 1rem;
@@ -200,7 +210,8 @@
 
         /* NUEVO: botón "Notificar disponibilidad" con contraste y foco accesible */
         .btn-notify {
-            background-color: #004085 !important; /* más oscuro que #007bff -> contraste >= 4.5:1 */
+            background-color: #004085 !important;
+            /* más oscuro que #007bff -> contraste >= 4.5:1 */
             color: #ffffff !important;
             border: none;
             padding: 0.5rem 1rem;
@@ -209,14 +220,17 @@
             cursor: pointer;
             font-weight: 500;
         }
+
         .btn-notify:hover {
             background-color: #00366b !important;
         }
+
         .btn-notify:focus {
             outline: 3px solid rgba(0, 64, 133, 0.22);
             outline-offset: 2px;
             box-shadow: 0 0 0 3px rgba(0, 64, 133, 0.12);
         }
+
         .btn-notify:disabled {
             background: #6c757d !important;
             color: #ffffff !important;
@@ -233,6 +247,7 @@
             height: 1px;
             overflow: hidden;
         }
+
         .skip-link:focus {
             position: static;
             left: auto;
@@ -249,53 +264,52 @@
 </head>
 
 <body>
-        <!-- Skip link para saltar al contenido principal -->
-        <a href="#mainContent" class="skip-link">Saltar al contenido</a>
-        
-        <!-- PROBLEMA: Falta skip links -->
-        
-        <!-- Header de la tienda -->
-        <header class="shop-header">
-            <div class="container">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h1>TechShop</h1>
-                        <p class="mb-0">Los mejores productos tecnológicos</p>
-                    </div>
-                    
-                    <!-- PROBLEMA: Carrito sin información accesible -->
-                    <div style="position: relative;">
-                        <button id="openCartBtn" class="btn btn-light btn-lg" aria-haspopup="dialog" aria-controls="cartSidebar">
-                            🛒 Carrito
-                            <span id="cartBadge" class="cart-badge" style="display: none;" aria-hidden="true">0</span>
-                            <span id="cartBadgeLabel" class="visually-hidden" aria-live="polite" aria-atomic="true">Carrito vacío</span>
-                        </button>
-                    </div>
+    <!-- Skip link para saltar al contenido principal -->
+    <a href="#mainContent" class="skip-link">Saltar al contenido</a>
+
+    <!-- PROBLEMA: Falta skip links -->
+
+    <!-- Header de la tienda -->
+    <header class="shop-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1>TechShop</h1>
+                    <p class="mb-0">Los mejores productos tecnológicos</p>
                 </div>
-                
-                <!-- Navegación de regreso -->
-                <div class="mt-3">
-                    <a href="{{ url_for('index') }}" class="btn btn-outline-light">
-                        ← Volver al portal
-                    </a>
+
+                <!-- PROBLEMA: Carrito sin información accesible -->
+                <div style="position: relative;">
+                    <button id="openCartBtn" class="btn btn-light btn-lg" aria-haspopup="dialog"
+                        aria-controls="cartSidebar">
+                        🛒 Carrito
+                        <span id="cartBadge" class="cart-badge" style="display: none;" aria-hidden="true">0</span>
+                        <span id="cartBadgeLabel" class="visually-hidden" aria-live="polite" aria-atomic="true">Carrito
+                            vacío</span>
+                    </button>
                 </div>
             </div>
-        </header>
-        
-        <!-- Contenido principal -->
-        <main id="mainContent" class="container my-5" tabindex="-1" aria-label="Contenido principal">
-        
+
+            <!-- Navegación de regreso -->
+            <div class="mt-3">
+                <a href="index.html" class="btn btn-outline-light">
+                    ← Volver al portal
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main id="mainContent" class="container my-5" tabindex="-1" aria-label="Contenido principal">
+
         <!-- Filtros y búsqueda - PROBLEMAS -->
         <div class="row mb-4">
             <div class="col-md-6">
                 <!-- PROBLEMA: Campo de búsqueda sin label -->
-                <input type="text" 
-                       class="form-control" 
-                       placeholder="Buscar productos..." 
-                       aria-label="Buscar productos" 
-                       onkeyup="filterProducts(this.value)">
+                <input type="text" class="form-control" placeholder="Buscar productos..." aria-label="Buscar productos"
+                    onkeyup="filterProducts(this.value)">
             </div>
-            
+
             <div class="col-md-3">
                 <!-- CORRECCIÓN: Añadir label accesible (visualmente oculto).
                      Evitar "jump menu" ejecutando la ordenación solo al aplicar (botón)
@@ -303,54 +317,55 @@
                 <label for="sortSelect" class="visually-hidden">Ordenar productos</label>
                 <div style="display:flex; gap:0.5rem; align-items:center;">
                     <select id="sortSelect" class="form-select" aria-label="Seleccionar criterio de orden">
-                         <option value="">Ordenar por...</option>
-                         <option value="name">Nombre</option>
-                         <option value="price-low">Precio: Menor a Mayor</option>
-                         <option value="price-high">Precio: Mayor a Menor</option>
-                         <option value="rating">Calificación</option>
-                     </select>
-                     <button id="applySortBtn" class="btn btn-outline-secondary" type="button" aria-label="Aplicar orden">Aplicar</button>
+                        <option value="">Ordenar por...</option>
+                        <option value="name">Nombre</option>
+                        <option value="price-low">Precio: Menor a Mayor</option>
+                        <option value="price-high">Precio: Mayor a Menor</option>
+                        <option value="rating">Calificación</option>
+                    </select>
+                    <button id="applySortBtn" class="btn btn-outline-secondary" type="button"
+                        aria-label="Aplicar orden">Aplicar</button>
                 </div>
-             </div>
-            
+            </div>
+
             <div class="col-md-3">
                 <label for="filterSelect" class="visually-hidden">Filtrar por categoría</label>
                 <div style="display:flex; gap:0.5rem; align-items:center;">
                     <select id="filterSelect" class="form-select" aria-label="Seleccionar categoría para filtrar">
-                         <option value="">Todas las categorías</option>
-                         <option value="laptops">Laptops</option>
-                         <option value="phones">Teléfonos</option>
-                         <option value="accessories">Accesorios</option>
-                         <option value="software">Software</option>
-                     </select>
-                     <button id="applyFilterBtn" class="btn btn-outline-secondary" type="button" aria-label="Aplicar filtro de categoría">Aplicar</button>
+                        <option value="">Todas las categorías</option>
+                        <option value="laptops">Laptops</option>
+                        <option value="phones">Teléfonos</option>
+                        <option value="accessories">Accesorios</option>
+                        <option value="software">Software</option>
+                    </select>
+                    <button id="applyFilterBtn" class="btn btn-outline-secondary" type="button"
+                        aria-label="Aplicar filtro de categoría">Aplicar</button>
                 </div>
-             </div>
+            </div>
         </div>
-        
+
         <!-- Grid de productos - MÚLTIPLES PROBLEMAS -->
         <div class="row" id="productsGrid">
-            
+
             <!-- Producto 1 -->
             <div class="col-lg-4 col-md-6 product-item" data-category="laptops">
                 <!-- PROBLEMA: Producto sin estructura semántica -->
                 <article class="product-card" aria-labelledby="title-laptop-1">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ELaptop Gaming%3C/text%3E%3C/svg%3E" 
-                         class="product-image" alt="Laptop Gaming Pro X1, Intel i7, 16GB RAM, RTX 3070">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ELaptop Gaming%3C/text%3E%3C/svg%3E" class="product-image" alt="Laptop Gaming Pro X1, Intel i7, 16GB RAM, RTX 3070">
+                    <h2 id="title-laptop-1" class="product-title"
+                        style="font-size:1.3rem; font-weight: 600; margin-bottom:0.5rem;">Laptop Gaming Pro X1</h2>
 
-                    <h2 id="title-laptop-1" class="product-title" style="font-size:1.3rem; font-weight: 600; margin-bottom:0.5rem;">Laptop Gaming Pro X1</h2>
-                    
                     <div class="product-description">
                         Intel i7, 16GB RAM, RTX 3070, SSD 1TB. Perfecta para gaming y trabajo profesional.
                     </div>
-                    
+
                     <!-- Calificación accesible -->
                     <div style="margin: 1rem 0;">
                         <span aria-hidden="true">⭐⭐⭐⭐⭐</span>
                         <span class="visually-hidden">Puntuación 5 de 5. 47 reseñas.</span>
                         <span style="color: #6c757d; margin-left: 0.5rem;">(47 reseñas)</span>
                     </div>
-                    
+
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="price" data-price="1299.99" aria-label="€1.299,99">€1,299.99</span>
                         <!-- Estado de stock accesible -->
@@ -358,187 +373,188 @@
                             ✅ En stock (12 unidades)
                             <span class="visually-hidden">En stock: 12 unidades</span>
                         </span>
-                     </div>
-                     
-                     <div class="product-actions">
-                         <!-- PROBLEMA: Botón sin descripción de acción -->
-                        <button class="btn-add-cart" 
-                                onclick="addToCart('laptop-1', 'Laptop Gaming Pro X1', 1299.99)"
-                                data-product-id="laptop-1"
-                                aria-label="Añadir Laptop Gaming Pro X1 al carrito">
+                    </div>
+
+                    <div class="product-actions">
+                        <!-- PROBLEMA: Botón sin descripción de acción -->
+                        <button class="btn-add-cart" onclick="addToCart('laptop-1', 'Laptop Gaming Pro X1', 1299.99)"
+                            data-product-id="laptop-1" aria-label="Añadir Laptop Gaming Pro X1 al carrito">
                             Añadir al carrito
                         </button>
-                        
+
                         <!-- CORRECCIÓN: Selector de cantidad con label accesible -->
                         <label for="qty-laptop-1" class="visually-hidden">Cantidad para Laptop Gaming Pro X1</label>
-                        <select id="qty-laptop-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Laptop Gaming Pro X1">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                          </select>
-                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="laptop-1" aria-label="Aplicar cantidad seleccionada para Laptop Gaming Pro X1" style="margin-left:0.4rem;">OK</button>
-                        
+                        <select id="qty-laptop-1" style="width: 80px; margin-left: 0.5rem;"
+                            aria-label="Seleccionar cantidad para Laptop Gaming Pro X1">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn"
+                            data-product-id="laptop-1"
+                            aria-label="Aplicar cantidad seleccionada para Laptop Gaming Pro X1"
+                            style="margin-left:0.4rem;">OK</button>
+
                         <!-- PROBLEMA: Botón favorito sin descripción -->
-                        <button onclick="toggleFavorite('laptop-1')" 
-                                style="background: none; border: none; font-size: 1.5rem;"
-                                class="favorite-btn"
-                                aria-pressed="false"
-                                aria-label="Marcar Laptop Gaming Pro X1 como favorito"
-                                data-product-id="laptop-1">
+                        <button onclick="toggleFavorite('laptop-1')"
+                            style="background: none; border: none; font-size: 1.5rem;" class="favorite-btn"
+                            aria-pressed="false" aria-label="Marcar Laptop Gaming Pro X1 como favorito"
+                            data-product-id="laptop-1">
                             🤍
                         </button>
-                     </div>
-                 </article>
-             </div>
-            
+                    </div>
+                </article>
+            </div>
+
             <!-- Producto 2 -->
             <div class="col-lg-4 col-md-6 product-item" data-category="phones">
-                 <article class="product-card" aria-labelledby="title-phone-1">
-                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ESmartphone%3C/text%3E%3C/svg%3E" 
-                          class="product-image" alt="Smartphone Ultra 5G — OLED 6.7, triple cámara 108MP, batería 5000mAh, 256GB">
+                <article class="product-card" aria-labelledby="title-phone-1">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ESmartphone%3C/text%3E%3C/svg%3E" class="product-image" alt="Smartphone Ultra 5G — OLED 6.7, triple cámara 108MP, batería 5000mAh, 256GB">
 
-                     <h2 id="title-phone-1" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Smartphone Ultra 5G</h2>
-                     
-                     <div class="product-description">
-                         Pantalla OLED 6.7", Cámara triple 108MP, Batería 5000mAh, 256GB almacenamiento.
-                     </div>
-                    
+                    <h2 id="title-phone-1" class="product-title"
+                        style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Smartphone Ultra 5G</h2>
+
+                    <div class="product-description">
+                        Pantalla OLED 6.7", Cámara triple 108MP, Batería 5000mAh, 256GB almacenamiento.
+                    </div>
+
                     <div style="margin: 1rem 0;">
                         <span aria-hidden="true">⭐⭐⭐⭐☆</span>
                         <span class="visually-hidden">Puntuación 4 de 5. 32 reseñas.</span>
                         <span style="color: #6c757d; margin-left: 0.5rem;">(32 reseñas)</span>
                     </div>
-                    
-                     <div class="d-flex justify-content-between align-items-center">
+
+                    <div class="d-flex justify-content-between align-items-center">
                         <span class="price" data-price="899.99" aria-label="€899,99">€899.99</span>
-                         <span class="stock-info stock-low" role="status" aria-live="polite" aria-atomic="true">⚠️ Pocas unidades (3 restantes)
-                             <span class="visually-hidden">Pocas unidades: 3 restantes</span>
-                         </span>
-                     </div>
-                     
-                     <div class="product-actions">
--                        <button class="btn-add-cart" 
--                                onclick="addToCart('phone-1', 'Smartphone Ultra 5G', 899.99)"
--                                data-product-id="phone-1">
--                            Añadir al carrito
--                        </button>
-+                        <button class="btn-add-cart" 
-+                                onclick="addToCart('phone-1', 'Smartphone Ultra 5G', 899.99)"
-+                                data-product-id="phone-1"
-+                                aria-label="Añadir Smartphone Ultra 5G al carrito">
-+                            Añadir al carrito
-+                        </button>
-+
-                         <!-- CORRECCIÓN: Selector de cantidad con label accesible -->
-                         <label for="qty-phone-1" class="visually-hidden">Cantidad para Smartphone Ultra 5G</label>
-                         <select id="qty-phone-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Smartphone Ultra 5G">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                         </select>
-                         <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="phone-1" aria-label="Aplicar cantidad seleccionada para Smartphone Ultra 5G" style="margin-left:0.4rem;">OK</button>
-                         
--                        <button onclick="toggleFavorite('phone-1')" 
--                                style="background: none; border: none; font-size: 1.5rem;">
--                            🤍
--                        </button>
-+                        <button onclick="toggleFavorite('phone-1')" 
-+                                style="background: none; border: none; font-size: 1.5rem;"
-+                                class="favorite-btn"
-+                                data-product-id="phone-1"
-+                                aria-pressed="false"
-+                                aria-label="Marcar Smartphone Ultra 5G como favorito">
-+                            🤍
-+                        </button>
-                     </div>
-                 </article>
-             </div>
-            
+                        <span class="stock-info stock-low" role="status" aria-live="polite" aria-atomic="true">⚠️ Pocas
+                            unidades (3 restantes)
+                            <span class="visually-hidden">Pocas unidades: 3 restantes</span>
+                        </span>
+                    </div>
+
+                    <div class="product-actions">
+                        <button class="btn-add-cart" onclick="addToCart('phone-1', 'Smartphone Ultra 5G', 899.99)"
+                            data-product-id="phone-1">
+                            Añadir al carrito
+                        </button>
+                        <button class="btn-add-cart" onclick="addToCart('phone-1', 'Smartphone Ultra 5G', 899.99)"
+                            data-product-id="phone-1" aria-label="Añadir Smartphone Ultra 5G al carrito">
+                            Añadir al carrito
+                        </button>
+
+                        <!-- CORRECCIÓN: Selector de cantidad con label accesible -->
+                        <label for="qty-phone-1" class="visually-hidden">Cantidad para Smartphone Ultra 5G</label>
+                        <select id="qty-phone-1" style="width: 80px; margin-left: 0.5rem;"
+                            aria-label="Seleccionar cantidad para Smartphone Ultra 5G">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn"
+                            data-product-id="phone-1"
+                            aria-label="Aplicar cantidad seleccionada para Smartphone Ultra 5G"
+                            style="margin-left:0.4rem;">OK</button>
+
+                        <button onclick="toggleFavorite('phone-1')"
+                            style="background: none; border: none; font-size: 1.5rem;">
+                            🤍
+                        </button>
+                        <button onclick="toggleFavorite('phone-1')"
+                            style="background: none; border: none; font-size: 1.5rem;" class="favorite-btn"
+                            data-product-id="phone-1" aria-pressed="false"
+                            aria-label="Marcar Smartphone Ultra 5G como favorito">
+                            🤍
+                        </button>
+                    </div>
+                </article>
+            </div>
+
             <!-- Producto 3 -->
             <div class="col-lg-4 col-md-6 product-item" data-category="accessories">
-                 <article class="product-card" aria-labelledby="title-headphones-1">
-                     <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3EAuriculares%3C/text%3E%3C/svg%3E" 
-                          class="product-image" alt="Auriculares Wireless Pro — cancelación de ruido, 30h, Bluetooth 5.2, IPX4">
+                <article class="product-card" aria-labelledby="title-headphones-1">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3EAuriculares%3C/text%3E%3C/svg%3E" class="product-image" alt="Auriculares Wireless Pro — cancelación de ruido, 30h, Bluetooth 5.2, IPX4">
+                    <h2 id="title-headphones-1" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
+                        Auriculares Wireless Pro
+                    </h2>
 
-                     <h2 id="title-headphones-1" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Auriculares Wireless Pro</h2>
-                     
-                     <div class="product-description">
-                         Cancelación de ruido activa, 30h de batería, Bluetooth 5.2, resistentes al agua IPX4.
-                     </div>
-                     
-                     <div style="margin: 1rem 0;">
+                    <div class="product-description">
+                        Cancelación de ruido activa, 30h de batería, Bluetooth 5.2, resistentes al agua IPX4.
+                    </div>
+
+                    <div style="margin: 1rem 0;">
                         <span aria-hidden="true">⭐⭐⭐⭐⭐</span>
                         <span class="visually-hidden">Puntuación 5 de 5. 89 reseñas.</span>
                         <span style="color: #6c757d; margin-left: 0.5rem;">(89 reseñas)</span>
-                     </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="price" data-price="199.99">€199.99</span>
+                        <span class="price" data-price="199.99" aria-label="€199,99">€199.99</span>
+                        <span class="stock-info stock-ok" role="status" aria-live="polite" aria-atomic="true">
+                            ✅ En stock (25 unidades)
+                            <span class="visually-hidden">En stock: 25 unidades</span>
+                        </span>
+                    </div>
+
+                    <div class="product-actions">
+                        <button class="btn-add-cart"
+                            onclick="addToCart('headphones-1', 'Auriculares Wireless Pro', 199.99)"
+                            data-product-id="headphones-1" aria-label="Añadir Auriculares Wireless Pro al carrito">
+                            Añadir al carrito
+                        </button>
+                        
+                        
+                        
                      
-                     <div class="d-flex justify-content-between align-items-center">
--                        <span class="price" data-price="199.99">€199.99</span>
-+                        <span class="price" data-price="199.99" aria-label="€199,99">€199.99</span>
-                         <span class="stock-info stock-ok" role="status" aria-live="polite" aria-atomic="true">
-                             ✅ En stock (25 unidades)
-                             <span class="visually-hidden">En stock: 25 unidades</span>
-                         </span>
-                     </div>
-                     
-                     <div class="product-actions">
--                        <button class="btn-add-cart" 
--                                onclick="addToCart('headphones-1', 'Auriculares Wireless Pro', 199.99)"
--                                data-product-id="headphones-1">
--                            Añadir al carrito
--                        </button>
-+                        <button class="btn-add-cart" 
-+                                onclick="addToCart('headphones-1', 'Auriculares Wireless Pro', 199.99)"
-+                                data-product-id="headphones-1"
-+                                aria-label="Añadir Auriculares Wireless Pro al carrito">
-+                            Añadir al carrito
-+                        </button>
-+
-                         <label for="qty-headphones-1" class="visually-hidden">Cantidad para Auriculares Wireless Pro</label>
-                         <select id="qty-headphones-1" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Auriculares Wireless Pro">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                          </select>
-                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="headphones-1" aria-label="Aplicar cantidad seleccionada para Auriculares Wireless Pro" style="margin-left:0.4rem;">OK</button>
-                         
--                        <button onclick="toggleFavorite('headphones-1')" 
--                                style="background: none; border: none; font-size: 1.5rem;">
--                            🤍
--                        </button>
-+                        <button onclick="toggleFavorite('headphones-1')" 
-+                                style="background: none; border: none; font-size: 1.5rem;"
-+                                class="favorite-btn"
-+                                data-product-id="headphones-1"
-+                                aria-pressed="false"
-+                                aria-label="Marcar Auriculares Wireless Pro como favorito">
-+                            🤍
-+                        </button>
-                     </div>
-                 </article>
-             </div>
-            
+
+                        <label for="qty-headphones-1" class="visually-hidden">Cantidad para Auriculares Wireless
+                            Pro</label>
+                        <select id="qty-headphones-1" style="width: 80px; margin-left: 0.5rem;"
+                            aria-label="Seleccionar cantidad para Auriculares Wireless Pro">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn"
+                            data-product-id="headphones-1"
+                            aria-label="Aplicar cantidad seleccionada para Auriculares Wireless Pro"
+                            style="margin-left:0.4rem;">OK</button>
+
+                        <button onclick="toggleFavorite('headphones-1')"
+                            style="background: none; border: none; font-size: 1.5rem;">
+                            🤍
+                        </button>
+                        <button onclick="toggleFavorite('headphones-1')"
+                            style="background: none; border: none; font-size: 1.5rem;" class="favorite-btn"
+                            data-product-id="headphones-1" aria-pressed="false"
+                            aria-label="Marcar Auriculares Wireless Pro como favorito">
+                            🤍
+                        </button>
+                    </div>
+                </article>
+            </div>
+
             <!-- Producto 4 - AGOTADO -->
             <div class="col-lg-4 col-md-6 product-item" data-category="software">
                 <article class="product-card" aria-labelledby="title-software-1">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ESoftware%3C/text%3E%3C/svg%3E" 
-                         class="product-image" alt="Suite Productividad Pro — editor, hojas de cálculo, presentaciones, licencia completa">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ESoftware%3C/text%3E%3C/svg%3E" class="product-image" alt="Suite Productividad Pro — editor, hojas de cálculo, presentaciones, licencia completa">
+                    <h2 id="title-software-1" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">
+                        Suite Productividad Pro
+                    </h2>
 
-                    <h2 id="title-software-1" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Suite Productividad Pro</h2>
-                    
                     <div class="product-description">
                         Licencia completa: Editor de documentos, hojas de cálculo, presentaciones y más herramientas.
                     </div>
-                    
+
                     <div style="margin: 1rem 0;">
                         <span>⭐⭐⭐⭐☆</span>
                         <span style="color: #6c757d; margin-left: 0.5rem;">(156 reseñas)</span>
                     </div>
-                    
+
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="price" data-price="149.99">€149.99</span>
                         <!-- Estado agotado con texto alternativo -->
@@ -546,49 +562,43 @@
                             <span class="visually-hidden">Producto agotado</span>
                         </span>
                     </div>
-                    
+
                     <div class="product-actions">
                         <!-- PROBLEMA: Botón deshabilitado sin explicación -->
-                        <button class="btn-add-cart" 
-                                disabled
-                                data-product-id="software-1"
-                                aria-describedby="unavailable-software-1">
+                        <button class="btn-add-cart" disabled data-product-id="software-1"
+                            aria-describedby="unavailable-software-1">
                             No disponible
                         </button>
                         <span id="unavailable-software-1" class="visually-hidden">
                             Producto temporalmente agotado. Puede solicitar notificación con "Notificar disponibilidad".
                         </span>
-                        
+
                         <!-- PROBLEMA: Botón notificar sin descripción -->
-                        <button class="btn-notify"
-                                type="button"
-                                onclick="notifyWhenAvailable('software-1')"
-                                aria-label="Notificarme cuando el producto esté disponible"
-                                title="Notificarme cuando esté disponible">
+                        <button class="btn-notify" type="button" onclick="notifyWhenAvailable('software-1')"
+                            aria-label="Notificarme cuando el producto esté disponible"
+                            title="Notificarme cuando esté disponible">
                             Notificar disponibilidad
                         </button>
                     </div>
                 </article>
             </div>
-            
+
             <!-- Más productos similares... -->
             <div class="col-lg-4 col-md-6 product-item" data-category="accessories">
                 <article class="product-card" aria-labelledby="title-keyboard-2">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ETeclado%3C/text%3E%3C/svg%3E" 
-                         class="product-image" alt="Teclado Mecánico RGB — switches Cherry MX, retroiluminación RGB, construcción de aluminio">
-
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Crect width='300' height='200' fill='%23e9ecef'/%3E%3Ctext x='150' y='100' text-anchor='middle' fill='%23495057' font-size='14'%3ETeclado%3C/text%3E%3C/svg%3E" class="product-image" alt="Teclado Mecánico RGB — switches Cherry MX, retroiluminación RGB, construcción de aluminio">
                     <h2 id="title-keyboard-2" class="product-title" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem;">Teclado Mecánico RGB</h2>
-                    
+
                     <div class="product-description">
                         Switches Cherry MX, retroiluminación RGB personalizable, construcción de aluminio premium.
                     </div>
-                    
+
                     <div style="margin: 1rem 0;">
                         <span aria-hidden="true">⭐⭐⭐⭐⭐</span>
                         <span class="visually-hidden">Puntuación 5 de 5. 120 reseñas.</span>
                         <span style="color: #6c757d; margin-left: 0.5rem;">(120 reseñas)</span>
                     </div>
-                    
+
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="price" data-price="109.99" aria-label="€109,99">€109.99</span>
                         <span class="stock-info stock-ok" role="status" aria-live="polite" aria-atomic="true">
@@ -596,42 +606,42 @@
                             <span class="visually-hidden">En stock: 30 unidades</span>
                         </span>
                     </div>
-                    
+
                     <div class="product-actions">
-                        <button class="btn-add-cart" 
-                                onclick="addToCart('keyboard-2', 'Teclado Mecánico RGB', 109.99)"
-                                data-product-id="keyboard-2"
-                                aria-label="Añadir Teclado Mecánico RGB al carrito">
+                        <button class="btn-add-cart" onclick="addToCart('keyboard-2', 'Teclado Mecánico RGB', 109.99)"
+                            data-product-id="keyboard-2" aria-label="Añadir Teclado Mecánico RGB al carrito">
                             Añadir al carrito
                         </button>
-                        
+
                         <label for="qty-keyboard-2" class="visually-hidden">Cantidad para Teclado Mecánico RGB</label>
-                        <select id="qty-keyboard-2" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para Teclado Mecánico RGB">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                          </select>
-                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="keyboard-2" aria-label="Aplicar cantidad seleccionada para Teclado Mecánico RGB" style="margin-left:0.4rem;">OK</button>
-                        
-                        <button onclick="toggleFavorite('keyboard-2')" 
-                                style="background: none; border: none; font-size: 1.5rem;"
-                                class="favorite-btn"
-                                aria-pressed="false"
-                                aria-label="Marcar Teclado Mecánico RGB como favorito"
-                                data-product-id="keyboard-2">
+                        <select id="qty-keyboard-2" style="width: 80px; margin-left: 0.5rem;"
+                            aria-label="Seleccionar cantidad para Teclado Mecánico RGB">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn"
+                            data-product-id="keyboard-2"
+                            aria-label="Aplicar cantidad seleccionada para Teclado Mecánico RGB"
+                            style="margin-left:0.4rem;">OK</button>
+
+                        <button onclick="toggleFavorite('keyboard-2')"
+                            style="background: none; border: none; font-size: 1.5rem;" class="favorite-btn"
+                            aria-pressed="false" aria-label="Marcar Teclado Mecánico RGB como favorito"
+                            data-product-id="keyboard-2">
                             🤍
                         </button>
-                     </div>
-                 </article>
-             </div>
+                    </div>
+                </article>
+            </div>
         </div>
-        
+
         <!-- Carrito lateral (sidebar) - PROBLEMAS -->
         <div class="cart-sidebar" id="cartSidebar" aria-labelledby="cartTitle" role="dialog" tabindex="-1">
             <h2 id="cartTitle" class="visually-hidden">Carrito de compras</h2>
-            
+
             <!-- Contenido del carrito (vacío por defecto) -->
             <div id="cartContent">
                 <p class="text-center" style="margin: 2rem 0;">
@@ -640,7 +650,7 @@
                     Agrega productos desde la tienda para verlos aquí.
                 </p>
             </div>
-            
+
             <!-- Resumen y acciones del carrito (oculto si el carrito está vacío) -->
             <div id="cartSummary" class="d-none">
                 <div class="cart-summary">
@@ -648,52 +658,52 @@
                         <span>Total:</span>
                         <strong id="totalPrice" aria-label="Precio total del carrito">€0.00</strong>
                     </div>
-                    
+
                     <button class="btn btn-primary btn-block" id="checkoutBtn" aria-label="Ir a pagar">
                         🛒 Pagar
                     </button>
                 </div>
             </div>
         </div>
-        
+
         <!-- Overlay del carrito (fondo oscuro) - PROBLEMAS -->
         <div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
-        
+
         <!-- A11Y Announcer (para anuncios de accesibilidad) - PROBLEMAS -->
         <div id="a11yAnnouncer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
-        
-        </main>
-        
-        <!-- Scripts al final para mejor rendimiento -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            // Variables y estado inicial
-            let cartItems = [];  // Items en el carrito
-            let allProducts = []; // Todos los productos (para filtros/búsquedas)
-            
-            // Función para inicializar la tienda (cargar productos, etc.)
-            function initStore() {
-                // Cargar productos (simulado)
-                allProducts = [
-                    { id: 'laptop-1', name: 'Laptop Gaming Pro X1', price: 1299.99, category: 'laptops', stock: 12, image: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23e9ecef\'/%3E%3Ctext x=\'150\' y=\'100\' text-anchor=\'middle\' fill=\'%23495057\' font-size=\'14\'%3ELaptop Gaming%3C/text%3E%3C/svg%3E' },
-                    { id: 'phone-1', name: 'Smartphone Ultra 5G', price: 899.99, category: 'phones', stock: 3, image: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23e9ecef\'/%3E%3Ctext x=\'150\' y=\'100\' text-anchor=\'middle\' fill=\'%23495057\' font-size=\'14\'%3ESmartphone%3C/text%3E%3C/svg%3E' },
-                    { id: 'headphones-1', name: 'Auriculares Wireless Pro', price: 199.99, category: 'accessories', stock: 25, image: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23e9ecef\'/%3E%3Ctext x=\'150\' y=\'100\' text-anchor=\'middle\' fill=\'%23495057\' font-size=\'14\'%3EAuriculares%3C/text%3E%3C/svg%3E' },
-                    { id: 'software-1', name: 'Suite Productividad Pro', price: 149.99, category: 'software', stock: 0, image: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23e9ecef\'/%3E%3Ctext x=\'150\' y=\'100\' text-anchor=\'middle\' fill=\'%23495057\' font-size=\'14\'%3ESoftware%3C/text%3E%3C/svg%3E' }
-                ];
-                
-                // Inicializar UI con productos
-                renderProducts(allProducts);
-            }
-            
-            // Función para renderizar productos en la interfaz
-            function renderProducts(products) {
-                const grid = document.getElementById('productsGrid');
-                grid.innerHTML = ''; // Limpiar grid actual
-                
-                products.forEach(product => {
-                    // Crear elemento de producto (usando template literal para simplificar)
-                    const productEl = `
+
+    </main>
+
+    <!-- Scripts al final para mejor rendimiento -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variables y estado inicial
+        let cartItems = [];  // Items en el carrito
+        let allProducts = []; // Todos los productos (para filtros/búsquedas)
+
+        // Función para inicializar la tienda (cargar productos, etc.)
+        function initStore() {
+            // Cargar productos (simulado)
+            allProducts = [
+                { id: 'laptop-1', name: 'Laptop Gaming Pro X1', price: 1299.99, category: 'laptops', stock: 12, image: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23e9ecef\'/%3E%3Ctext x=\'150\' y=\'100\' text-anchor=\'middle\' fill=\'%23495057\' font-size=\'14\'%3ELaptop Gaming%3C/text%3E%3C/svg%3E' },
+                { id: 'phone-1', name: 'Smartphone Ultra 5G', price: 899.99, category: 'phones', stock: 3, image: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23e9ecef\'/%3E%3Ctext x=\'150\' y=\'100\' text-anchor=\'middle\' fill=\'%23495057\' font-size=\'14\'%3ESmartphone%3C/text%3E%3C/svg%3E' },
+                { id: 'headphones-1', name: 'Auriculares Wireless Pro', price: 199.99, category: 'accessories', stock: 25, image: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23e9ecef\'/%3E%3Ctext x=\'150\' y=\'100\' text-anchor=\'middle\' fill=\'%23495057\' font-size=\'14\'%3EAuriculares%3C/text%3E%3C/svg%3E' },
+                { id: 'software-1', name: 'Suite Productividad Pro', price: 149.99, category: 'software', stock: 0, image: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23e9ecef\'/%3E%3Ctext x=\'150\' y=\'100\' text-anchor=\'middle\' fill=\'%23495057\' font-size=\'14\'%3ESoftware%3C/text%3E%3C/svg%3E' }
+            ];
+
+            // Inicializar UI con productos
+            renderProducts(allProducts);
+        }
+
+        // Función para renderizar productos en la interfaz
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = ''; // Limpiar grid actual
+
+            products.forEach(product => {
+                // Crear elemento de producto (usando template literal para simplificar)
+                const productEl = `
                         <div class="col-lg-4 col-md-6 product-item" data-category="${product.category}">
                             <article class="product-card" aria-labelledby="title-${product.id}">
                                 <img src="${product.image}" class="product-image" alt="${product.name}">
@@ -718,7 +728,7 @@
                                     
                                     <label for="qty-${product.id}" class="visually-hidden">Cantidad para ${product.name}</label>
                                     <select id="qty-${product.id}" style="width: 80px; margin-left: 0.5rem;" aria-label="Seleccionar cantidad para ${product.name}">
-                                          ${Array.from({ length: Math.min(product.stock, 5) }, (_, i) => `<option value="${i+1}">${i+1}</option>`).join('')}
+                                          ${Array.from({ length: Math.min(product.stock, 5) }, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
                                     </select>
                                     <button type="button" class="btn btn-sm btn-outline-secondary apply-qty-btn" data-product-id="${product.id}" aria-label="Aplicar cantidad seleccionada para ${product.name}" style="margin-left:0.4rem;">OK</button>
                                     
@@ -734,55 +744,55 @@
                              </article>
                          </div>
                     `;
-                    
-                    // Añadir elemento de producto al grid
-                    grid.insertAdjacentHTML('beforeend', productEl);
-                });
+
+                // Añadir elemento de producto al grid
+                grid.insertAdjacentHTML('beforeend', productEl);
+            });
+        }
+
+        // Función para agregar un producto al carrito
+        function addToCart(productId, productName, productPrice) {
+            // Comprobar si el producto ya está en el carrito
+            const existing = cartItems.find(item => item.id === productId);
+            if (existing) {
+                // Si existe, aumentar cantidad (suponiendo un solo item por producto en el carrito)
+                existing.quantity++;
+            } else {
+                // Si no existe, añadir nuevo item al carrito
+                cartItems.push({ id: productId, name: productName, price: productPrice, quantity: 1 });
             }
-            
-            // Función para agregar un producto al carrito
-            function addToCart(productId, productName, productPrice) {
-                // Comprobar si el producto ya está en el carrito
-                const existing = cartItems.find(item => item.id === productId);
-                if (existing) {
-                    // Si existe, aumentar cantidad (suponiendo un solo item por producto en el carrito)
-                    existing.quantity++;
-                } else {
-                    // Si no existe, añadir nuevo item al carrito
-                    cartItems.push({ id: productId, name: productName, price: productPrice, quantity: 1 });
-                }
-                
-                // Actualizar interfaz del carrito
-                updateCartUI();
-                
-                // Mostrar notificación (ejemplo simple, mejorar en producción)
-                showNotification(`${productName} añadido al carrito!`, 'success');
-                announce(`${productName} añadido al carrito!`);
-            }
-            
-            // Función para actualizar la interfaz del carrito
-            function updateCartUI() {
-                const cartContent = document.getElementById('cartContent');
-                const cartSummary = document.getElementById('cartSummary');
-                const totalPriceEl = document.getElementById('totalPrice');
-                
-                // Limpiar contenido actual del carrito
-                cartContent.innerHTML = '';
-                
-                if (cartItems.length === 0) {
-                    // Si el carrito está vacío, mostrar mensaje
-                    cartContent.innerHTML = `
+
+            // Actualizar interfaz del carrito
+            updateCartUI();
+
+            // Mostrar notificación (ejemplo simple, mejorar en producción)
+            showNotification(`${productName} añadido al carrito!`, 'success');
+            announce(`${productName} añadido al carrito!`);
+        }
+
+        // Función para actualizar la interfaz del carrito
+        function updateCartUI() {
+            const cartContent = document.getElementById('cartContent');
+            const cartSummary = document.getElementById('cartSummary');
+            const totalPriceEl = document.getElementById('totalPrice');
+
+            // Limpiar contenido actual del carrito
+            cartContent.innerHTML = '';
+
+            if (cartItems.length === 0) {
+                // Si el carrito está vacío, mostrar mensaje
+                cartContent.innerHTML = `
                         <p class="text-center" style="margin: 2rem 0;">
                             <strong>Tu carrito está vacío</strong>
                             <br>
                             Agrega productos desde la tienda para verlos aquí.
                         </p>
                     `;
-                    cartSummary.classList.add('d-none');
-                } else {
-                    // Si hay items en el carrito, mostrar lista de productos
-                    cartItems.forEach(item => {
-                        const itemEl = `
+                cartSummary.classList.add('d-none');
+            } else {
+                // Si hay items en el carrito, mostrar lista de productos
+                cartItems.forEach(item => {
+                    const itemEl = `
                             <div class="cart-item" data-product-id="${item.id}">
                                 <img src="${allProducts.find(p => p.id === item.id).image}" class="cart-item-image" alt="${item.name}">
                                 <div class="cart-item-details">
@@ -809,42 +819,43 @@
                                 </div>
                             </div>
                         `;
-                        
-                        // Añadir item al contenido del carrito
-                        cartContent.insertAdjacentHTML('beforeend', itemEl);
-                    });
-                    
-                    // Mostrar resumen del carrito
-                    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-                    totalPriceEl.textContent = `€${total.toFixed(2)}`;
-                    cartSummary.classList.remove('d-none');
-                }
+
+                    // Añadir item al contenido del carrito
+                    cartContent.insertAdjacentHTML('beforeend', itemEl);
+                });
+
+                // Mostrar resumen del carrito
+                const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                totalPriceEl.textContent = `€${total.toFixed(2)}`;
+                cartSummary.classList.remove('d-none');
             }
-            
-            // Función para eliminar un producto del carrito
-            function removeFromCart(productId) {
-                // intentamos usar un modal accesible; fallback a confirm
-                const msg = '¿Eliminar este producto del carrito?';
-                // si existe función de modal accesible, usarla (implementar modal real en producción)
-                const ok = window.confirm ? window.confirm(msg) : true;
-                if (!ok) {
-                    announce('Eliminación cancelada');
-                    return;
-                }
-                cartItems = cartItems.filter(i => i.id !== productId);
-                updateCartUI();
-                showNotification('Producto eliminado del carrito', 'info');
-                announce('Producto eliminado del carrito');
+        }
+
+        // Función para eliminar un producto del carrito
+        function removeFromCart(productId) {
+            // intentamos usar un modal accesible; fallback a confirm
+            const msg = '¿Eliminar este producto del carrito?';
+            // si existe función de modal accesible, usarla (implementar modal real en producción)
+            const ok = window.confirm ? window.confirm(msg) : true;
+            if (!ok) {
+                announce('Eliminación cancelada');
+                return;
             }
-            
-            // Función para notificar disponibilidad (simulado)
-            function notifyWhenAvailable(productId) {
-                // Aquí se implementaría la lógica real para notificar disponibilidad
-                alert(`Notificación de disponibilidad para ${productId} activada.`);
-            }
-            
-            // Inicializar tienda al cargar
-            document.addEventListener('DOMContentLoaded', initStore);
-        </script>
-    </body>
+            cartItems = cartItems.filter(i => i.id !== productId);
+            updateCartUI();
+            showNotification('Producto eliminado del carrito', 'info');
+            announce('Producto eliminado del carrito');
+        }
+
+        // Función para notificar disponibilidad (simulado)
+        function notifyWhenAvailable(productId) {
+            // Aquí se implementaría la lógica real para notificar disponibilidad
+            alert(`Notificación de disponibilidad para ${productId} activada.`);
+        }
+
+        // Inicializar tienda al cargar
+        document.addEventListener('DOMContentLoaded', initStore);
+    </script>
+</body>
+
 </html>
