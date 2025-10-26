@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- PROBLEMA INTENCIONADO: Título no descriptivo -->
-    <title>Home</title>
-    
+    <title>Inicio | TechHub</title>
+
     <!-- PROBLEMA: Falta descripción meta -->
+    <meta name="description" content="TechHub: tendencias en tecnología, programación y desarrollo web. Artículos, tutoriales y recursos actualizados.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <style>
         /* PROBLEMAS INTENCIONADOS DE CSS PARA ACCESIBILIDAD */
         .hero-section {
@@ -18,7 +20,7 @@
             padding: 4rem 0;
             text-align: center;
         }
-        
+
         .feature-card {
             border: 1px solid #ddd;
             padding: 2rem;
@@ -26,231 +28,296 @@
             border-radius: 8px;
             background: white;
         }
-        
+
         /* PROBLEMA: Contraste insuficiente */
         .link-sutil {
-            color: #ccc;
-            text-decoration: none;
+            /* Mejorar contraste y estado de foco */
+            color: #0d6efd;
+            text-decoration: underline;
         }
-        
+        .link-sutil:focus-visible,
+        .link-sutil:hover {
+            text-decoration: underline;
+        }
+
         /* PROBLEMA: Elementos no enfocables visualmente */
         .btn-invisible:focus {
-            outline: none;
+            /* No eliminar el foco: ofrecer alternativa visible */
+            outline: 2px solid #0d6efd;
+            outline-offset: 2px;
         }
-        
+
         /* PROBLEMA: Texto muy pequeño */
         .texto-pequeño {
-            font-size: 10px;
-            color: #888;
+            font-size: 0.875rem; /* ~14px para legibilidad */
+            color: #6c757d;
+        }
+
+        /* Indicación visual en elementos clicables de tarjeta al recibir foco teclado */
+        .feature-card[tabindex]:focus {
+            outline: 3px solid #198754; /* verde bootstrap */
+            outline-offset: 4px;
         }
     </style>
 </head>
 
 <!-- PROBLEMA: Lang incorrecto para contenido en español -->
-<body lang="en">
+
+<body lang="es">
+
+    <!-- Skip link para navegación por teclado -->
+    <a class="visually-hidden-focusable" href="#main-content">Saltar al contenido principal</a>
 
     <!-- PROBLEMA: Falta skip link -->
-    
+
     <!-- PROBLEMA: Header sin role banner -->
-    <div class="hero-section">
+    <header class="hero-section" role="banner">
         <div class="container">
             <!-- PROBLEMA: Múltiples H1 en la página -->
             <h1>Bienvenido a TechHub</h1>
-            <h1>Tu portal tecnológico</h1>
-            
+            <h2>Tu portal tecnológico</h2>
+
             <!-- PROBLEMA: Párrafo importante sin estructura semántica -->
-            <div>Descubre las últimas tendencias en tecnología, programación y desarrollo web. 
-                 Mantente actualizado con nuestros artículos y tutoriales.</div>
-            
+
+            <p>Descubre las últimas tendencias en tecnología, programación y desarrollo web.
+                Mantente actualizado con nuestros artículos y tutoriales.</p>
+
             <!-- PROBLEMA: Botón importante sin aria-label -->
-            <button class="btn btn-primary btn-lg mt-3" onclick="alert('¡Funciona!')">
+            <button class="btn btn-primary btn-lg mt-3" onclick="alert('¡Funciona!')" aria-label="Comenzar ahora">
                 Comenzar ahora
             </button>
         </div>
-    </div>
-    
+    </header>
+
     <!-- PROBLEMA: Nav sin role navigation ni aria-label -->
-    <div class="navbar navbar-expand-lg" style="background-color: #f8f9fa;">
+    <nav class="navbar navbar-expand-lg" style="background-color: #f8f9fa;" role="navigation"
+        aria-label="Navegación principal">
         <div class="container">
             <!-- PROBLEMA: Logo sin texto alternativo -->
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23007bff'/%3E%3C/svg%3E" class="me-2">
-            
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23007bff'/%3E%3C/svg%3E"
+                class="me-2" alt="Logo de TechHub">
+
             <!-- PROBLEMA: Links de navegación sin estructura semántica -->
             <div>
                 <!-- PROBLEMA: Links sin contexto -->
-                <a href="#" class="me-3">Inicio</a>
-                <a href="#" class="me-3">Artículos</a>
-                <a href="#" class="me-3">Tutoriales</a>
-                <a href="#" class="me-3">Contacto</a>
-                
+                <div>
+                    <a href="#" class="me-3">Inicio</a>
+                    <a href="#" class="me-3">Artículos</a>
+                    <a href="#" class="me-3">Tutoriales</a>
+                    <a href="#" class="me-3">Contacto</a>
+                </div>
+
                 <!-- PROBLEMA: Texto de link genérico -->
-                <a href="#" class="link-sutil">Leer más</a>
+                <a href="#" class="link-sutil" aria-label="Más información sobre TechHub">Más información</a>
             </div>
         </div>
-    </div>
-    
+    </nav>
+
     <!-- PROBLEMA: Contenido principal sin main ni landmark -->
-    <div class="container my-5">
-        
-        <!-- PROBLEMA: Sección sin encabezado ni landmark apropiado -->
-        <div class="row">
-            <!-- PROBLEMA: Jerarquía de encabezados incorrecta -->
-            <div class="col-md-8">
-                <h4>Últimas noticias tecnológicas</h4>
-                
-                <!-- PROBLEMA: Artículos sin estructura semántica -->
-                <div class="feature-card">
-                    <!-- PROBLEMA: Imagen decorativa con alt text -->
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23ffc107'/%3E%3C/svg%3E" 
-                         alt="Imagen de JavaScript" class="mb-3">
-                    
-                    <!-- PROBLEMA: Encabezado no descriptivo -->
-                    <h5>Nuevo</h5>
-                    <p>Las nuevas características de JavaScript ES2024 que debes conocer. 
-                       Aprende sobre las últimas funcionalidades del lenguaje más popular.</p>
-                    
-                    <!-- PROBLEMA: Link sin contexto -->
-                    <a href="#" class="btn btn-outline-primary">Ver más</a>
+    <main role="main" id="main-content">
+
+        <div class="container my-5">
+
+            <!-- PROBLEMA: Sección sin encabezado ni landmark apropiado -->
+            <div class="row section" role="region" aria-labelledby="ultimas-noticias">
+                <!-- PROBLEMA: Jerarquía de encabezados incorrecta -->
+                <div class="col-md-8">
+                    <h2 id="ultimas-noticias">Últimas noticias tecnológicas</h2>
+                    <!-- PROBLEMA: Artículos sin estructura semántica -->
+                    <article role="article" class="feature-card" tabindex="0">
+                        <!-- PROBLEMA: Imagen decorativa con alt text -->
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23ffc107'/%3E%3C/svg%3E"
+                            alt="" role="presentation" class="mb-3">
+
+                        <!-- PROBLEMA: Encabezado no descriptivo -->
+                        <h3>Nuevas características de JavaScript</h3>
+                        <p>Las nuevas características de JavaScript ES2024 que debes conocer.
+                            Aprende sobre las últimas funcionalidades del lenguaje más popular.</p>
+
+                        <!-- PROBLEMA: Link sin contexto -->
+                        <a href="#" class="btn btn-outline-primary"
+                            aria-label="Ver más sobre Nuevas características de JavaScript">
+                            Ver más sobre Nuevas características de JavaScript
+                        </a>
+                    </article>
+
+                    <article role="article" class="feature-card" tabindex="0">
+                        <!-- PROBLEMA: Imagen sin texto alternativo -->
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%2328a745'/%3E%3C/svg%3E"
+                            class="mb-3" alt="" role="presentation">
+
+                        <h3>Tutorial completo de React Hooks</h3>
+                        <p>Domina los React Hooks con este tutorial paso a paso.
+                            Desde useState hasta hooks personalizados.</p>
+
+                        <!-- PROBLEMA: Botón que no es botón -->
+
+                        <a href="#" class="btn btn-outline-success" role="button"
+                            aria-label="Leer tutorial completo de React Hooks">
+                            Leer tutorial
+                        </a>
+                    </article>
+
+                    <!-- PROBLEMA: Contenido importante sin estructura -->
+                    <section class="my-4" role="region" aria-labelledby="aviso-mantenimiento">
+                        <div class="alert alert-warning" role="alert" aria-live="assertive" tabindex="0">
+                            <h3 id="aviso-mantenimiento" class="h5 mb-2">Aviso importante: mantenimiento programado</h3>
+                            <p>
+                                El sitio estará en mantenimiento el próximo domingo de
+                                <time datetime="02:00">02:00</time> a
+                                <time datetime="04:00">04:00</time> (hora local). Durante ese periodo, algunos servicios
+                                podrían no estar disponibles.
+                            </p>
+                            <p class="mb-0">Por favor planifica tus tareas en consecuencia. Gracias por tu comprensión.
+                            </p>
+                        </div>
+                    </section>
                 </div>
-                
-                <div class="feature-card">
-                    <!-- PROBLEMA: Imagen sin texto alternativo -->
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%2328a745'/%3E%3C/svg%3E" 
-                         class="mb-3">
-                    
-                    <h5>Tutorial completo de React Hooks</h5>
-                    <p>Domina los React Hooks con este tutorial paso a paso. 
-                       Desde useState hasta hooks personalizados.</p>
-                    
-                    <!-- PROBLEMA: Botón que no es botón -->
-                    <div class="btn btn-outline-success" onclick="location.href='#'">
-                        Leer tutorial
+
+                <!-- PROBLEMA: Sidebar sin landmark apropiado -->
+                <aside class="col-md-4" role="complementary">
+                    <!-- PROBLEMA: Encabezado con nivel incorrecto -->
+                    <h4>Recursos populares</h4>
+
+                    <!-- PROBLEMA: Lista no semántica -->
+                    <ul class="list-group">
+                        <!-- PROBLEMA: Links repetitivos sin diferenciación -->
+                        <li class="list-group-item">
+                            <a href="#">Guía de CSS Grid</a>
+                            <span class="texto-pequeño">hace 2 días</span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">Introducción a TypeScript</a>
+                            <span class="texto-pequeño">hace 5 días</span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">Node.js para principiantes</a>
+                            <span class="texto-pequeño">hace 1 semana</span>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">Responsive Design tips</a>
+                            <span class="texto-pequeño">hace 2 semanas</span>
+                        </li>
+                    </ul>
+
+                    <!-- PROBLEMA: Formulario sin labels ni estructura accesible -->
+                    <div class="mt-4 p-3" style="background-color: #f0f0f0;">
+                        <h6 id="newsletter-heading">Newsletter</h6>
+                            <form aria-labelledby="newsletter-heading" novalidate>
+                                <!-- Input con label accesible -->
+                                <label for="newsletter-email" class="form-label visually-hidden">Correo
+                                    electrónico</label>
+                                <input id="newsletter-email" name="email" type="email" placeholder="Tu email"
+                                    class="form-control mb-2" aria-describedby="email-help" required>
+
+                                <div id="email-help" class="form-text texto-pequeño">Recibirás novedades y ofertas.
+                                    Puedes darte de baja en cualquier momento.</div>
+
+                                <!-- Checkbox con label asociado -->
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="acepto" name="acepto" required>
+                                    <label class="form-check-label" for="acepto">Acepto los términos y
+                                        condiciones</label>
+                                </div>
+
+                                <!-- Botón de envío con texto y foco visible -->
+                                <button type="submit" class="btn btn-sm btn-primary">Suscribirse</button>
+                            </form>
                     </div>
-                </div>
-                
-                <!-- PROBLEMA: Contenido importante sin estructura -->
-                <div style="border: 2px solid red; padding: 1rem; margin: 1rem 0;">
-                    ⚠️ AVISO IMPORTANTE: El sitio estará en mantenimiento el próximo domingo de 2:00 a 4:00 AM
-                </div>
+
+                    <!-- PROBLEMA: Widget sin estructura semántica -->
+                    <article class="mt-4 p-3 border" role="region" aria-labelledby="titulo-clima">
+                        <header class="widget-header">
+                            <h6 id="titulo-clima">Clima</h6>
+                        </header>
+                        <!-- PROBLEMA: Información importante sin estructura -->
+                        <section class="widget-content">
+                            <ul>
+                                <li><strong>Madrid:</strong> 22 °C ☀️</li>
+                                <li><strong>Barcelona:</strong> 18 °C ⛅</li>
+                                <li><strong>Valencia:</strong> 25 °C ☀️</li>
+                            </ul>
+                        </section>
+                        <footer class="widget-footer">
+                            <p class="texto-pequeño">
+                                <time datetime="2025-10-25T14:30">Actualizado: 14:30</time>
+                            </p>
+                        </footer>
+                    </article>
+                </aside>
             </div>
-            
-            <!-- PROBLEMA: Sidebar sin landmark apropiado -->
-            <div class="col-md-4">
-                <!-- PROBLEMA: Encabezado con nivel incorrecto -->
-                <h2>Recursos populares</h2>
-                
-                <!-- PROBLEMA: Lista no semántica -->
-                <div class="list-group">
-                    <!-- PROBLEMA: Links repetitivos sin diferenciación -->
-                    <div class="list-group-item">
-                        <a href="#">Guía de CSS Grid</a>
-                        <span class="texto-pequeño">hace 2 días</span>
-                    </div>
-                    <div class="list-group-item">
-                        <a href="#">Introducción a TypeScript</a>
-                        <span class="texto-pequeño">hace 5 días</span>
-                    </div>
-                    <div class="list-group-item">
-                        <a href="#">Node.js para principiantes</a>
-                        <span class="texto-pequeño">hace 1 semana</span>
-                    </div>
-                    <div class="list-group-item">
-                        <a href="#">Responsive Design tips</a>
-                        <span class="texto-pequeño">hace 2 semanas</span>
-                    </div>
-                </div>
-                
-                <!-- PROBLEMA: Formulario sin labels ni estructura accesible -->
-                <div class="mt-4 p-3" style="background-color: #f0f0f0;">
-                    <h6>Newsletter</h6>
-                    <form>
-                        <!-- PROBLEMA: Input sin label -->
-                        <input type="email" placeholder="Tu email" class="form-control mb-2">
-                        
-                        <!-- PROBLEMA: Checkbox sin label asociado -->
-                        <input type="checkbox" id="acepto"> Acepto términos y condiciones
-                        
-                        <!-- PROBLEMA: Botón de envío sin indicar acción -->
-                        <button type="submit" class="btn btn-sm btn-primary btn-invisible">Enviar</button>
-                    </form>
-                </div>
-                
-                <!-- PROBLEMA: Widget sin estructura semántica -->
-                <div class="mt-4 p-3 border">
-                    <h6>Clima</h6>
-                    <!-- PROBLEMA: Información importante sin estructura -->
-                    <div>Madrid: 22°C ☀️</div>
-                    <div>Barcelona: 18°C ⛅</div>
-                    <div>Valencia: 25°C ☀️</div>
-                    <!-- PROBLEMA: Última actualización sin contexto temporal -->
-                    <div class="texto-pequeño">Actualizado: 14:30</div>
-                </div>
+
+            <!-- PROBLEMA: Sección de testimonios sin estructura -->
+            <div class="row" role="list">
+                <!-- Testimonio 1 -->
+                <article class="col-md-4" role="listitem">
+                    <figure class="text-center">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23007bff'/%3E%3C/svg%3E"
+                            class="rounded-circle mb-3" alt="Foto de María García" width="80" height="80">
+                        <blockquote>
+                            <p>"Excelente contenido y muy útil para aprender programación."</p>
+                        </blockquote>
+                        <figcaption>
+                            <strong>María García</strong><br>
+                            <span class="texto-pequeño">Desarrolladora Frontend</span>
+                        </figcaption>
+                    </figure>
+                </article>
+
+                <!-- Testimonio 2 -->
+                <article class="col-md-4" role="listitem">
+                    <figure class="text-center">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%2328a745'/%3E%3C/svg%3E"
+                            class="rounded-circle mb-3" alt="Foto de Juan Rodríguez" width="80" height="80">
+                        <blockquote>
+                            <p>"Los tutoriales son muy claros y fáciles de seguir."</p>
+                        </blockquote>
+                        <figcaption>
+                            <strong>Juan Rodríguez</strong><br>
+                            <span class="texto-pequeño">Estudiante</span>
+                        </figcaption>
+                    </figure>
+                </article>
+
+                <!-- Testimonio 3 -->
+                <article class="col-md-4" role="listitem">
+                    <figure class="text-center">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23ffc107'/%3E%3C/svg%3E"
+                            class="rounded-circle mb-3" alt="Foto de Ana López" width="80" height="80">
+                        <blockquote>
+                            <p>"Siempre encuentro respuestas a mis dudas técnicas."</p>
+                        </blockquote>
+                        <figcaption>
+                            <strong>Ana López</strong><br>
+                            <span class="texto-pequeño">Full Stack Developer</span>
+                        </figcaption>
+                    </figure>
+                </article>
             </div>
-        </div>
-        
-        <!-- PROBLEMA: Sección de testimonios sin estructura -->
-        <div class="mt-5">
-            <h3>Lo que dicen nuestros usuarios</h3>
-            
-            <div class="row">
-                <div class="col-md-4">
-                    <!-- PROBLEMA: Testimonio sin cita semántica -->
-                    <div class="text-center">
-                        <!-- PROBLEMA: Avatar sin descripción -->
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23007bff'/%3E%3C/svg%3E" 
-                             class="rounded-circle mb-3">
-                        <p>"Excelente contenido y muy útil para aprender programación."</p>
-                        <!-- PROBLEMA: Autor sin marcado semántico -->
-                        <div>- María García</div>
-                        <div class="texto-pequeño">Desarrolladora Frontend</div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="text-center">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%2328a745'/%3E%3C/svg%3E" 
-                             class="rounded-circle mb-3">
-                        <p>"Los tutoriales son muy claros y fáciles de seguir."</p>
-                        <div>- Juan Rodríguez</div>
-                        <div class="texto-pequeño">Estudiante</div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="text-center">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='40' fill='%23ffc107'/%3E%3C/svg%3E" 
-                             class="rounded-circle mb-3">
-                        <p>"Siempre encuentro respuestas a mis dudas técnicas."</p>
-                        <div>- Ana López</div>
-                        <div class="texto-pequeño">Full Stack Developer</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+
+    </main>
     <!-- PROBLEMA: Footer sin role contentinfo -->
-    <div style="background-color: #343a40; color: white; padding: 3rem 0; margin-top: 3rem;">
+    <footer style="background-color: #343a40; color: white; padding: 3rem 0; margin-top: 3rem;" role="contentinfo">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <!-- PROBLEMA: Información de contacto sin estructura -->
-                    <h5>Contacto</h5>
+                    <h2>Contacto</h2>
                     <div>Email: info@techhub.com</div>
                     <div>Teléfono: +34 900 123 456</div>
                     <div>Dirección: Calle Ejemplo 123, Madrid</div>
                 </div>
-                
+
                 <div class="col-md-6">
-                    <h5>Síguenos</h5>
+                    <h2>Síguenos</h2>
                     <!-- PROBLEMA: Enlaces sociales sin texto descriptivo -->
                     <div>
-                        <a href="#" class="text-white me-3">📘</a>
-                        <a href="#" class="text-white me-3">🐦</a>
-                        <a href="#" class="text-white me-3">💼</a>
-                        <a href="#" class="text-white">📷</a>
+                        <a href="#" class="text-white me-3" aria-label="Facebook">📘</a>
+                        <a href="#" class="text-white me-3" aria-label="Twitter/X">🐦</a>
+                        <a href="#" class="text-white me-3" aria-label="LinkedIn">💼</a>
+                        <a href="#" class="text-white" aria-label="Instagram">📷</a>
                     </div>
-                    
+
                     <!-- PROBLEMA: Copyright sin marcado semántico -->
                     <div class="mt-3 texto-pequeño">
                         © 2025 TechHub. Todos los derechos reservados.
@@ -258,35 +325,43 @@
                 </div>
             </div>
         </div>
-    </div>
-    
+    </footer>
+
     <!-- PROBLEMA: Scripts sin defer/async apropiado -->
-    <script src="{{ url_for('static', filename='js/portal.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script defer src="{{ url_for('static', filename='js/portal.js') }}"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- PROBLEMA: Regiones live mal implementadas -->
-    <div id="messages"></div>
-    
+    <div id="messages" role="status" aria-live="polite" aria-atomic="true"></div>
+
     <script>
         // PROBLEMA INTENCIONADO: JavaScript sin accesibilidad
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Simular notificaciones que no son accesibles
-            setTimeout(function() {
-                document.getElementById('messages').innerHTML = 
+            setTimeout(function () {
+                document.getElementById('messages').innerHTML =
                     '<div style="position: fixed; top: 20px; right: 20px; background: red; color: white; padding: 1rem;">¡Nueva notificación!</div>';
             }, 3000);
-            
+
             // PROBLEMA: Evento click sin manejo de teclado
-            document.querySelectorAll('.feature-card').forEach(function(card) {
-                card.addEventListener('click', function() {
-                    // Acción sin feedback accesible
+            document.querySelectorAll('.feature-card').forEach(function (card) {
+                card.addEventListener('click', function () {
+                    // Acción con feedback accesible
                     console.log('Card clicked');
+                });
+                // Equivalente de teclado
+                card.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        card.click();
+                    }
                 });
             });
         });
     </script>
-    
+
 </body>
+
 </html>
 
 <!-- 
