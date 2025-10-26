@@ -11,6 +11,26 @@
     
     <style>
         /* Estilos específicos para el formulario de login */
+                .skip-link {
+            position: absolute;
+            left: -999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+        .skip-link:focus {
+            left: 1rem;
+            top: 1rem;
+            width: auto;
+            height: auto;
+            background: #000;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            z-index: 10000;
+            text-decoration: none;
+        }
+
         .login-container {
             min-height: 100vh;
             display: flex;
@@ -93,7 +113,16 @@
 </head>
 
 <body>
-    <!-- PROBLEMA: Falta skip link -->
+    <!--X PROBLEMA: Falta skip link -->
+     <a href="#mainContent" class="skip-link">Saltar al contenido</a>
+
+    <header aria-label="Encabezado del portal" class="mb-3">
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+            <a href="{{ url_for('index') }}" class="btn btn-outline-light">
+                ← Volver al portal
+            </a>
+        </div>
+    </header>
     
     <div class="login-container">
         <div class="container">
@@ -101,77 +130,73 @@
                 <div class="row g-0">
                     <!-- Panel izquierdo con información -->
                     <div class="col-lg-6 login-header">
-                        <!-- PROBLEMA: Encabezado sin estructura apropiada -->
-                        <div style="font-size: 2.5rem; font-weight: bold;">TechHub</div>
-                        <div style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">
-                            Accede a tu cuenta para disfrutar de contenido exclusivo
-                        </div>
+                        <!--X PROBLEMA: Encabezado sin estructura apropiada -->
+                        <h1 id="siteTitle" style="font-size: 2.5rem; font-weight: bold;">TechHub</h1>
+                        <p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.95;">Accede a tu cuenta para disfrutar de contenido exclusivo</p>
                         
-                        <!-- PROBLEMA: Lista de beneficios sin estructura semántica -->
-                        <div style="margin-top: 2rem; text-align: left;">
-                            <div style="margin-bottom: 1rem;">
-                                <!-- PROBLEMA: Iconos sin descripción -->
-                                ✅ Artículos premium exclusivos
-                            </div>
-                            <div style="margin-bottom: 1rem;">
-                                ✅ Tutoriales paso a paso
-                            </div>
-                            <div style="margin-bottom: 1rem;">
-                                ✅ Comunidad de desarrolladores
-                            </div>
-                            <div style="margin-bottom: 1rem;">
-                                ✅ Soporte prioritario
-                            </div>
-                        </div>
+                        <!--X PROBLEMA: Lista de beneficios sin estructura semántica -->
+                        <ul style="margin-top: 2rem; text-align: left;">
+                            <li style="margin-bottom: 1rem;">✅ Artículos premium exclusivos</li>
+                            <li style="margin-bottom: 1rem;">✅ Tutoriales paso a paso</li>
+                            <li style="margin-bottom: 1rem;">✅ Comunidad de desarrolladores</li>
+                            <li style="margin-bottom: 1rem;">✅ Soporte prioritario</li>
+                        </ul>
+                        
                     </div>
                     
                     <!-- Panel derecho con formulario -->
                     <div class="col-lg-6 login-form">
-                        <!-- PROBLEMA: Formulario sin landmark apropiado -->
-                        <div>
-                            <!-- PROBLEMA: Encabezado sin nivel apropiado -->
-                            <div style="font-size: 1.8rem; font-weight: 500; margin-bottom: 0.5rem;">
+                        <!--X PROBLEMA: Formulario sin landmark apropiado -->
+                        <section class="g-6 login-form" aria-labelledby="loginHeading">
+                            <!--X PROBLEMA: Encabezado sin nivel apropiado -->
+                            <h2 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 0.5rem;">
                                 Iniciar Sesión
-                            </div>
-                            <div style="color: #6c757d; margin-bottom: 2rem;">
+                            </h2>
+                            <p style="color: #6c757d; margin-bottom: 2rem;">
                                 Ingresa tus credenciales para acceder
-                            </div>
+                            </p>
                             
                             <!-- PROBLEMA: Formulario sin elementos de accesibilidad -->
                             <form id="loginForm" novalidate>
                                 
                                 <!-- Campo Email - MÚLTIPLES PROBLEMAS -->
                                 <div class="mb-3">
-                                    <!-- PROBLEMA: Label no asociado correctamente -->
-                                    <div class="form-label">Correo Electrónico *</div>
-                                    <input type="email" 
+                                    <!--X PROBLEMA: Label no asociado correctamente -->
+                                    <label class="form-label" for="email">Correo Electrónico *</label>
+                                    <input id="email" type="email" 
                                            class="form-control" 
                                            name="email"
                                            placeholder="tu@email.com"
-                                           autocomplete="email">
-                                    <!-- PROBLEMA: Mensaje de error no asociado -->
-                                    <div class="form-error" style="display: none;">
+                                           autocomplete="email"
+                                           aria-required="true"
+                                           aria-describedby="emailError">
+                                    <!--X PROBLEMA: Mensaje de error no asociado -->
+                                    <div id="emailError" class="form-error" aria-live="polite" style="display: none;">
                                         El email es requerido
                                     </div>
                                 </div>
                                 
-                                <!-- Campo Contraseña - PROBLEMAS MÚLTIPLES -->
+                                <!--X Campo Contraseña - PROBLEMAS MÚLTIPLES -->
                                 <div class="mb-3">
-                                    <div class="form-label">Contraseña *</div>
+                                    <label class="form-label" for="password">Contraseña *</label>
                                     <div style="position: relative;">
                                         <!-- PROBLEMA: Input sin label apropiado -->
-                                        <input type="password" 
+                                        <input id="password" type="password" 
                                                class="form-control" 
                                                name="password"
                                                placeholder="Tu contraseña"
-                                               autocomplete="current-password">
-                                        
-                                        <!-- PROBLEMA: Botón toggle sin descripción accesible -->
-                                        <span class="password-toggle" 
+                                               autocomplete="current-password"
+                                               aria-required="true"
+                                               aria-describedby="passwordError">
+                                        <div id="passwordError" class="form-error" aria-live="polite" style="display: none;">
+                                            La contraseña es requerida
+                                        </div>
+                                        <!--X PROBLEMA: Botón toggle sin descripción accesible -->
+                                        <button id="togglePassword" type="button" class="password-toggle" 
                                               style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"
-                                              onclick="togglePassword()">
+                                              onclick="togglePassword()" aria-label="Mostrar contraseña">
                                             👁️
-                                        </span>
+                                        </button>
                                     </div>
                                     <div class="form-error" style="display: none;">
                                         La contraseña es requerida
@@ -292,7 +317,7 @@
                                     </a>
                                 </div>
                             </form>
-                        </div>
+                        </section>
                     </div>
                 </div>
             </div>
