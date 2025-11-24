@@ -177,7 +177,8 @@
                             <div class="col-md-6 mb-3">
                                 <!-- Label correcto -->
                                 <label for="fullName" class="required-field">Nombre completo</label>
-                                <input type="text"
+                                <input 
+                                    type="text"
                                     id="fullName"
                                     name="fullName"
                                     class="form-control"
@@ -195,48 +196,63 @@
                             
                             <!-- Email -->
                             <div class="col-md-6 mb-3">
-                                <div class="form-label required-field">Correo electrónico</div>
-                                <input type="email" 
-                                       class="form-control" 
-                                       name="email"
-                                       placeholder="tu@email.com"
-                                       autocomplete="email">
-                                <!-- PROBLEMA: Validación en vivo sin accesibilidad -->
-                                <div class="validation-message" style="display: none;"></div>
+                                <label for="email" class="required-field">Correo electrónico</label>
+                                <input 
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-control"
+                                    placeholder="tu@email.com"
+                                    autocomplete="email"
+                                    aria-required="true"
+                                    aria-describedby="emailValidation"
+                                >
+                                <!-- Validación en vivo con accesibilidad -->
+                                <div id="emailValidation" class="validation-message" aria-live="polite" style="display: none;"></div>
                             </div>
                         </div> 
                         
                         <div class="row">
                             <!-- Fecha de nacimiento -->
                             <div class="col-md-4 mb-3">
-                                <div class="form-label required-field">Fecha de nacimiento</div>
-                                <input type="date" 
-                                       class="form-control" 
-                                       name="birthDate"
-                                       max="2006-01-01">
-                                <div class="field-help">
+                                <label for="birthDate" class="required-field">Fecha de nacimiento</label>
+                                <input 
+                                    type="date"
+                                    id="birthDate"
+                                    name="birthDate"
+                                    class="form-control"
+                                    max="2006-01-01"
+                                    aria-required="true"
+                                    aria-describedby="birthDateHelp"
+                                >
+                                <div id="birthDateHelp" class="field-help">
                                     Debes ser mayor de 18 años para registrarte
                                 </div>
                             </div>
                             
                             <!-- Teléfono -->
                             <div class="col-md-4 mb-3">
-                                <div class="form-label required-field">Teléfono</div>
-                                <input type="tel" 
-                                       class="form-control" 
-                                       name="phone"
-                                       placeholder="+34 600 000 000"
-                                       autocomplete="tel">
-                                <div class="validation-message" style="display: none;"></div>
+                                <label for="phone" class="required-field">Teléfono</label>
+                                <input 
+                                    type="tel" 
+                                    id="phone"
+                                    name="phone"
+                                    class="form-control" 
+                                    placeholder="+34 600 000 000"
+                                    autocomplete="tel"
+                                    aria-required="true"
+                                    aria-describedby="phoneValidation"
+                                >
+                                <div id="phoneValidation" class="validation-message" aria-live="polite" style="display: none;"></div>
                             </div>
                             
                             <!-- País -->
                             <div class="col-md-4 mb-3">
-                                <!-- PROBLEMA: Select sin label apropiado -->
-                                <div class="form-label required-field">País</div>
-                                <select class="form-select" name="country">
-                                    <!-- PROBLEMA: Opción por defecto no accesible -->
-                                    <option value="">Selecciona tu país</option>
+                                <!-- Select con label apropiado -->
+                                <label for="country" class="required-field">País</label>
+                                <select id="country" name="country" class="form-select" aria-required="true" aria-describedby="countryHelp" required>
+                                    <!-- Opción por defecto accesible -->
+                                    <option value="" disabled selected>Selecciona tu país</option>
                                     <option value="ES">España</option>
                                     <option value="MX">México</option>
                                     <option value="AR">Argentina</option>
@@ -245,6 +261,7 @@
                                     <option value="CL">Chile</option>
                                     <option value="OTHER">Otro</option>
                                 </select>
+                                <div id="countryHelp" class="field-help"></div>
                             </div>
                         </div>
                     </fieldset>
