@@ -117,13 +117,29 @@
         .success { color: #28a745; }
         .error { color: #dc3545; }
         .warning { color: #ffc107; }
+
+        
+        .skip-link:focus {
+            position: static;
+            width: auto;
+            height: auto;
+            left: 0;
+            background-color: #000;
+            color: #fff;
+            padding: 0.5rem;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
     </style>
 </head>
 
 <body>
-    <!-- PROBLEMA: Falta skip link -->
+    <!-- Skip link -->
+    <a href="#registrationForm" class="skip-link" tabindex="0" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;"> Saltar al formulario </a>
     
-    <div class="registration-container">
+    
+    <div class="registration-container" id="registrationForm">
         <div class="container">
             
             <!-- Navegación de regreso -->
@@ -135,43 +151,44 @@
             
             <div class="registration-card">
                 
-                <!-- PROBLEMA: Progreso sin accesibilidad -->
-                <div class="form-progress">
+                <!-- Progreso con accesibilidad -->
+                <div class="form-progress" role="region" aria-label="Progreso de registro de usuario">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                         <div style="font-weight: 500; font-size: 1.2rem;">Registro de Usuario</div>
-                        <div style="font-size: 0.9rem; color: #6c757d;">Paso 1 de 1</div>
+                        <div style="font-size: 0.9rem; color: #6c757d;" aria-live="polite">Paso 1 de 1</div>
                     </div>
-                    <div class="progress-bar-custom">
+                    <div class="progress-bar-custom" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" aria-label="Progreso del formulario 25%">
                         <div class="progress-fill" style="width: 25%"></div>
                     </div>
-                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #6c757d;">
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #6c757d;" aria-live="polite">
                         Completando información personal...
                     </div>
                 </div>
                 
-                <!-- PROBLEMA: Formulario sin estructura semántica apropiada -->
+                <!-- Formulario con estructura semántica apropiada -->
                 <form id="registrationForm" novalidate style="padding: 0;">
-                    
-                    <!-- Sección 1: Información Personal - MÚLTIPLES PROBLEMAS -->
-                    <div class="form-section">
-                        <!-- PROBLEMA: Sin fieldset para agrupar -->
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <fieldset>
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
                             📝 Información Personal
-                        </div>
+                        </legend>
                         
                         <div class="row">
                             <!-- Nombre completo -->
                             <div class="col-md-6 mb-3">
-                                <!-- PROBLEMA: Label sin asociación correcta -->
-                                <div class="form-label required-field">Nombre completo</div>
-                                <input type="text" 
-                                       class="form-control" 
-                                       name="fullName"
-                                       placeholder="Ingresa tu nombre completo"
-                                       maxlength="100">
-                                <div class="character-counter">0/100 caracteres</div>
-                                <!-- PROBLEMA: Mensaje de ayuda no asociado -->
-                                <div class="field-help">
+                                <!-- Label correcto -->
+                                <label for="fullName" class="required-field">Nombre completo</label>
+                                <input type="text"
+                                    id="fullName"
+                                    name="fullName"
+                                    class="form-control"
+                                    placeholder="Ingresa tu nombre completo"
+                                    maxlength="100"
+                                    aria-required="true"
+                                    aria-describedby="fullNameHelp charCountFullName"
+                                >
+                                <div id="charCountFullName" class="character-counter">0/100 caracteres</div>
+                                <!-- Mensaje de ayuda asociado -->
+                                <div id="fullNameHelp"class="field-help">
                                     Incluye tu nombre y apellidos completos
                                 </div>
                             </div>
@@ -230,7 +247,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                     
                     <!-- Sección 2: Información Profesional - PROBLEMAS -->
                     <div class="form-section">
