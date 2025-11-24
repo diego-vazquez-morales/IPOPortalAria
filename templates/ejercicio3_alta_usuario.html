@@ -266,24 +266,28 @@
                         </div>
                     </fieldset>
                     
-                    <!-- Sección 2: Información Profesional - PROBLEMAS -->
-                    <div class="form-section">
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <!-- Sección 2: Información Profesional-->
+                    <fieldset class="form-section">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
                             💼 Información Profesional
-                        </div>
+                        </legend>
                         
                         <div class="row">
                             <!-- Ocupación -->
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Ocupación actual</div>
-                                <input type="text" 
-                                       class="form-control" 
-                                       name="occupation"
-                                       placeholder="Ej: Desarrollador Frontend"
-                                       list="occupationsList">
+                                <label for="occupation">Ocupación actual</label>
+                                <input
+                                    type="text"
+                                    id="occupation"
+                                    name="occupation"
+                                    class="form-control"
+                                    placeholder="Ej: Desarrollador Frontend"
+                                    list="occupationsList"
+                                    aria-describedby="occupationHelp"
+                                >
                                 
-                                <!-- PROBLEMA: Datalist sin accesibilidad -->
-                                <datalist id="occupationsList">
+                                <!-- Datalist con accesibilidad -->
+                                <datalist id="occupationsList" aria-hidden="true">
                                     <option value="Desarrollador Frontend">
                                     <option value="Desarrollador Backend">
                                     <option value="Full Stack Developer">
@@ -293,19 +297,29 @@
                                     <option value="Data Scientist">
                                     <option value="Estudiante">
                                 </datalist>
+                                <div id="occupationHelp" class="field-help">Elige o escribe tu ocupación actual</div>
                             </div>
                             
                             <!-- Experiencia -->
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Años de experiencia</div>
-                                <!-- PROBLEMA: Range input sin descripción accesible -->
-                                <input type="range" 
-                                       class="form-range" 
-                                       name="experience"
-                                       min="0" 
-                                       max="20" 
-                                       value="2"
-                                       step="1">
+                                <label for="experience" id="experienceLabel">Años de experiencia</label>
+                                <!-- Range input con descripción accesible -->
+                                <input
+                                    type="range"
+                                    id="experience"
+                                    name="experience"
+                                    class="form-range"
+                                    min="0"
+                                    max="20"
+                                    value="2"
+                                    step="1"
+                                    aria-valuemin="0"
+                                    aria-valuemax="20"
+                                    aria-valuenow="2"
+                                    aria-valuetext="2 años"
+                                    aria-labelledby="experienceLabel"
+                                >
+                                
                                 <div class="range-display">
                                     <span>0 años</span>
                                     <span id="experienceValue">2 años</span>
@@ -314,92 +328,98 @@
                             </div>
                         </div>
                         
-                        <!-- Habilidades técnicas - PROBLEMA: Checkboxes sin estructura -->
-                        <div class="mb-3">
-                            <div class="form-label">Habilidades técnicas</div>
-                            <div class="field-help">Selecciona todas las que apliquen</div>
+                        <!-- Habilidades técnicas -->
+                        <fieldset>
+                            <legend>Habilidades técnicas 
+                                <span class="field-help">(Selecciona todas las que apliquen)</span>
+                            </legend>
                             
-                            <div class="checkbox-group">
+                            <div class="checkbox-group" role="group" aria-describedby="skillsHelp"> 
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <!-- PROBLEMA: Checkboxes sin labels apropiados -->
-                                        <input type="checkbox" name="skills" value="html" style="margin-right: 0.5rem;">
-                                        HTML/CSS
+                                        <!-- PROBLEMA: Checkboxes con labels apropiados -->
+                                        <input type="checkbox" id="skill-html" name="skills" value="html" style="margin-right: 0.5rem;">
+                                        <label for="skill-html">HTML/CSS</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="javascript" style="margin-right: 0.5rem;">
-                                        JavaScript
+                                        <input type="checkbox" id="skill-javascript" name="skills" value="javascript" style="margin-right: 0.5rem;">
+                                        <label for="skill-javascript">JavaScript</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="react" style="margin-right: 0.5rem;">
-                                        React
+                                        <input type="checkbox" id="skill-react" name="skills" value="react" style="margin-right: 0.5rem;">
+                                        <label for="skill-react">React</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="vue" style="margin-right: 0.5rem;">
-                                        Vue.js
+                                        <input type="checkbox" id="skill-vue" name="skills" value="vue" style="margin-right: 0.5rem;">
+                                        <label for="skill-vue">Vue.js</label>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="angular" style="margin-right: 0.5rem;">
-                                        Angular
+                                        <input type="checkbox" id="skill-angular" name="skills" value="angular" style="margin-right: 0.5rem;">
+                                        <label for="skill-angular">Angular</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="nodejs" style="margin-right: 0.5rem;">
-                                        Node.js
+                                        <input type="checkbox" id="skill-nodejs" name="skills" value="nodejs" style="margin-right: 0.5rem;">
+                                        <label for="skill-nodejs">Node.js</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="python" style="margin-right: 0.5rem;">
-                                        Python
+                                        <input type="checkbox" id="skill-python" name="skills" value="python" style="margin-right: 0.5rem;">
+                                        <label for="skill-python">Python</label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="other" style="margin-right: 0.5rem;">
-                                        Otras
+                                        <input type="checkbox" id="skill-other" name="skills" value="other" style="margin-right: 0.5rem;">
+                                        <label for="skill-other">Otras</label>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </fieldset>
                         
                         <!-- Salario esperado -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Salario esperado (EUR/año)</div>
-                                <input type="number" 
-                                       class="form-control" 
-                                       name="expectedSalary"
-                                       min="15000" 
-                                       max="150000" 
-                                       step="1000"
-                                       placeholder="45000">
-                                <div class="field-help">Rango entre €15,000 y €150,000</div>
+                                <label for="expectedSalary">Salario esperado (EUR/año)</label>
+                                <input
+                                    type="number"
+                                    id="expectedSalary"
+                                    name="expectedSalary"
+                                    class="form-control"
+                                    min="15000"
+                                    max="150000"
+                                    step="1000"
+                                    placeholder="45000"
+                                    aria-describedby="salaryHelp"
+                                >
+                                
+                                <div id="salaryHelp" class="field-help">Rango entre €15,000 y €150,000</div>
                             </div>
                             
                             <!-- Disponibilidad -->
-                            <div class="col-md-6 mb-3">
-                                <div class="form-label required-field">Disponibilidad para trabajar</div>
-                                <!-- PROBLEMA: Radio buttons sin fieldset -->
-                                <div class="radio-group">
+                            <fieldset class="col-md-6 mb-3">
+                                <legend class="required-field">Disponibilidad para trabajar</legend>
+                                <!-- Radio buttons con fieldset -->
+                                <div class="radio-group" role="radiogroup" aria-labelledby="availabilityLegend">
                                     <div>
-                                        <!-- PROBLEMA: Radio buttons sin labels apropiados -->
-                                        <input type="radio" name="availability" value="immediate" style="margin-right: 0.5rem;">
-                                        Inmediata
+                                        <!-- Radio buttons con labels apropiados -->
+                                        <input type="radio" id="availability-immediate" name="availability" value="immediate" style="margin-right: 0.5rem;">
+                                        <label for="availability-immediate">Inmediata</label>
                                     </div>
                                     <div>
-                                        <input type="radio" name="availability" value="2weeks" style="margin-right: 0.5rem;">
-                                        2 semanas
+                                        <input type="radio" id="availability-2weeks" name="availability" value="2weeks" style="margin-right: 0.5rem;">
+                                        <label for="availability-2weeks">2 semanas</label>
                                     </div>
                                     <div>
-                                        <input type="radio" name="availability" value="1month" style="margin-right: 0.5rem;">
-                                        1 mes
+                                        <input type="radio" id="availability-1month" name="availability" value="1month" style="margin-right: 0.5rem;">
+                                        <label for="availability-1month">1 mes</label>
                                     </div>
                                     <div>
-                                        <input type="radio" name="availability" value="negotiable" style="margin-right: 0.5rem;">
-                                        Negociable
+                                        <input type="radio" id="availability-negotiable" name="availability" value="negotiable" style="margin-right: 0.5rem;">
+                                        <label for="availability-negotiable">Negociable</label>
                                     </div>
                                 </div>
-                            </div>
+                            </fieldset>
                         </div>
-                    </div>
+                    </fieldset>
                     
                     <!-- Sección 3: Preferencias y Configuración - PROBLEMAS -->
                     <div class="form-section">
