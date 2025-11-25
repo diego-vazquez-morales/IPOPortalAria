@@ -131,6 +131,19 @@
             text-decoration: none;
         }
 
+        .sr-only {
+            border: 0 !important;
+            clip: rect(0, 0, 0, 0) !important;
+            height: 1px !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            position: absolute !important;
+            width: 1px !important;
+            white-space: nowrap !important;
+        }
+
+
     </style>
 </head>
 
@@ -167,12 +180,12 @@
                 
                 <!-- Formulario con estructura semántica apropiada -->
                 <form id="registrationForm" novalidate style="padding: 0;">
-                    <fieldset>
+                    <fieldset class="form-section">
                         <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
                             📝 Información Personal
                         </legend>
                         
-                        <div class="row">
+                        <div class="col-md-12 mb-4">
                             <!-- Nombre completo -->
                             <div class="col-md-6 mb-3">
                                 <!-- Label correcto -->
@@ -189,7 +202,7 @@
                                 >
                                 <div id="charCountFullName" class="character-counter">0/100 caracteres</div>
                                 <!-- Mensaje de ayuda asociado -->
-                                <div id="fullNameHelp"class="field-help">
+                                <div id="fullNameHelp"class="field-help sr-only">
                                     Incluye tu nombre y apellidos completos
                                 </div>
                             </div>
@@ -210,11 +223,9 @@
                                 <!-- Validación en vivo con accesibilidad -->
                                 <div id="emailValidation" class="validation-message" aria-live="polite" style="display: none;"></div>
                             </div>
-                        </div> 
                         
-                        <div class="row">
                             <!-- Fecha de nacimiento -->
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="birthDate" class="required-field">Fecha de nacimiento</label>
                                 <input 
                                     type="date"
@@ -231,7 +242,7 @@
                             </div>
                             
                             <!-- Teléfono -->
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="phone" class="required-field">Teléfono</label>
                                 <input 
                                     type="tel" 
@@ -247,7 +258,7 @@
                             </div>
                             
                             <!-- País -->
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <!-- Select con label apropiado -->
                                 <label for="country" class="required-field">País</label>
                                 <select id="country" name="country" class="form-select" aria-required="true" aria-describedby="countryHelp" required>
@@ -272,7 +283,7 @@
                             💼 Información Profesional
                         </legend>
                         
-                        <div class="row">
+                        <div class="col-md-12 mb-4">
                             <!-- Ocupación -->
                             <div class="col-md-6 mb-3">
                                 <label for="occupation">Ocupación actual</label>
@@ -330,44 +341,44 @@
                         
                         <!-- Habilidades técnicas -->
                         <fieldset>
-                            <legend>Habilidades técnicas 
-                                <span class="field-help">(Selecciona todas las que apliquen)</span>
+                            <legend>Habilidades técnicas
+                                <div class="row">
+                                    <span class="field-help">(Selecciona todas las que apliquen)</span>
+                                </div>
                             </legend>
                             
                             <div class="checkbox-group" role="group" aria-describedby="skillsHelp"> 
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <!-- PROBLEMA: Checkboxes con labels apropiados -->
+                                    <div class="row-md-3">
+                                        <!-- Checkboxes con labels apropiados -->
                                         <input type="checkbox" id="skill-html" name="skills" value="html" style="margin-right: 0.5rem;">
                                         <label for="skill-html">HTML/CSS</label>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="row-md-3">
                                         <input type="checkbox" id="skill-javascript" name="skills" value="javascript" style="margin-right: 0.5rem;">
                                         <label for="skill-javascript">JavaScript</label>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="row-md-3">
                                         <input type="checkbox" id="skill-react" name="skills" value="react" style="margin-right: 0.5rem;">
                                         <label for="skill-react">React</label>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="row-md-3">
                                         <input type="checkbox" id="skill-vue" name="skills" value="vue" style="margin-right: 0.5rem;">
                                         <label for="skill-vue">Vue.js</label>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-3">
+                                    <div class="row-md-3">
                                         <input type="checkbox" id="skill-angular" name="skills" value="angular" style="margin-right: 0.5rem;">
                                         <label for="skill-angular">Angular</label>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="row-md-3">
                                         <input type="checkbox" id="skill-nodejs" name="skills" value="nodejs" style="margin-right: 0.5rem;">
                                         <label for="skill-nodejs">Node.js</label>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="row-md-3">
                                         <input type="checkbox" id="skill-python" name="skills" value="python" style="margin-right: 0.5rem;">
                                         <label for="skill-python">Python</label>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="row-md-3">
                                         <input type="checkbox" id="skill-other" name="skills" value="other" style="margin-right: 0.5rem;">
                                         <label for="skill-other">Otras</label>
                                     </div>
@@ -376,7 +387,7 @@
                         </fieldset>
                         
                         <!-- Salario esperado -->
-                        <div class="row">
+                        <div class="row mt-4">
                             <div class="col-md-6 mb-3">
                                 <label for="expectedSalary">Salario esperado (EUR/año)</label>
                                 <input
@@ -393,45 +404,44 @@
                                 
                                 <div id="salaryHelp" class="field-help">Rango entre €15,000 y €150,000</div>
                             </div>
-                            
-                            <!-- Disponibilidad -->
-                            <fieldset class="col-md-6 mb-3">
-                                <legend class="required-field">Disponibilidad para trabajar</legend>
-                                <!-- Radio buttons con fieldset -->
-                                <div class="radio-group" role="radiogroup" aria-labelledby="availabilityLegend">
-                                    <div>
-                                        <!-- Radio buttons con labels apropiados -->
-                                        <input type="radio" id="availability-immediate" name="availability" value="immediate" style="margin-right: 0.5rem;">
-                                        <label for="availability-immediate">Inmediata</label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" id="availability-2weeks" name="availability" value="2weeks" style="margin-right: 0.5rem;">
-                                        <label for="availability-2weeks">2 semanas</label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" id="availability-1month" name="availability" value="1month" style="margin-right: 0.5rem;">
-                                        <label for="availability-1month">1 mes</label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" id="availability-negotiable" name="availability" value="negotiable" style="margin-right: 0.5rem;">
-                                        <label for="availability-negotiable">Negociable</label>
-                                    </div>
+                        </div>    
+                        <!-- Disponibilidad -->
+                        <fieldset class="col-md-6 mb-3">
+                            <legend class="required-field">Disponibilidad para trabajar</legend>
+                            <!-- Radio buttons con fieldset -->
+                            <div class="radio-group" role="radiogroup" aria-labelledby="availabilityLegend">
+                                <div>
+                                    <!-- Radio buttons con labels apropiados -->
+                                    <input type="radio" id="availability-immediate" name="availability" value="immediate" style="margin-right: 0.5rem;">
+                                    <label for="availability-immediate">Inmediata</label>
                                 </div>
-                            </fieldset>
-                        </div>
+                                <div>
+                                    <input type="radio" id="availability-2weeks" name="availability" value="2weeks" style="margin-right: 0.5rem;">
+                                    <label for="availability-2weeks">2 semanas</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="availability-1month" name="availability" value="1month" style="margin-right: 0.5rem;">
+                                    <label for="availability-1month">1 mes</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="availability-negotiable" name="availability" value="negotiable" style="margin-right: 0.5rem;">
+                                    <label for="availability-negotiable">Negociable</label>
+                                </div>
+                            </div>
+                        </fieldset>
                     </fieldset>
                     
-                    <!-- Sección 3: Preferencias y Configuración - PROBLEMAS -->
-                    <div class="form-section">
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <!-- Sección 3: Preferencias y Configuración -->
+                    <fieldset class="form-section">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
                             ⚙️ Preferencias y Configuración
-                        </div>
+                        </legend>
                         
                         <div class="row">
                             <!-- Idioma preferido -->
                             <div class="col-md-4 mb-3">
-                                <div class="form-label">Idioma preferido</div>
-                                <select class="form-select" name="preferredLanguage">
+                                <label for="preferredLanguage">Idioma preferido</label>
+                                <select id="preferredLanguage" class="form-select" name="preferredLanguage">
                                     <option value="es" selected>Español</option>
                                     <option value="en">English</option>
                                     <option value="fr">Français</option>
@@ -439,11 +449,12 @@
                                     <option value="pt">Português</option>
                                 </select>
                             </div>
-                            
+                        </div>
+                        <div class="row">    
                             <!-- Zona horaria -->
                             <div class="col-md-4 mb-3">
-                                <div class="form-label">Zona horaria</div>
-                                <select class="form-select" name="timezone">
+                                <label for="timezone">Zona horaria</label>
+                                <select id="timezone" class="form-select" name="timezone">
                                     <option value="">Detectar automáticamente</option>
                                     <option value="Europe/Madrid">Europa/Madrid (CET)</option>
                                     <option value="America/Mexico_City">América/Ciudad_de_México</option>
@@ -451,104 +462,124 @@
                                     <option value="America/Los_Angeles">América/Los_Ángeles (PST)</option>
                                 </select>
                             </div>
-                            
+                        </div>
+                        <div class="row">    
                             <!-- Tema preferido -->
                             <div class="col-md-4 mb-3">
-                                <div class="form-label">Tema de interfaz</div>
-                                <!-- PROBLEMA: Radio buttons inline sin estructura -->
-                                <div style="margin-top: 0.5rem;">
-                                    <input type="radio" name="theme" value="light" checked style="margin-right: 0.5rem;">
-                                    Claro
-                                    <input type="radio" name="theme" value="dark" style="margin-left: 1rem; margin-right: 0.5rem;">
-                                    Oscuro
-                                    <input type="radio" name="theme" value="auto" style="margin-left: 1rem; margin-right: 0.5rem;">
-                                    Automático
-                                </div>
+                                <fieldset>
+                                    <legend>Tema de interfaz</legend>
+                                    <!-- Radio buttons inline con estructura -->
+                                    <div style="margin-top: 0.5rem;">
+                                        <input type="radio" id="themeLight" name="theme" value="light" checked style="margin-right: 0.5rem;">
+                                        <label for="themeLight">Claro</label>
+                                        <input type="radio" id="themeDark" name="theme" value="dark" style="margin-left: 1rem; margin-right: 0.5rem;">
+                                        <label for="themeDark">Oscuro</label>
+                                        <input type="radio" id="themeAuto" name="theme" value="auto" style="margin-left: 1rem; margin-right: 0.5rem;">
+                                        <label for="themeAuto">Automático</label>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
                         
-                        <!-- Notificaciones - PROBLEMA: Sin fieldset -->
-                        <div class="mb-3">
-                            <div class="form-label">Preferencias de notificaciones</div>
+                        <!-- Notificaciones -->
+                        <fieldset class="mb-3">
+                            <legend>Preferencias de notificaciones</legend>
                             <div class="checkbox-group">
                                 <div class="mb-2">
-                                    <input type="checkbox" name="notifications" value="email" checked style="margin-right: 0.5rem;">
-                                    Recibir notificaciones por email
+                                    <input type="checkbox" id="notificationsEmail" name="notifications" value="email" checked style="margin-right: 0.5rem;">
+                                    <label for="notificationsEmail">Recibir notificaciones por email</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" name="notifications" value="sms" style="margin-right: 0.5rem;">
-                                    Recibir notificaciones por SMS
+                                    <input type="checkbox" id="notificationsSms" name="notifications" value="sms" style="margin-right: 0.5rem;">
+                                    <label for="notificationsSms">Recibir notificaciones por SMS</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" name="notifications" value="push" checked style="margin-right: 0.5rem;">
-                                    Recibir notificaciones push
+                                    <input type="checkbox" id="notificationsPush" name="notifications" value="push" checked style="margin-right: 0.5rem;">
+                                    <label for="notificationsPush">Recibir notificaciones push</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" name="notifications" value="newsletter" checked style="margin-right: 0.5rem;">
-                                    Suscribirse al newsletter semanal
+                                    <input type="checkbox" id="notificationsNewsletter" name="notifications" value="newsletter" checked style="margin-right: 0.5rem;">
+                                    <label for="notificationsNewsletter">Suscribirse al newsletter semanal</label>
                                 </div>
                             </div>
-                        </div>
+                        </fieldset>
                         
                         <!-- Bio/Descripción -->
                         <div class="mb-3">
-                            <div class="form-label">Biografía o descripción personal</div>
-                            <!-- PROBLEMA: Textarea sin aria-describedby -->
-                            <textarea class="form-control" 
-                                      name="bio"
-                                      rows="4"
-                                      maxlength="500"
-                                      placeholder="Cuéntanos un poco sobre ti, tus intereses profesionales y objetivos..."></textarea>
-                            <div class="character-counter">0/500 caracteres</div>
-                            <div class="field-help">
+                            <label for="bio">Biografía o descripción personal</label>
+                            <!-- Textarea con aria-describedby -->
+                            <textarea 
+                                id="bio"
+                                class="form-control" 
+                                name="bio"
+                                rows="4"
+                                maxlength="500"
+                                placeholder="Cuéntanos un poco sobre ti, tus intereses profesionales y objetivos..."
+                                aria-describedby="bioHelp charCountBio"
+                            ></textarea>
+                            <div id="charCountBio" class="character-counter">0/500 caracteres</div>
+                            <div id="bioHelp" class="field-help">
                                 Esta información aparecerá en tu perfil público
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                     
-                    <!-- Sección 4: Documentos y Archivos - PROBLEMAS CRÍTICOS -->
-                    <div class="form-section">
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <!-- Sección 4: Documentos y Archivos -->
+                    <fieldset class="form-section">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
                             📎 Documentos y Archivos
-                        </div>
+                        </legend>
                         
                         <!-- CV/Currículum -->
                         <div class="mb-4">
-                            <div class="form-label">Currículum Vitae (CV)</div>
-                            <!-- PROBLEMA: File input sin accesibilidad -->
-                            <div class="file-upload-area" onclick="document.getElementById('cvFile').click()">
+                            <label for="cvFile" class="form-label">Currículum Vitae (CV)</label>
+                            <!-- File input con accesibilidad -->
+                            <input
+                                type="file"
+                                id="cvFile"
+                                name="cv"
+                                accept=".pdf,.doc,.docx"
+                                style="opacity:0; position:absolute; width:1px; height:1px;"
+                                aria-describedby="cvFormats cvHelp"
+                            >
+
+                            <div class="file-upload-area" tabindex="0" role="button" aria-label="Subir Currículum Vitae" onclick="document.getElementById('cvFile').click()" onkeypress="if(event.key==='Enter'){document.getElementById('cvFile').click();}">
                                 <div style="font-size: 2rem; margin-bottom: 1rem;">📄</div>
                                 <div style="font-weight: 500;">Haz clic para subir tu CV</div>
-                                <div class="subtle-text" style="margin-top: 0.5rem;">
+                                <div id="cvFormats" class="subtle-text" style="margin-top: 0.5rem;">
                                     Formatos admitidos: PDF, DOC, DOCX (máx. 5MB)
                                 </div>
-                                <input type="file" 
-                                       id="cvFile"
-                                       name="cv"
-                                       accept=".pdf,.doc,.docx"
-                                       style="display: none;">
                             </div>
-                            <div class="field-help">
+
+                            <div id="cvHelp" class="field-help">
                                 Tu CV nos ayuda a entender mejor tu experiencia profesional
                             </div>
+                            <div id="cvStatus" aria-live="polite"></div>
                         </div>
                         
                         <!-- Foto de perfil -->
                         <div class="mb-4">
-                            <div class="form-label">Foto de perfil (opcional)</div>
-                            <div class="file-upload-area" onclick="document.getElementById('profilePhoto').click()">
+                            <label for="profilePhoto" class="form-label">Foto de perfil (opcional)</label>
+                            <!-- File input con aria-describedby -->
+                            <input
+                                type="file"
+                                id="profilePhoto"
+                                name="profilePhoto"
+                                accept="image/*"
+                                style="opacity:0; position:absolute; width:1px; height:1px;"
+                                aria-describedby="photoFormats photoHelp"
+                            >
+                            <div class="file-upload-area" tabindex="0" role="button" aria-label="Subir foto de perfil" onclick="document.getElementById('profilePhoto').click();" onkeypress="if(event.key==='Enter'){document.getElementById('profilePhoto').click();}">
                                 <div style="font-size: 2rem; margin-bottom: 1rem;">📷</div>
                                 <div style="font-weight: 500;">Subir foto de perfil</div>
-                                <div class="subtle-text" style="margin-top: 0.5rem;">
+                                <div id="photoFormats" class="subtle-text" style="margin-top: 0.5rem;">
                                     JPG, PNG (máx. 2MB, recomendado: 400x400px)
                                 </div>
-                                <!-- PROBLEMA: File input sin aria-describedby -->
-                                <input type="file" 
-                                       id="profilePhoto"
-                                       name="profilePhoto"
-                                       accept="image/*"
-                                       style="display: none;">
                             </div>
+                            <div id="photoHelp" class="field-help">
+                            La foto debe ser clara y reciente.
+                            </div>
+                            <div id="photoStatus" aria-live="polite"></div>
                         </div>
                         
                         <!-- Portfolio/Enlaces -->
