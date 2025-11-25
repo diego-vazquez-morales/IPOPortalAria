@@ -341,11 +341,8 @@
                         
                         <!-- Habilidades técnicas -->
                         <fieldset>
-                            <legend>Habilidades técnicas
-                                <div class="row">
-                                    <span class="field-help">(Selecciona todas las que apliquen)</span>
-                                </div>
-                            </legend>
+                            <legend>Habilidades técnicas</legend>
+                            <span id="skillsHelp" class="field-help">(Selecciona todas las que apliquen)</span>
                             
                             <div class="checkbox-group" role="group" aria-describedby="skillsHelp"> 
                                 <div class="row">
@@ -407,7 +404,7 @@
                         </div>    
                         <!-- Disponibilidad -->
                         <fieldset class="col-md-6 mb-3">
-                            <legend class="required-field">Disponibilidad para trabajar</legend>
+                            <legend id="availabilityLegend" class="required-field">Disponibilidad para trabajar</legend>
                             <!-- Radio buttons con fieldset -->
                             <div class="radio-group" role="radiogroup" aria-labelledby="availabilityLegend">
                                 <div>
@@ -428,6 +425,7 @@
                                     <label for="availability-negotiable">Negociable</label>
                                 </div>
                             </div>
+                            
                         </fieldset>
                     </fieldset>
                     
@@ -585,40 +583,67 @@
                         <!-- Portfolio/Enlaces -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Portfolio web</div>
-                                <input type="url" 
-                                       class="form-control" 
-                                       name="portfolio"
-                                       placeholder="https://tu-portfolio.com">
-                                <div class="field-help">
+                                <label for="portfolio">Portfolio web</label>
+                                <input 
+                                    type="url"
+                                    id="portfolio"
+                                    class="form-control" 
+                                    name="portfolio"
+                                    placeholder="https://tu-portfolio.com"
+                                    aria-describedby="portfolioHelp"
+                                >
+                                <div id="portfolioHelp" class="field-help">
                                     Enlace a tu portfolio o sitio web personal
                                 </div>
                             </div>
-                            
+                        </div>
+                        <div class="row">                            
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Perfil de LinkedIn</div>
-                                <input type="url" 
-                                       class="form-control" 
-                                       name="linkedin"
-                                       placeholder="https://linkedin.com/in/tu-perfil">
+                                <label for="linkedin">Perfil de LinkedIn</label>
+                                <input 
+                                    type="url"
+                                    id="linkedin"
+                                    class="form-control" 
+                                    name="linkedin"
+                                    placeholder="https://linkedin.com/in/tu-perfil"
+                                    aria-describedby="linkedinHelp"
+                                >
+                                <div id="linkedinHelp" class="field-help">
+                                    Enlace a tu perfil de LinkedIn
+                                </div>
                             </div>
                         </div>
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">GitHub/GitLab</div>
-                                <input type="url" 
-                                       class="form-control" 
-                                       name="github"
-                                       placeholder="https://github.com/tu-usuario">
+                                <label for="github" class="form-label">GitHub/GitLab</label>
+                                <input 
+                                    type="url"
+                                    id="github"
+                                    class="form-control" 
+                                    name="github"
+                                    placeholder="https://github.com/tu-usuario"
+                                    aria-describedby="githubHelp"
+                                >
+                                <div id="githubHelp" class="field-help">
+                                    Enlace a tu perfil de GitHub o GitLab
+                                </div>
                             </div>
-                            
+                        </div>
+                        <div class="row">    
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Otro enlace relevante</div>
-                                <input type="url" 
-                                       class="form-control" 
-                                       name="otherLink"
-                                       placeholder="https://...">
+                                <label for="otherLink" class="form-label">Otro enlace relevante</label>
+                                <input 
+                                    type="url" 
+                                    id="otherLink"
+                                    class="form-control" 
+                                    name="otherLink"
+                                    placeholder="https://..."
+                                    aria-describedby="otherLinkHelp"
+                                >
+                                <div id="otherLinkHelp" class="field-help">
+                                    Enlace a otro sitio relevante (blog, proyecto, etc.)
+                                </div>
                             </div>
                         </div>
                     </div>
