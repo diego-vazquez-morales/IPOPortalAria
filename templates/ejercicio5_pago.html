@@ -209,9 +209,10 @@
 </head>
 
 <body>
-    <!-- PROBLEMA: Falta skip link -->
-    
-    <div class="checkout-container">
+    <!-- Skip link -->
+    <a href="#checkoutForm" class="skip-link" tabindex="0" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;"> Saltar al formulario </a>
+
+    <div id="checkoutForm" class="checkout-container">
         <div class="container">
             
             <!-- Navegación de regreso -->
@@ -222,615 +223,669 @@
             </div>
             
             <div class="checkout-card">
+                <!-- Header de progreso con accesibilidad -->
+                <header class="progress-header" aria-label="Proceso de Pago">
+                    <h1 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 2rem; text-align: center;">
+                    Proceso de Pago Seguro
+                    </h1>            
+                    <nav aria-label="Progreso de pago">
+                        <!-- Indicador de pasos con accesibilidad -->
+                        <ol class="step-indicator" style="list-style: none; padding: 0; display: flex; justify-content: center;" role="list">
+                            <li class="step active" data-step="1" role="listitem" aria-current="step">
+                                <span class="step-number" aria-hidden="true">1</span>
+                                <span class="step-title">Información Personal</span>
+                            </li>
+                            <li class="step" data-step="2" role="listitem">
+                                <span class="step-number" aria-hidden="true">2</span>
+                                <span class="step-title">Envío y Facturación</span>
+                            </li>
+                            <li class="step" data-step="3" role="listitem">
+                                <span class="step-number" aria-hidden="true">3</span>
+                                <span class="step-title">Método de Pago</span>
+                            </li>
+                            <li class="step" data-step="4" role="listitem">
+                                <span class="step-number" aria-hidden="true">4</span>
+                                <span class="step-title">Confirmación</span>
+                            </li>
+                        </ol>
+                        
+                    </nav>
+                </header>
                 
-                <!-- PROBLEMA: Header de progreso sin accesibilidad -->
-                <div class="progress-header">
-                    <!-- PROBLEMA: Título sin estructura apropiada -->
-                    <div style="font-size: 1.8rem; font-weight: 300; margin-bottom: 2rem; text-align: center;">
-                        Proceso de Pago Seguro
-                    </div>
-                    
-                    <!-- PROBLEMA: Indicador de pasos sin accesibilidad -->
-                    <div class="step-indicator">
-                        <div class="step-connector"></div>
-                        
-                        <div class="step active" data-step="1">
-                            <div class="step-number">1</div>
-                            <div class="step-title">Información Personal</div>
-                        </div>
-                        
-                        <div class="step" data-step="2">
-                            <div class="step-number">2</div>
-                            <div class="step-title">Envío y Facturación</div>
-                        </div>
-                        
-                        <div class="step" data-step="3">
-                            <div class="step-number">3</div>
-                            <div class="step-title">Método de Pago</div>
-                        </div>
-                        
-                        <div class="step" data-step="4">
-                            <div class="step-number">4</div>
-                            <div class="step-title">Confirmación</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- PROBLEMA: Contenido principal sin landmark -->
-                <div class="checkout-content">
+                <!-- Contenido principal con landmark -->
+                <main class="checkout-content" role="main">
                     <div class="row">
                         
                         <!-- Columna principal del formulario -->
                         <div class="col-lg-8">
                             
-                            <!-- PROBLEMA: Formulario sin estructura accesible -->
+                            <!-- Formulario con estructura accesible -->
                             <form id="checkoutForm" novalidate>
                                 
-                                <!-- PASO 1: Información Personal - MÚLTIPLES PROBLEMAS -->
-                                <div class="step-panel active" data-panel="1">
-                                    <!-- PROBLEMA: Sin fieldset para agrupar -->
-                                    <div class="form-section">
-                                        <div class="section-title">
-                                            👤 Información Personal
+                                <!-- PASO 1: Información Personal -->
+                                <fieldset class="step-panel active" data-panel="1">
+                                    <legend class="seccion-title">
+                                        👤 Información Personal
+                                    </legend>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <!-- Label con asociación -->
+                                            <label for="firstName" class="form-label required">Nombre</label>
+                                            <input 
+                                                type="text" 
+                                                id="firstName"
+                                                class="form-control"
+                                                name="firstName"
+                                                placeholder="Tu nombre"
+                                                autocomplete="given-name"
+                                                required
+                                                aria-required="true"
+                                            >
+                                            <div class="field-error" id="errorFirstName" style="display: none;" aria-live="polite"></div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 mb-3">
+                                            <label for="lastName" class="form-label required">Apellidos</label>
+                                            <input 
+                                                type="text"
+                                                id="lastName"
+                                                class="form-control"
+                                                name="lastName"
+                                                placeholder="Tus apellidos"
+                                                autocomplete="family-name"
+                                                required
+                                                aria-required="true"
+                                            >
+                                            <div class="field-error" id="errorLastName" style="display: none;" aria-live="polite"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-8 mb-3">
+                                            <label for="email" class="form-label required">Correo electrónico</label>
+                                            <input 
+                                                type="email"
+                                                id="email"
+                                                class="form-control"
+                                                name="email"
+                                                placeholder="tu@email.com"
+                                                autocomplete="email"
+                                                required
+                                                aria-required="true"
+                                            >
+                                            <div class="field-error" id="errorEmail" style="display: none;" aria-live="polite"></div>
+                                        </div>
+                                        
+                                        <div class="col-md-4 mb-3">
+                                            <label for="phone" class="form-label required">Teléfono</label>
+                                            <input 
+                                                type="tel"
+                                                id="phone"
+                                                class="form-control"
+                                                name="phone"
+                                                placeholder="+34 600 000 000"
+                                                autocomplete="tel"
+                                                required
+                                                aria-required="true"
+                                            >
+                                            <div class="field-error" id="errorPhone" style="display: none;" aria-live="polite"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Checkbox con estructura accesible -->
+                                    <div class="mb-3">
+                                        <input type="checkbox" id="createAccount" name="createAccount" style="margin-right: 0.5rem;">
+                                        <label for="createAccount">
+                                        Crear una cuenta para futuras compras más rápidas
+                                        </label>
+                                    </div>
+                                </fieldset>
+                                    
+                                <!-- Botones de navegación - PROBLEMAS -->
+                                <div style="display: flex; justify-content: end; gap: 1rem;">
+                                    <!-- PROBLEMA: Botón sin descripción de acción -->
+                                    <button type="button" 
+                                            onclick="nextStep()"
+                                            class="btn btn-primary btn-lg">
+                                        Continuar →
+                                    </button>
+                                </div>
+                            </form>
+                                
+                            <!-- PASO 2: Envío y Facturación -->
+                            <div class="step-panel" data-panel="2">
+                                
+                                <!-- Dirección de envío -->
+                                <fieldset class="form-section">   
+                                    <legend class="section-title">🚚 Dirección de Envío</legend>
+                                    
+                                    <div class="row">
+                                        <div class="col-12 mb-3">
+                                            <label for="address" class="form-label required">Dirección</label>
+                                            <input type="text"
+                                                id="address"
+                                                class="form-control"
+                                                name="address"
+                                                placeholder="Calle, número, piso, puerta"
+                                                autocomplete="street-address"
+                                                required
+                                                aria-required="true"
+                                            >
+                                            <div class="field-error" id="errorAddress" style="display: none;" aria-live="polite"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="city" class="form-label required">Ciudad</label>
+                                            <input type="text"
+                                                id="city"
+                                                class="form-control"
+                                                name="city"
+                                                placeholder="Tu ciudad"
+                                                autocomplete="address-level2"
+                                                required
+                                                aria-required="true"
+                                            >
+                                            <div class="field-error" id="errorCity" style="display: none;" aria-live="polite"></div>
+                                        </div>
+                                        
+                                        <div class="col-md-3 mb-3">
+                                            <label for="postalCode" class="form-label required">Código Postal</label>
+                                            <input type="text"
+                                                id="postalCode"
+                                                class="form-control"
+                                                name="postalCode"
+                                                placeholder="28001"
+                                                autocomplete="postal-code"
+                                                required
+                                                aria-required="true"
+                                            >
+                                            <div class="field-error" id="errorPostalCode" style="display: none;" aria-live="polite"></div>
+                                        </div>
+                                        
+                                        <div class="col-md-3 mb-3">
+                                            <!-- Select con label apropiado -->
+                                            <label for="country" class="form-label required">País</label>
+                                            <select class="form-select" id="country" name="country" autocomplete="country" required aria-required="true">
+                                                <option value="">Selecciona país</option>
+                                                <option value="ES">España</option>
+                                                <option value="FR">Francia</option>
+                                                <option value="DE">Alemania</option>
+                                                <option value="IT">Italia</option>
+                                                <option value="PT">Portugal</option>
+                                            </select>
+                                            <div class="field-error" id="errorCountry" style="display: none;" aria-live="polite"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Opciones de envío -->
+                                <fieldset class="form-section">
+                                    <legend class="section-title">📦 Opciones de Envío</legend>
+                                    <div role="radiogroup" aria-labelledby="shippingMethodsLabel">
+                                        <div id="shippingMethodsLabel" style="display:none;">Opciones de envío</div>
+                                        <!-- Radio buttons con fieldset -->
+                                        <!-- Radio con label apropiado -->
+                                        <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                            <input 
+                                                type="radio" 
+                                                id="shippingStandard" 
+                                                name="shipping" 
+                                                value="standard" 
+                                                style="margin-right: 0.5rem;"
+                                            >
+                                            <label for="shippingStandard">
+                                                <strong>
+                                                    Envío Estándar (5-7 días)
+                                                </strong>
+                                                - Gratis
+                                            </label>
+                                            <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
+                                            Entrega en horario laboral
+                                            </div>
+                                        </div>
+                                        <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                            <input 
+                                                type="radio" 
+                                                id="shippingExpress" 
+                                                name="shipping" 
+                                                value="express" 
+                                                style="margin-right: 0.5rem;"
+                                            >
+                                            <label for="shippingExpress">
+                                                <strong>
+                                                    Envío Express (2-3 días)
+                                                </strong> 
+                                                - €9.99
+                                            </label>
+                                            <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
+                                            Entrega garantizada en 2-3 días hábiles
+                                            </div>
+                                        </div>
+                                        <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                            <input 
+                                                type="radio" 
+                                                id="shippingOvernight" 
+                                                name="shipping" 
+                                                value="overnight" 
+                                                style="margin-right: 0.5rem;"
+                                            >
+                                            <label for="shippingOvernight">
+                                                <strong>Envío 24h</strong> 
+                                                - €19.99
+                                            </label>
+                                            <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
+                                            Entrega al día siguiente antes de las 12:00
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                
+                                <!-- Facturación -->
+                                <fieldset class="form-section">
+                                    <legend class="section-title">🧾 Información de Facturación</legend>
+                                    
+                                    <!-- Checkbox con accesibilidad -->
+                                    <div class="mb-3">
+                                        <input type="checkbox"
+                                            id="sameAsShipping"
+                                            name="sameAsShipping"
+                                            checked
+                                            onchange="toggleBillingAddress()"
+                                            style="margin-right: 0.5rem;"
+                                        >
+                                        <label for="sameAsShipping">La dirección de facturación es igual a la de envío</label>
+                                    </div>
+                                    
+                                    <!-- Sección colapsable con accesibilidad -->
+                                    <div id="billingAddressSection" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <label for="billingAddress" class="form-label">Dirección de facturación</label>
+                                                <input 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="billingAddress" 
+                                                    name="billingAddress"
+                                                >
+                                            </div>
+                                        </div>
+                                        <!-- Más campos de facturación... -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Botones de navegación -->
+                                <div style="display: flex; justify-content: space-between;">
+                                    <button type="button" 
+                                            onclick="prevStep()"
+                                            class="btn btn-outline-secondary btn-lg">
+                                        ← Anterior
+                                    </button>
+                                    <button type="button" 
+                                            onclick="nextStep()"
+                                            class="btn btn-primary btn-lg">
+                                        Continuar →
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- PASO 3: Método de Pago - PROBLEMAS CRÍTICOS -->
+                            <div class="step-panel" data-panel="3">
+                                
+                                <div class="form-section">
+                                    <div class="section-title">
+                                        💳 Método de Pago
+                                    </div>
+                                    
+                                    <!-- PROBLEMA: Métodos de pago sin fieldset -->
+                                    <div style="margin-bottom: 2rem;">
+                                        
+                                        <!-- Tarjeta de crédito -->
+                                        <div class="payment-method" onclick="selectPaymentMethod('card')">
+                                            <!-- PROBLEMA: Radio sin label -->
+                                            <input type="radio" name="paymentMethod" value="card" style="margin-right: 0.5rem;">
+                                            <strong>💳 Tarjeta de Crédito/Débito</strong>
+                                            <div style="font-size: 0.9rem; color: #6c757d;">
+                                                Visa, Mastercard, American Express
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- PayPal -->
+                                        <div class="payment-method" onclick="selectPaymentMethod('paypal')">
+                                            <input type="radio" name="paymentMethod" value="paypal" style="margin-right: 0.5rem;">
+                                            <strong>🔵 PayPal</strong>
+                                            <div style="font-size: 0.9rem; color: #6c757d;">
+                                                Paga de forma segura con tu cuenta PayPal
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Transferencia -->
+                                        <div class="payment-method" onclick="selectPaymentMethod('transfer')">
+                                            <input type="radio" name="paymentMethod" value="transfer" style="margin-right: 0.5rem;">
+                                            <strong>🏦 Transferencia Bancaria</strong>
+                                            <div style="font-size: 0.9rem; color: #6c757d;">
+                                                Recibirás las instrucciones por email
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- PROBLEMA: Sección tarjeta sin accesibilidad -->
+                                    <div id="cardDetails" style="display: none;">
+                                        
+                                        <!-- Vista previa de tarjeta - PROBLEMA: Solo visual -->
+                                        <div class="card-preview">
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                                <span>BANCO EJEMPLO</span>
+                                                <span id="cardType">VISA</span>
+                                            </div>
+                                            <div style="font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 1rem;" id="cardNumberDisplay">
+                                                **** **** **** ****
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <div>
+                                                    <div style="font-size: 0.7rem; opacity: 0.8;">TITULAR</div>
+                                                    <div id="cardHolderDisplay">NOMBRE APELLIDOS</div>
+                                                </div>
+                                                <div>
+                                                    <div style="font-size: 0.7rem; opacity: 0.8;">VÁLIDA HASTA</div>
+                                                    <div id="cardExpiryDisplay">MM/AA</div>
+                                                </div>
+                                            </div>
                                         </div>
                                         
                                         <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <!-- PROBLEMA: Label sin asociación -->
-                                                <div class="form-label required">Nombre</div>
+                                            <div class="col-12 mb-3">
+                                                <!-- PROBLEMA: Campo tarjeta sin descripción accesible -->
+                                                <div class="form-label required">Número de tarjeta</div>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="firstName"
-                                                       placeholder="Tu nombre"
-                                                       autocomplete="given-name">
-                                                <div class="field-error" style="display: none;"></div>
-                                            </div>
-                                            
-                                            <div class="col-md-6 mb-3">
-                                                <div class="form-label required">Apellidos</div>
-                                                <input type="text" 
-                                                       class="form-control" 
-                                                       name="lastName"
-                                                       placeholder="Tus apellidos"
-                                                       autocomplete="family-name">
+                                                        class="form-control" 
+                                                        name="cardNumber"
+                                                        placeholder="1234 5678 9012 3456"
+                                                        maxlength="19"
+                                                        autocomplete="cc-number"
+                                                        oninput="formatCardNumber(this)">
                                                 <div class="field-error" style="display: none;"></div>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-8 mb-3">
-                                                <div class="form-label required">Correo electrónico</div>
-                                                <input type="email" 
-                                                       class="form-control" 
-                                                       name="email"
-                                                       placeholder="tu@email.com"
-                                                       autocomplete="email">
+                                                <div class="form-label required">Nombre del titular</div>
+                                                <input type="text" 
+                                                        class="form-control" 
+                                                        name="cardHolder"
+                                                        placeholder="Como aparece en la tarjeta"
+                                                        autocomplete="cc-name"
+                                                        oninput="updateCardPreview()">
                                                 <div class="field-error" style="display: none;"></div>
                                             </div>
                                             
                                             <div class="col-md-4 mb-3">
-                                                <div class="form-label required">Teléfono</div>
-                                                <input type="tel" 
-                                                       class="form-control" 
-                                                       name="phone"
-                                                       placeholder="+34 600 000 000"
-                                                       autocomplete="tel">
-                                                <div class="field-error" style="display: none;"></div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- PROBLEMA: Checkbox sin estructura accesible -->
-                                        <div class="mb-3">
-                                            <input type="checkbox" name="createAccount" style="margin-right: 0.5rem;">
-                                            <span>Crear una cuenta para futuras compras más rápidas</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Botones de navegación - PROBLEMAS -->
-                                    <div style="display: flex; justify-content: end; gap: 1rem;">
-                                        <!-- PROBLEMA: Botón sin descripción de acción -->
-                                        <button type="button" 
-                                                onclick="nextStep()"
-                                                class="btn btn-primary btn-lg">
-                                            Continuar →
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <!-- PASO 2: Envío y Facturación - PROBLEMAS -->
-                                <div class="step-panel" data-panel="2">
-                                    
-                                    <!-- Dirección de envío -->
-                                    <div class="form-section">
-                                        <div class="section-title">
-                                            🚚 Dirección de Envío
-                                        </div>
-                                        
-                                        <div class="row">
-                                            <div class="col-12 mb-3">
-                                                <div class="form-label required">Dirección</div>
-                                                <input type="text" 
-                                                       class="form-control" 
-                                                       name="address"
-                                                       placeholder="Calle, número, piso, puerta"
-                                                       autocomplete="street-address">
+                                                <!-- PROBLEMA: CVV sin explicación accesible -->
+                                                <div class="form-label required">
+                                                    CVV
+                                                    <!-- PROBLEMA: Icono de ayuda sin accesibilidad -->
+                                                    <span style="cursor: help; color: #007bff;" onclick="showCVVHelp()">ℹ️</span>
+                                                </div>
+                                                <input type="password" 
+                                                        class="form-control" 
+                                                        name="cvv"
+                                                        placeholder="123"
+                                                        maxlength="4"
+                                                        autocomplete="cc-csc">
                                                 <div class="field-error" style="display: none;"></div>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <div class="form-label required">Ciudad</div>
-                                                <input type="text" 
-                                                       class="form-control" 
-                                                       name="city"
-                                                       placeholder="Tu ciudad"
-                                                       autocomplete="address-level2">
+                                                <div class="form-label required">Mes de expiración</div>
+                                                <!-- PROBLEMA: Select sin opciones accesibles -->
+                                                <select class="form-select" 
+                                                        name="expiryMonth" 
+                                                        autocomplete="cc-exp-month"
+                                                        onchange="updateCardPreview()">
+                                                    <option value="">Mes</option>
+                                                    <option value="01">01</option>
+                                                    <option value="02">02</option>
+                                                    <option value="03">03</option>
+                                                    <option value="04">04</option>
+                                                    <option value="05">05</option>
+                                                    <option value="06">06</option>
+                                                    <option value="07">07</option>
+                                                    <option value="08">08</option>
+                                                    <option value="09">09</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </select>
                                                 <div class="field-error" style="display: none;"></div>
                                             </div>
                                             
-                                            <div class="col-md-3 mb-3">
-                                                <div class="form-label required">Código Postal</div>
-                                                <input type="text" 
-                                                       class="form-control" 
-                                                       name="postalCode"
-                                                       placeholder="28001"
-                                                       autocomplete="postal-code">
-                                                <div class="field-error" style="display: none;"></div>
-                                            </div>
-                                            
-                                            <div class="col-md-3 mb-3">
-                                                <!-- PROBLEMA: Select sin label apropiado -->
-                                                <div class="form-label required">País</div>
-                                                <select class="form-select" name="country" autocomplete="country">
-                                                    <option value="">Selecciona país</option>
-                                                    <option value="ES">España</option>
-                                                    <option value="FR">Francia</option>
-                                                    <option value="DE">Alemania</option>
-                                                    <option value="IT">Italia</option>
-                                                    <option value="PT">Portugal</option>
+                                            <div class="col-md-6 mb-3">
+                                                <div class="form-label required">Año de expiración</div>
+                                                <select class="form-select" 
+                                                        name="expiryYear" 
+                                                        autocomplete="cc-exp-year"
+                                                        onchange="updateCardPreview()">
+                                                    <option value="">Año</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                    <option value="2027">2027</option>
+                                                    <option value="2028">2028</option>
+                                                    <option value="2029">2029</option>
+                                                    <option value="2030">2030</option>
                                                 </select>
                                                 <div class="field-error" style="display: none;"></div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                    <!-- Opciones de envío - PROBLEMAS -->
-                                    <div class="form-section">
-                                        <div class="section-title">
-                                            📦 Opciones de Envío
-                                        </div>
                                         
-                                        <!-- PROBLEMA: Radio buttons sin fieldset -->
-                                        <div style="margin-bottom: 1rem;">
-                                            <!-- PROBLEMA: Radio sin label apropiado -->
-                                            <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;"
-                                                 onclick="selectShipping('standard')">
-                                                <input type="radio" name="shipping" value="standard" style="margin-right: 0.5rem;">
-                                                <strong>Envío Estándar (5-7 días)</strong> - Gratis
-                                                <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
-                                                    Entrega en horario laboral
-                                                </div>
-                                            </div>
-                                            
-                                            <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;"
-                                                 onclick="selectShipping('express')">
-                                                <input type="radio" name="shipping" value="express" style="margin-right: 0.5rem;">
-                                                <strong>Envío Express (2-3 días)</strong> - €9.99
-                                                <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
-                                                    Entrega garantizada en 2-3 días hábiles
-                                                </div>
-                                            </div>
-                                            
-                                            <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;"
-                                                 onclick="selectShipping('overnight')">
-                                                <input type="radio" name="shipping" value="overnight" style="margin-right: 0.5rem;">
-                                                <strong>Envío 24h</strong> - €19.99
-                                                <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
-                                                    Entrega al día siguiente antes de las 12:00
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Facturación -->
-                                    <div class="form-section">
-                                        <div class="section-title">
-                                            🧾 Información de Facturación
-                                        </div>
-                                        
-                                        <!-- PROBLEMA: Checkbox sin accesibilidad -->
+                                        <!-- PROBLEMA: Checkbox guardar tarjeta sin contexto -->
                                         <div class="mb-3">
-                                            <input type="checkbox" 
-                                                   name="sameAsShipping" 
-                                                   checked 
-                                                   onchange="toggleBillingAddress()"
-                                                   style="margin-right: 0.5rem;">
-                                            <span>La dirección de facturación es igual a la de envío</span>
-                                        </div>
-                                        
-                                        <!-- PROBLEMA: Sección colapsable sin accesibilidad -->
-                                        <div id="billingAddressSection" style="display: none;">
-                                            <div class="row">
-                                                <div class="col-12 mb-3">
-                                                    <div class="form-label">Dirección de facturación</div>
-                                                    <input type="text" class="form-control" name="billingAddress">
-                                                </div>
+                                            <input type="checkbox" name="saveCard" style="margin-right: 0.5rem;">
+                                            <span>Guardar esta tarjeta para futuras compras</span>
+                                            <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">
+                                                Tus datos se almacenarán de forma segura y encriptada
                                             </div>
-                                            <!-- Más campos de facturación... -->
                                         </div>
-                                    </div>
-                                    
-                                    <!-- Botones de navegación -->
-                                    <div style="display: flex; justify-content: space-between;">
-                                        <button type="button" 
-                                                onclick="prevStep()"
-                                                class="btn btn-outline-secondary btn-lg">
-                                            ← Anterior
-                                        </button>
-                                        <button type="button" 
-                                                onclick="nextStep()"
-                                                class="btn btn-primary btn-lg">
-                                            Continuar →
-                                        </button>
                                     </div>
                                 </div>
                                 
-                                <!-- PASO 3: Método de Pago - PROBLEMAS CRÍTICOS -->
-                                <div class="step-panel" data-panel="3">
-                                    
-                                    <div class="form-section">
-                                        <div class="section-title">
-                                            💳 Método de Pago
-                                        </div>
-                                        
-                                        <!-- PROBLEMA: Métodos de pago sin fieldset -->
-                                        <div style="margin-bottom: 2rem;">
-                                            
-                                            <!-- Tarjeta de crédito -->
-                                            <div class="payment-method" onclick="selectPaymentMethod('card')">
-                                                <!-- PROBLEMA: Radio sin label -->
-                                                <input type="radio" name="paymentMethod" value="card" style="margin-right: 0.5rem;">
-                                                <strong>💳 Tarjeta de Crédito/Débito</strong>
-                                                <div style="font-size: 0.9rem; color: #6c757d;">
-                                                    Visa, Mastercard, American Express
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- PayPal -->
-                                            <div class="payment-method" onclick="selectPaymentMethod('paypal')">
-                                                <input type="radio" name="paymentMethod" value="paypal" style="margin-right: 0.5rem;">
-                                                <strong>🔵 PayPal</strong>
-                                                <div style="font-size: 0.9rem; color: #6c757d;">
-                                                    Paga de forma segura con tu cuenta PayPal
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Transferencia -->
-                                            <div class="payment-method" onclick="selectPaymentMethod('transfer')">
-                                                <input type="radio" name="paymentMethod" value="transfer" style="margin-right: 0.5rem;">
-                                                <strong>🏦 Transferencia Bancaria</strong>
-                                                <div style="font-size: 0.9rem; color: #6c757d;">
-                                                    Recibirás las instrucciones por email
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- PROBLEMA: Sección tarjeta sin accesibilidad -->
-                                        <div id="cardDetails" style="display: none;">
-                                            
-                                            <!-- Vista previa de tarjeta - PROBLEMA: Solo visual -->
-                                            <div class="card-preview">
-                                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                                                    <span>BANCO EJEMPLO</span>
-                                                    <span id="cardType">VISA</span>
-                                                </div>
-                                                <div style="font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 1rem;" id="cardNumberDisplay">
-                                                    **** **** **** ****
-                                                </div>
-                                                <div style="display: flex; justify-content: space-between;">
-                                                    <div>
-                                                        <div style="font-size: 0.7rem; opacity: 0.8;">TITULAR</div>
-                                                        <div id="cardHolderDisplay">NOMBRE APELLIDOS</div>
-                                                    </div>
-                                                    <div>
-                                                        <div style="font-size: 0.7rem; opacity: 0.8;">VÁLIDA HASTA</div>
-                                                        <div id="cardExpiryDisplay">MM/AA</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="row">
-                                                <div class="col-12 mb-3">
-                                                    <!-- PROBLEMA: Campo tarjeta sin descripción accesible -->
-                                                    <div class="form-label required">Número de tarjeta</div>
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           name="cardNumber"
-                                                           placeholder="1234 5678 9012 3456"
-                                                           maxlength="19"
-                                                           autocomplete="cc-number"
-                                                           oninput="formatCardNumber(this)">
-                                                    <div class="field-error" style="display: none;"></div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="row">
-                                                <div class="col-md-8 mb-3">
-                                                    <div class="form-label required">Nombre del titular</div>
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           name="cardHolder"
-                                                           placeholder="Como aparece en la tarjeta"
-                                                           autocomplete="cc-name"
-                                                           oninput="updateCardPreview()">
-                                                    <div class="field-error" style="display: none;"></div>
-                                                </div>
-                                                
-                                                <div class="col-md-4 mb-3">
-                                                    <!-- PROBLEMA: CVV sin explicación accesible -->
-                                                    <div class="form-label required">
-                                                        CVV
-                                                        <!-- PROBLEMA: Icono de ayuda sin accesibilidad -->
-                                                        <span style="cursor: help; color: #007bff;" onclick="showCVVHelp()">ℹ️</span>
-                                                    </div>
-                                                    <input type="password" 
-                                                           class="form-control" 
-                                                           name="cvv"
-                                                           placeholder="123"
-                                                           maxlength="4"
-                                                           autocomplete="cc-csc">
-                                                    <div class="field-error" style="display: none;"></div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="form-label required">Mes de expiración</div>
-                                                    <!-- PROBLEMA: Select sin opciones accesibles -->
-                                                    <select class="form-select" 
-                                                            name="expiryMonth" 
-                                                            autocomplete="cc-exp-month"
-                                                            onchange="updateCardPreview()">
-                                                        <option value="">Mes</option>
-                                                        <option value="01">01</option>
-                                                        <option value="02">02</option>
-                                                        <option value="03">03</option>
-                                                        <option value="04">04</option>
-                                                        <option value="05">05</option>
-                                                        <option value="06">06</option>
-                                                        <option value="07">07</option>
-                                                        <option value="08">08</option>
-                                                        <option value="09">09</option>
-                                                        <option value="10">10</option>
-                                                        <option value="11">11</option>
-                                                        <option value="12">12</option>
-                                                    </select>
-                                                    <div class="field-error" style="display: none;"></div>
-                                                </div>
-                                                
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="form-label required">Año de expiración</div>
-                                                    <select class="form-select" 
-                                                            name="expiryYear" 
-                                                            autocomplete="cc-exp-year"
-                                                            onchange="updateCardPreview()">
-                                                        <option value="">Año</option>
-                                                        <option value="2024">2024</option>
-                                                        <option value="2025">2025</option>
-                                                        <option value="2026">2026</option>
-                                                        <option value="2027">2027</option>
-                                                        <option value="2028">2028</option>
-                                                        <option value="2029">2029</option>
-                                                        <option value="2030">2030</option>
-                                                    </select>
-                                                    <div class="field-error" style="display: none;"></div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- PROBLEMA: Checkbox guardar tarjeta sin contexto -->
-                                            <div class="mb-3">
-                                                <input type="checkbox" name="saveCard" style="margin-right: 0.5rem;">
-                                                <span>Guardar esta tarjeta para futuras compras</span>
-                                                <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">
-                                                    Tus datos se almacenarán de forma segura y encriptada
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Botones de navegación -->
-                                    <div style="display: flex; justify-content: space-between;">
-                                        <button type="button" 
-                                                onclick="prevStep()"
-                                                class="btn btn-outline-secondary btn-lg">
-                                            ← Anterior
-                                        </button>
-                                        <button type="button" 
-                                                onclick="nextStep()"
-                                                class="btn btn-primary btn-lg">
-                                            Revisar Pedido →
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <!-- PASO 4: Confirmación - PROBLEMAS -->
-                                <div class="step-panel" data-panel="4">
-                                    
-                                    <div class="form-section">
-                                        <div class="section-title">
-                                            ✅ Confirmación de Pedido
-                                        </div>
-                                        
-                                        <!-- PROBLEMA: Resumen sin estructura accesible -->
-                                        <div style="background: white; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
-                                            
-                                            <!-- Resumen de información personal -->
-                                            <div style="margin-bottom: 1.5rem;">
-                                                <div style="font-weight: 600; margin-bottom: 0.5rem; color: #007bff;">
-                                                    Información Personal
-                                                </div>
-                                                <div id="personalSummary">
-                                                    <!-- Se completará dinámicamente -->
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Resumen de envío -->
-                                            <div style="margin-bottom: 1.5rem;">
-                                                <div style="font-weight: 600; margin-bottom: 0.5rem; color: #007bff;">
-                                                    Dirección de Envío
-                                                </div>
-                                                <div id="shippingSummary">
-                                                    <!-- Se completará dinámicamente -->
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Resumen de pago -->
-                                            <div style="margin-bottom: 1.5rem;">
-                                                <div style="font-weight: 600; margin-bottom: 0.5rem; color: #007bff;">
-                                                    Método de Pago
-                                                </div>
-                                                <div id="paymentSummary">
-                                                    <!-- Se completará dinámicamente -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- PROBLEMA: Términos finales sin accesibilidad -->
-                                        <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
-                                            <div style="font-weight: 500; margin-bottom: 0.5rem;">
-                                                ⚠️ Términos y Condiciones Finales
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="checkbox" name="acceptTerms" required style="margin-right: 0.5rem;">
-                                                <span>
-                                                    Acepto los 
-                                                    <!-- PROBLEMA: Link sin indicar nueva ventana -->
-                                                    <a href="#" target="_blank">términos y condiciones de venta</a>
-                                                </span>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="checkbox" name="acceptPrivacy" required style="margin-right: 0.5rem;">
-                                                <span>
-                                                    He leído la 
-                                                    <a href="#" target="_blank">política de privacidad</a>
-                                                </span>
-                                            </div>
-                                            <div class="mb-2">
-                                                <input type="checkbox" name="acceptRefund" required style="margin-right: 0.5rem;">
-                                                <span>
-                                                    Entiendo la 
-                                                    <a href="#" target="_blank">política de devoluciones</a>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Botones finales -->
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <button type="button" 
-                                                onclick="prevStep()"
-                                                class="btn btn-outline-secondary btn-lg">
-                                            ← Anterior
-                                        </button>
-                                        
-                                        <div style="text-align: center;">
-                                            <!-- PROBLEMA: Total sin formato accesible -->
-                                            <div style="font-size: 1.1rem; color: #6c757d; margin-bottom: 0.5rem;">
-                                                Total a pagar:
-                                            </div>
-                                            <div style="font-size: 2rem; font-weight: bold; color: #007bff;">
-                                                €1,848.96
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- PROBLEMA: Botón final sin indicar proceso -->
-                                        <button type="submit" 
-                                                class="btn btn-success btn-lg"
-                                                style="font-size: 1.2rem; padding: 1rem 2rem;">
-                                            💳 Realizar Pago
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <!-- PROBLEMA: Sidebar resumen sin landmark -->
-                        <div class="col-lg-4">
-                            <div class="order-summary">
-                                <!-- PROBLEMA: Resumen sin estructura semántica -->
-                                <div style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; text-align: center;">
-                                    📋 Resumen del Pedido
-                                </div>
-                                
-                                <!-- Lista de productos - PROBLEMA: Sin estructura -->
-                                <div style="margin-bottom: 1.5rem;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #dee2e6;">
-                                        <div>
-                                            <div style="font-weight: 500;">Laptop Gaming Pro X1</div>
-                                            <div style="font-size: 0.9rem; color: #6c757d;">Cantidad: 1</div>
-                                        </div>
-                                        <div style="font-weight: 500;">€1,299.99</div>
-                                    </div>
-                                    
-                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #dee2e6;">
-                                        <div>
-                                            <div style="font-weight: 500;">Auriculares Wireless Pro</div>
-                                            <div style="font-size: 0.9rem; color: #6c757d;">Cantidad: 2</div>
-                                        </div>
-                                        <div style="font-weight: 500;">€399.98</div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Totales - PROBLEMA: Sin estructura semántica -->
-                                <div style="border-top: 2px solid #dee2e6; padding-top: 1rem;">
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                        <span>Subtotal:</span>
-                                        <span>€1,699.97</span>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                        <span>Envío:</span>
-                                        <span id="shippingCost">€0.00</span>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                        <span>Impuestos (21%):</span>
-                                        <span>€356.99</span>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                                        <span>Descuento:</span>
-                                        <span style="color: #28a745;">-€208.00</span>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; border-top: 2px solid #007bff; padding-top: 1rem;">
-                                        <span>Total:</span>
-                                        <span style="color: #007bff;">€1,848.96</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- PROBLEMA: Código promocional sin accesibilidad -->
-                                <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
-                                    <div style="font-weight: 500; margin-bottom: 0.5rem;">¿Tienes un código promocional?</div>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <!-- PROBLEMA: Input sin label -->
-                                        <input type="text" 
-                                               class="form-control" 
-                                               placeholder="Código promocional"
-                                               id="promoCode">
-                                        <button onclick="applyPromoCode()" class="btn btn-outline-primary">
-                                            Aplicar
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <!-- Garantías y seguridad -->
-                                <div style="margin-top: 1.5rem; font-size: 0.9rem; color: #6c757d; text-align: center;">
-                                    <div style="margin-bottom: 0.5rem;">🔒 Pago 100% seguro</div>
-                                    <div style="margin-bottom: 0.5rem;">📞 Soporte 24/7</div>
-                                    <div style="margin-bottom: 0.5rem;">📦 Garantía de 30 días</div>
+                                <!-- Botones de navegación -->
+                                <div style="display: flex; justify-content: space-between;">
+                                    <button type="button" 
+                                            onclick="prevStep()"
+                                            class="btn btn-outline-secondary btn-lg">
+                                        ← Anterior
+                                    </button>
+                                    <button type="button" 
+                                            onclick="nextStep()"
+                                            class="btn btn-primary btn-lg">
+                                        Revisar Pedido →
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                            
+                            <!-- PASO 4: Confirmación - PROBLEMAS -->
+                            <div class="step-panel" data-panel="4">
+                                
+                                <div class="form-section">
+                                    <div class="section-title">
+                                        ✅ Confirmación de Pedido
+                                    </div>
+                                    
+                                    <!-- PROBLEMA: Resumen sin estructura accesible -->
+                                    <div style="background: white; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+                                        
+                                        <!-- Resumen de información personal -->
+                                        <div style="margin-bottom: 1.5rem;">
+                                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: #007bff;">
+                                                Información Personal
+                                            </div>
+                                            <div id="personalSummary">
+                                                <!-- Se completará dinámicamente -->
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Resumen de envío -->
+                                        <div style="margin-bottom: 1.5rem;">
+                                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: #007bff;">
+                                                Dirección de Envío
+                                            </div>
+                                            <div id="shippingSummary">
+                                                <!-- Se completará dinámicamente -->
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Resumen de pago -->
+                                        <div style="margin-bottom: 1.5rem;">
+                                            <div style="font-weight: 600; margin-bottom: 0.5rem; color: #007bff;">
+                                                Método de Pago
+                                            </div>
+                                            <div id="paymentSummary">
+                                                <!-- Se completará dinámicamente -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- PROBLEMA: Términos finales sin accesibilidad -->
+                                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                                        <div style="font-weight: 500; margin-bottom: 0.5rem;">
+                                            ⚠️ Términos y Condiciones Finales
+                                        </div>
+                                        <div class="mb-2">
+                                            <input type="checkbox" name="acceptTerms" required style="margin-right: 0.5rem;">
+                                            <span>
+                                                Acepto los 
+                                                <!-- PROBLEMA: Link sin indicar nueva ventana -->
+                                                <a href="#" target="_blank">términos y condiciones de venta</a>
+                                            </span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <input type="checkbox" name="acceptPrivacy" required style="margin-right: 0.5rem;">
+                                            <span>
+                                                He leído la 
+                                                <a href="#" target="_blank">política de privacidad</a>
+                                            </span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <input type="checkbox" name="acceptRefund" required style="margin-right: 0.5rem;">
+                                            <span>
+                                                Entiendo la 
+                                                <a href="#" target="_blank">política de devoluciones</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Botones finales -->
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <button type="button" 
+                                            onclick="prevStep()"
+                                            class="btn btn-outline-secondary btn-lg">
+                                        ← Anterior
+                                    </button>
+                                    
+                                    <div style="text-align: center;">
+                                        <!-- PROBLEMA: Total sin formato accesible -->
+                                        <div style="font-size: 1.1rem; color: #6c757d; margin-bottom: 0.5rem;">
+                                            Total a pagar:
+                                        </div>
+                                        <div style="font-size: 2rem; font-weight: bold; color: #007bff;">
+                                            €1,848.96
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- PROBLEMA: Botón final sin indicar proceso -->
+                                    <button type="submit" 
+                                            class="btn btn-success btn-lg"
+                                            style="font-size: 1.2rem; padding: 1rem 2rem;">
+                                        💳 Realizar Pago
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </div>
+                    
+                    <!-- PROBLEMA: Sidebar resumen sin landmark -->
+                    <div class="col-lg-4">
+                        <div class="order-summary">
+                            <!-- PROBLEMA: Resumen sin estructura semántica -->
+                            <div style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; text-align: center;">
+                                📋 Resumen del Pedido
+                            </div>
+                            
+                            <!-- Lista de productos - PROBLEMA: Sin estructura -->
+                            <div style="margin-bottom: 1.5rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #dee2e6;">
+                                    <div>
+                                        <div style="font-weight: 500;">Laptop Gaming Pro X1</div>
+                                        <div style="font-size: 0.9rem; color: #6c757d;">Cantidad: 1</div>
+                                    </div>
+                                    <div style="font-weight: 500;">€1,299.99</div>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #dee2e6;">
+                                    <div>
+                                        <div style="font-weight: 500;">Auriculares Wireless Pro</div>
+                                        <div style="font-size: 0.9rem; color: #6c757d;">Cantidad: 2</div>
+                                    </div>
+                                    <div style="font-weight: 500;">€399.98</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Totales - PROBLEMA: Sin estructura semántica -->
+                            <div style="border-top: 2px solid #dee2e6; padding-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Subtotal:</span>
+                                    <span>€1,699.97</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Envío:</span>
+                                    <span id="shippingCost">€0.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Impuestos (21%):</span>
+                                    <span>€356.99</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                    <span>Descuento:</span>
+                                    <span style="color: #28a745;">-€208.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; border-top: 2px solid #007bff; padding-top: 1rem;">
+                                    <span>Total:</span>
+                                    <span style="color: #007bff;">€1,848.96</span>
+                                </div>
+                            </div>
+                            
+                            <!-- PROBLEMA: Código promocional sin accesibilidad -->
+                            <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+                                <div style="font-weight: 500; margin-bottom: 0.5rem;">¿Tienes un código promocional?</div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <!-- PROBLEMA: Input sin label -->
+                                    <input type="text" 
+                                            class="form-control" 
+                                            placeholder="Código promocional"
+                                            id="promoCode">
+                                    <button onclick="applyPromoCode()" class="btn btn-outline-primary">
+                                        Aplicar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Garantías y seguridad -->
+                            <div style="margin-top: 1.5rem; font-size: 0.9rem; color: #6c757d; text-align: center;">
+                                <div style="margin-bottom: 0.5rem;">🔒 Pago 100% seguro</div>
+                                <div style="margin-bottom: 0.5rem;">📞 Soporte 24/7</div>
+                                <div style="margin-bottom: 0.5rem;">📦 Garantía de 30 días</div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </main>
             </div>
         </div>
     </div>
