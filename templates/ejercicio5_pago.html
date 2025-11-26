@@ -209,129 +209,148 @@
 </head>
 
 <body>
-    <!-- PROBLEMA: Falta skip link -->
-    
-    <div class="checkout-container">
+    <!-- Skip link -->
+    <a href="#mainCheckout" class="skip-link" tabindex="0" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;">Saltar al checkout</a>
+
+    <!-- Añadido el main para el skip link y landmark principal -->
+    <main id="mainCheckout" class="checkout-container" tabindex="-1">    
         <div class="container">
             
             <!-- Navegación de regreso -->
-            <div class="mb-3">
+            <nav aria-label="Enlace de regreso">
+                <div class="mb-3">
                 <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
                     ← Volver al portal
                 </a>
-            </div>
+                </div>
+            </nav>
             
             <div class="checkout-card">
                 
-                <!-- PROBLEMA: Header de progreso sin accesibilidad -->
-                <div class="progress-header">
-                    <!-- PROBLEMA: Título sin estructura apropiada -->
-                    <div style="font-size: 1.8rem; font-weight: 300; margin-bottom: 2rem; text-align: center;">
+                <!-- Header de progreso con accesibilidad -->
+                <header class="progress-header">
+                    <!-- Título con estructura apropiada -->
+                    <h1 style="font-size: 1.8rem; font-weight: 300; margin-bottom: 2rem; text-align: center;">
                         Proceso de Pago Seguro
-                    </div>
+                    </h1>
                     
-                    <!-- PROBLEMA: Indicador de pasos sin accesibilidad -->
-                    <div class="step-indicator">
-                        <div class="step-connector"></div>
-                        
-                        <div class="step active" data-step="1">
-                            <div class="step-number">1</div>
-                            <div class="step-title">Información Personal</div>
-                        </div>
-                        
-                        <div class="step" data-step="2">
-                            <div class="step-number">2</div>
-                            <div class="step-title">Envío y Facturación</div>
-                        </div>
-                        
-                        <div class="step" data-step="3">
-                            <div class="step-number">3</div>
-                            <div class="step-title">Método de Pago</div>
-                        </div>
-                        
-                        <div class="step" data-step="4">
-                            <div class="step-number">4</div>
-                            <div class="step-title">Confirmación</div>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Indicador de pasos con accesibilidad -->
+                    <nav aria-label="Progreso de compra">
+                        <ol class="step-indicator" style="list-style:none;display:flex;justify-content:center;padding:0;">
+                            <li class="step" data-step="1" role="listitem" aria-current="step">
+                            <span class="step-number">1</span>
+                            <span class="step-title">Información Personal</span>
+                            </li>
+                            <li class="step" data-step="2" role="listitem">
+                            <span class="step-number">2</span>
+                            <span class="step-title">Envío y Facturación</span>
+                            </li>
+                            <li class="step" data-step="3" role="listitem">
+                            <span class="step-number">3</span>
+                            <span class="step-title">Método de Pago</span>
+                            </li>
+                            <li class="step" data-step="4" role="listitem">
+                            <span class="step-number">4</span>
+                            <span class="step-title">Confirmación</span>
+                            </li>
+                        </ol>
+                    </nav>
+
+                </header>
                 
-                <!-- PROBLEMA: Contenido principal sin landmark -->
+                <!-- Contenido principal con landmark -->
                 <div class="checkout-content">
                     <div class="row">
                         
                         <!-- Columna principal del formulario -->
                         <div class="col-lg-8">
                             
-                            <!-- PROBLEMA: Formulario sin estructura accesible -->
+                            <!-- Formulario con estructura accesible -->
                             <form id="checkoutForm" novalidate>
                                 
-                                <!-- PASO 1: Información Personal - MÚLTIPLES PROBLEMAS -->
+                                <!-- PASO 1: Información Personal -->
                                 <div class="step-panel active" data-panel="1">
-                                    <!-- PROBLEMA: Sin fieldset para agrupar -->
-                                    <div class="form-section">
-                                        <div class="section-title">
+                                    <!-- Fieldset para agrupar -->
+                                    <fieldset class="form-section">
+                                        <legend class="section-title">
                                             👤 Información Personal
-                                        </div>
+                                        </legend>
                                         
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <!-- PROBLEMA: Label sin asociación -->
-                                                <div class="form-label required">Nombre</div>
+                                                <!-- Label con asociación -->
+                                                <label for="firstName" class="form-label required">Nombre</label>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="firstName"
-                                                       placeholder="Tu nombre"
-                                                       autocomplete="given-name">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    id="firstName"
+                                                    class="form-control" 
+                                                    name="firstName"
+                                                    placeholder="Tu nombre"
+                                                    autocomplete="given-name"
+                                                    required
+                                                    aria-required="true"
+                                                >
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                             
                                             <div class="col-md-6 mb-3">
-                                                <div class="form-label required">Apellidos</div>
+                                                <label for="lastName" class="form-label required">Apellidos</label>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="lastName"
-                                                       placeholder="Tus apellidos"
-                                                       autocomplete="family-name">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    id="lastName"
+                                                    class="form-control" 
+                                                    name="lastName"
+                                                    placeholder="Tus apellidos"
+                                                    autocomplete="family-name"
+                                                    required
+                                                    aria-required="true"
+                                                >
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-8 mb-3">
-                                                <div class="form-label required">Correo electrónico</div>
+                                                <label for="email" class="form-label required">Correo electrónico</label>
                                                 <input type="email" 
-                                                       class="form-control" 
-                                                       name="email"
-                                                       placeholder="tu@email.com"
-                                                       autocomplete="email">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    id="email"
+                                                    class="form-control" 
+                                                    name="email"
+                                                    placeholder="tu@email.com"
+                                                    autocomplete="email"
+                                                    required
+                                                    aria-required="true"
+                                                >
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                             
                                             <div class="col-md-4 mb-3">
-                                                <div class="form-label required">Teléfono</div>
+                                                <label for="phone" class="form-label required">Teléfono</label>
                                                 <input type="tel" 
-                                                       class="form-control" 
-                                                       name="phone"
-                                                       placeholder="+34 600 000 000"
-                                                       autocomplete="tel">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    id="phone"
+                                                    class="form-control" 
+                                                    name="phone"
+                                                    placeholder="+34 600 000 000"
+                                                    autocomplete="tel"
+                                                    required
+                                                    aria-required="true"
+                                                >
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                         </div>
                                         
-                                        <!-- PROBLEMA: Checkbox sin estructura accesible -->
+                                        <!-- Checkbox con estructura accesible -->
                                         <div class="mb-3">
-                                            <input type="checkbox" name="createAccount" style="margin-right: 0.5rem;">
-                                            <span>Crear una cuenta para futuras compras más rápidas</span>
+                                            <input type="checkbox" id="createAccount" name="createAccount" style="margin-right: 0.5rem;">
+                                            <label for="createAccount">Crear una cuenta para futuras compras más rápidas</label>
                                         </div>
-                                    </div>
+                                    </fieldset>
                                     
-                                    <!-- Botones de navegación - PROBLEMAS -->
+                                    <!-- Botones de navegación -->
                                     <div style="display: flex; justify-content: end; gap: 1rem;">
-                                        <!-- PROBLEMA: Botón sin descripción de acción -->
+                                        <!-- Botón con descripción de acción -->
                                         <button type="button" 
                                                 onclick="nextStep()"
-                                                class="btn btn-primary btn-lg">
+                                                class="btn btn-primary btn-lg"
+                                                aria-label="Continuar al siguiente paso">
                                             Continuar →
                                         </button>
                                     </div>
@@ -350,10 +369,10 @@
                                             <div class="col-12 mb-3">
                                                 <div class="form-label required">Dirección</div>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="address"
-                                                       placeholder="Calle, número, piso, puerta"
-                                                       autocomplete="street-address">
+                                                    class="form-control" 
+                                                    name="address"
+                                                    placeholder="Calle, número, piso, puerta"
+                                                    autocomplete="street-address">
                                                 <div class="field-error" style="display: none;"></div>
                                             </div>
                                         </div>
@@ -362,20 +381,20 @@
                                             <div class="col-md-6 mb-3">
                                                 <div class="form-label required">Ciudad</div>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="city"
-                                                       placeholder="Tu ciudad"
-                                                       autocomplete="address-level2">
+                                                    class="form-control" 
+                                                    name="city"
+                                                    placeholder="Tu ciudad"
+                                                    autocomplete="address-level2">
                                                 <div class="field-error" style="display: none;"></div>
                                             </div>
                                             
                                             <div class="col-md-3 mb-3">
                                                 <div class="form-label required">Código Postal</div>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="postalCode"
-                                                       placeholder="28001"
-                                                       autocomplete="postal-code">
+                                                    class="form-control" 
+                                                    name="postalCode"
+                                                    placeholder="28001"
+                                                    autocomplete="postal-code">
                                                 <div class="field-error" style="display: none;"></div>
                                             </div>
                                             
@@ -405,7 +424,7 @@
                                         <div style="margin-bottom: 1rem;">
                                             <!-- PROBLEMA: Radio sin label apropiado -->
                                             <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;"
-                                                 onclick="selectShipping('standard')">
+                                                onclick="selectShipping('standard')">
                                                 <input type="radio" name="shipping" value="standard" style="margin-right: 0.5rem;">
                                                 <strong>Envío Estándar (5-7 días)</strong> - Gratis
                                                 <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
@@ -414,7 +433,7 @@
                                             </div>
                                             
                                             <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;"
-                                                 onclick="selectShipping('express')">
+                                                onclick="selectShipping('express')">
                                                 <input type="radio" name="shipping" value="express" style="margin-right: 0.5rem;">
                                                 <strong>Envío Express (2-3 días)</strong> - €9.99
                                                 <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
@@ -423,7 +442,7 @@
                                             </div>
                                             
                                             <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;"
-                                                 onclick="selectShipping('overnight')">
+                                                onclick="selectShipping('overnight')">
                                                 <input type="radio" name="shipping" value="overnight" style="margin-right: 0.5rem;">
                                                 <strong>Envío 24h</strong> - €19.99
                                                 <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
@@ -442,10 +461,10 @@
                                         <!-- PROBLEMA: Checkbox sin accesibilidad -->
                                         <div class="mb-3">
                                             <input type="checkbox" 
-                                                   name="sameAsShipping" 
-                                                   checked 
-                                                   onchange="toggleBillingAddress()"
-                                                   style="margin-right: 0.5rem;">
+                                                name="sameAsShipping" 
+                                                checked 
+                                                onchange="toggleBillingAddress()"
+                                                style="margin-right: 0.5rem;">
                                             <span>La dirección de facturación es igual a la de envío</span>
                                         </div>
                                         
@@ -545,12 +564,12 @@
                                                     <!-- PROBLEMA: Campo tarjeta sin descripción accesible -->
                                                     <div class="form-label required">Número de tarjeta</div>
                                                     <input type="text" 
-                                                           class="form-control" 
-                                                           name="cardNumber"
-                                                           placeholder="1234 5678 9012 3456"
-                                                           maxlength="19"
-                                                           autocomplete="cc-number"
-                                                           oninput="formatCardNumber(this)">
+                                                        class="form-control" 
+                                                        name="cardNumber"
+                                                        placeholder="1234 5678 9012 3456"
+                                                        maxlength="19"
+                                                        autocomplete="cc-number"
+                                                        oninput="formatCardNumber(this)">
                                                     <div class="field-error" style="display: none;"></div>
                                                 </div>
                                             </div>
@@ -559,11 +578,11 @@
                                                 <div class="col-md-8 mb-3">
                                                     <div class="form-label required">Nombre del titular</div>
                                                     <input type="text" 
-                                                           class="form-control" 
-                                                           name="cardHolder"
-                                                           placeholder="Como aparece en la tarjeta"
-                                                           autocomplete="cc-name"
-                                                           oninput="updateCardPreview()">
+                                                        class="form-control" 
+                                                        name="cardHolder"
+                                                        placeholder="Como aparece en la tarjeta"
+                                                        autocomplete="cc-name"
+                                                        oninput="updateCardPreview()">
                                                     <div class="field-error" style="display: none;"></div>
                                                 </div>
                                                 
@@ -575,11 +594,11 @@
                                                         <span style="cursor: help; color: #007bff;" onclick="showCVVHelp()">ℹ️</span>
                                                     </div>
                                                     <input type="password" 
-                                                           class="form-control" 
-                                                           name="cvv"
-                                                           placeholder="123"
-                                                           maxlength="4"
-                                                           autocomplete="cc-csc">
+                                                        class="form-control" 
+                                                        name="cvv"
+                                                        placeholder="123"
+                                                        maxlength="4"
+                                                        autocomplete="cc-csc">
                                                     <div class="field-error" style="display: none;"></div>
                                                 </div>
                                             </div>
@@ -812,9 +831,9 @@
                                     <div style="display: flex; gap: 0.5rem;">
                                         <!-- PROBLEMA: Input sin label -->
                                         <input type="text" 
-                                               class="form-control" 
-                                               placeholder="Código promocional"
-                                               id="promoCode">
+                                            class="form-control" 
+                                            placeholder="Código promocional"
+                                            id="promoCode">
                                         <button onclick="applyPromoCode()" class="btn btn-outline-primary">
                                             Aplicar
                                         </button>
@@ -833,7 +852,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     
     <!-- PROBLEMA: Overlays sin accesibilidad -->
     <div class="loading-overlay" id="processingOverlay">
