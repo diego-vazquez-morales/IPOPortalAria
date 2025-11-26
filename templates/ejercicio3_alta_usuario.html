@@ -60,7 +60,7 @@
         
         .field-help {
             font-size: 0.8rem;
-            color: #6c757d;
+            color: #42494fff;
             margin-top: 0.25rem;
         }
         
@@ -75,7 +75,7 @@
         }
         
         .file-upload-area {
-            border: 2px dashed #dee2e6;
+            border: 2px dashed #42494fff;
             border-radius: 8px;
             padding: 2rem;
             text-align: center;
@@ -93,20 +93,20 @@
             display: flex;
             justify-content: space-between;
             font-size: 0.8rem;
-            color: #6c757d;
+            color: #42494fff;
             margin-top: 0.25rem;
         }
         
         .character-counter {
             text-align: right;
             font-size: 0.8rem;
-            color: #6c757d;
+            color: #42494fff;
             margin-top: 0.25rem;
         }
         
         /* Problemas de contraste intencionados */
         .subtle-text {
-            color: #ccc;
+            color: #424141ff;
         }
         
         .validation-message {
@@ -117,13 +117,42 @@
         .success { color: #28a745; }
         .error { color: #dc3545; }
         .warning { color: #ffc107; }
+
+        
+        .skip-link:focus {
+            position: static;
+            width: auto;
+            height: auto;
+            left: 0;
+            background-color: #000;
+            color: #fff;
+            padding: 0.5rem;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .sr-only {
+            border: 0 !important;
+            clip: rect(0, 0, 0, 0) !important;
+            height: 1px !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            position: absolute !important;
+            width: 1px !important;
+            white-space: nowrap !important;
+        }
+
+
     </style>
 </head>
 
 <body>
-    <!-- PROBLEMA: Falta skip link -->
+    <!-- Skip link -->
+    <a href="#registrationForm" class="skip-link" tabindex="0" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;"> Saltar al formulario </a>
     
-    <div class="registration-container">
+    
+    <div class="registration-container" id="registrationForm">
         <div class="container">
             
             <!-- Navegación de regreso -->
@@ -135,91 +164,106 @@
             
             <div class="registration-card">
                 
-                <!-- PROBLEMA: Progreso sin accesibilidad -->
-                <div class="form-progress">
+                <!-- Progreso con accesibilidad -->
+                <div class="form-progress" role="region" aria-label="Progreso de registro de usuario">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <div style="font-weight: 500; font-size: 1.2rem;">Registro de Usuario</div>
-                        <div style="font-size: 0.9rem; color: #6c757d;">Paso 1 de 1</div>
+                        <h1>Registro de Usuario</h1>
+                        <div style="font-size: 0.9rem; color: #42494fff;" aria-live="polite">Paso 1 de 1</div>
                     </div>
-                    <div class="progress-bar-custom">
+                    <div class="progress-bar-custom" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" aria-label="Progreso del formulario 25%">
                         <div class="progress-fill" style="width: 25%"></div>
                     </div>
-                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #6c757d;">
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #42494fff;" aria-live="polite">
                         Completando información personal...
                     </div>
                 </div>
                 
-                <!-- PROBLEMA: Formulario sin estructura semántica apropiada -->
+                <!-- Formulario con estructura semántica apropiada -->
                 <form id="registrationForm" novalidate style="padding: 0;">
-                    
-                    <!-- Sección 1: Información Personal - MÚLTIPLES PROBLEMAS -->
-                    <div class="form-section">
-                        <!-- PROBLEMA: Sin fieldset para agrupar -->
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <fieldset class="form-section">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             📝 Información Personal
-                        </div>
+                        </legend>
                         
-                        <div class="row">
+                        <div class="col-md-12 mb-4">
                             <!-- Nombre completo -->
                             <div class="col-md-6 mb-3">
-                                <!-- PROBLEMA: Label sin asociación correcta -->
-                                <div class="form-label required-field">Nombre completo</div>
-                                <input type="text" 
-                                       class="form-control" 
-                                       name="fullName"
-                                       placeholder="Ingresa tu nombre completo"
-                                       maxlength="100">
-                                <div class="character-counter">0/100 caracteres</div>
-                                <!-- PROBLEMA: Mensaje de ayuda no asociado -->
-                                <div class="field-help">
+                                <!-- Label correcto -->
+                                <label for="fullName" class="required-field">Nombre completo</label>
+                                <input 
+                                    type="text"
+                                    id="fullName"
+                                    name="fullName"
+                                    class="form-control"
+                                    placeholder="Ingresa tu nombre completo"
+                                    maxlength="100"
+                                    aria-required="true"
+                                    aria-describedby="fullNameHelp charCountFullName"
+                                >
+                                <div id="charCountFullName" class="character-counter">0/100 caracteres</div>
+                                <!-- Mensaje de ayuda asociado -->
+                                <div id="fullNameHelp"class="field-help sr-only">
                                     Incluye tu nombre y apellidos completos
                                 </div>
                             </div>
                             
                             <!-- Email -->
                             <div class="col-md-6 mb-3">
-                                <div class="form-label required-field">Correo electrónico</div>
-                                <input type="email" 
-                                       class="form-control" 
-                                       name="email"
-                                       placeholder="tu@email.com"
-                                       autocomplete="email">
-                                <!-- PROBLEMA: Validación en vivo sin accesibilidad -->
-                                <div class="validation-message" style="display: none;"></div>
+                                <label for="email" class="required-field">Correo electrónico</label>
+                                <input 
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-control"
+                                    placeholder="tu@email.com"
+                                    autocomplete="email"
+                                    aria-required="true"
+                                    aria-describedby="emailValidation"
+                                >
+                                <!-- Validación en vivo con accesibilidad -->
+                                <div id="emailValidation" class="validation-message" aria-live="polite" style="display: none;"></div>
                             </div>
-                        </div>
                         
-                        <div class="row">
                             <!-- Fecha de nacimiento -->
-                            <div class="col-md-4 mb-3">
-                                <div class="form-label required-field">Fecha de nacimiento</div>
-                                <input type="date" 
-                                       class="form-control" 
-                                       name="birthDate"
-                                       max="2006-01-01">
-                                <div class="field-help">
+                            <div class="col-md-6 mb-3">
+                                <label for="birthDate" class="required-field">Fecha de nacimiento</label>
+                                <input 
+                                    type="date"
+                                    id="birthDate"
+                                    name="birthDate"
+                                    class="form-control"
+                                    max="2006-01-01"
+                                    aria-required="true"
+                                    aria-describedby="birthDateHelp"
+                                >
+                                <div id="birthDateHelp" class="field-help">
                                     Debes ser mayor de 18 años para registrarte
                                 </div>
                             </div>
                             
                             <!-- Teléfono -->
-                            <div class="col-md-4 mb-3">
-                                <div class="form-label required-field">Teléfono</div>
-                                <input type="tel" 
-                                       class="form-control" 
-                                       name="phone"
-                                       placeholder="+34 600 000 000"
-                                       autocomplete="tel">
-                                <div class="validation-message" style="display: none;"></div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="required-field">Teléfono</label>
+                                <input 
+                                    type="tel" 
+                                    id="phone"
+                                    name="phone"
+                                    class="form-control" 
+                                    placeholder="+34 600 000 000"
+                                    autocomplete="tel"
+                                    aria-required="true"
+                                    aria-describedby="phoneValidation"
+                                >
+                                <div id="phoneValidation" class="validation-message" aria-live="polite" style="display: none;"></div>
                             </div>
                             
                             <!-- País -->
-                            <div class="col-md-4 mb-3">
-                                <!-- PROBLEMA: Select sin label apropiado -->
-                                <div class="form-label required-field">País</div>
-                                <select class="form-select" name="country">
-                                    <!-- PROBLEMA: Opción por defecto no accesible -->
-                                    <option value="">Selecciona tu país</option>
+                            <div class="col-md-6 mb-3">
+                                <!-- Select con label apropiado -->
+                                <label for="country" class="required-field">País</label>
+                                <select id="country" name="country" class="form-select" aria-required="true" aria-describedby="countryHelp" required>
+                                    <!-- Opción por defecto accesible -->
+                                    <option value="" disabled selected>Selecciona tu país</option>
                                     <option value="ES">España</option>
                                     <option value="MX">México</option>
                                     <option value="AR">Argentina</option>
@@ -228,28 +272,33 @@
                                     <option value="CL">Chile</option>
                                     <option value="OTHER">Otro</option>
                                 </select>
+                                <div id="countryHelp" class="field-help"></div>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                     
-                    <!-- Sección 2: Información Profesional - PROBLEMAS -->
-                    <div class="form-section">
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <!-- Sección 2: Información Profesional-->
+                    <fieldset class="form-section">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             💼 Información Profesional
-                        </div>
+                        </legend>
                         
-                        <div class="row">
+                        <div class="col-md-12 mb-4">
                             <!-- Ocupación -->
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Ocupación actual</div>
-                                <input type="text" 
-                                       class="form-control" 
-                                       name="occupation"
-                                       placeholder="Ej: Desarrollador Frontend"
-                                       list="occupationsList">
+                                <label for="occupation">Ocupación actual</label>
+                                <input
+                                    type="text"
+                                    id="occupation"
+                                    name="occupation"
+                                    class="form-control"
+                                    placeholder="Ej: Desarrollador Frontend"
+                                    list="occupationsList"
+                                    aria-describedby="occupationHelp"
+                                >
                                 
-                                <!-- PROBLEMA: Datalist sin accesibilidad -->
-                                <datalist id="occupationsList">
+                                <!-- Datalist con accesibilidad -->
+                                <datalist id="occupationsList" aria-hidden="true">
                                     <option value="Desarrollador Frontend">
                                     <option value="Desarrollador Backend">
                                     <option value="Full Stack Developer">
@@ -259,19 +308,29 @@
                                     <option value="Data Scientist">
                                     <option value="Estudiante">
                                 </datalist>
+                                <div id="occupationHelp" class="field-help">Elige o escribe tu ocupación actual</div>
                             </div>
                             
                             <!-- Experiencia -->
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Años de experiencia</div>
-                                <!-- PROBLEMA: Range input sin descripción accesible -->
-                                <input type="range" 
-                                       class="form-range" 
-                                       name="experience"
-                                       min="0" 
-                                       max="20" 
-                                       value="2"
-                                       step="1">
+                                <label for="experience" id="experienceLabel">Años de experiencia</label>
+                                <!-- Range input con descripción accesible -->
+                                <input
+                                    type="range"
+                                    id="experience"
+                                    name="experience"
+                                    class="form-range"
+                                    min="0"
+                                    max="20"
+                                    value="2"
+                                    step="1"
+                                    aria-valuemin="0"
+                                    aria-valuemax="20"
+                                    aria-valuenow="2"
+                                    aria-valuetext="2 años"
+                                    aria-labelledby="experienceLabel"
+                                >
+                                
                                 <div class="range-display">
                                     <span>0 años</span>
                                     <span id="experienceValue">2 años</span>
@@ -280,104 +339,107 @@
                             </div>
                         </div>
                         
-                        <!-- Habilidades técnicas - PROBLEMA: Checkboxes sin estructura -->
-                        <div class="mb-3">
-                            <div class="form-label">Habilidades técnicas</div>
-                            <div class="field-help">Selecciona todas las que apliquen</div>
+                        <!-- Habilidades técnicas -->
+                        <fieldset>
+                            <legend>Habilidades técnicas</legend>
+                            <span id="skillsHelp" class="field-help">(Selecciona todas las que apliquen)</span>
                             
-                            <div class="checkbox-group">
+                            <div class="checkbox-group" role="group" aria-describedby="skillsHelp"> 
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <!-- PROBLEMA: Checkboxes sin labels apropiados -->
-                                        <input type="checkbox" name="skills" value="html" style="margin-right: 0.5rem;">
-                                        HTML/CSS
+                                    <div class="row-md-3">
+                                        <!-- Checkboxes con labels apropiados -->
+                                        <input type="checkbox" id="skill-html" name="skills" value="html" style="margin-right: 0.5rem;">
+                                        <label for="skill-html">HTML/CSS</label>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="javascript" style="margin-right: 0.5rem;">
-                                        JavaScript
+                                    <div class="row-md-3">
+                                        <input type="checkbox" id="skill-javascript" name="skills" value="javascript" style="margin-right: 0.5rem;">
+                                        <label for="skill-javascript">JavaScript</label>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="react" style="margin-right: 0.5rem;">
-                                        React
+                                    <div class="row-md-3">
+                                        <input type="checkbox" id="skill-react" name="skills" value="react" style="margin-right: 0.5rem;">
+                                        <label for="skill-react">React</label>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="vue" style="margin-right: 0.5rem;">
-                                        Vue.js
+                                    <div class="row-md-3">
+                                        <input type="checkbox" id="skill-vue" name="skills" value="vue" style="margin-right: 0.5rem;">
+                                        <label for="skill-vue">Vue.js</label>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="angular" style="margin-right: 0.5rem;">
-                                        Angular
+                                    <div class="row-md-3">
+                                        <input type="checkbox" id="skill-angular" name="skills" value="angular" style="margin-right: 0.5rem;">
+                                        <label for="skill-angular">Angular</label>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="nodejs" style="margin-right: 0.5rem;">
-                                        Node.js
+                                    <div class="row-md-3">
+                                        <input type="checkbox" id="skill-nodejs" name="skills" value="nodejs" style="margin-right: 0.5rem;">
+                                        <label for="skill-nodejs">Node.js</label>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="python" style="margin-right: 0.5rem;">
-                                        Python
+                                    <div class="row-md-3">
+                                        <input type="checkbox" id="skill-python" name="skills" value="python" style="margin-right: 0.5rem;">
+                                        <label for="skill-python">Python</label>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input type="checkbox" name="skills" value="other" style="margin-right: 0.5rem;">
-                                        Otras
+                                    <div class="row-md-3">
+                                        <input type="checkbox" id="skill-other" name="skills" value="other" style="margin-right: 0.5rem;">
+                                        <label for="skill-other">Otras</label>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </fieldset>
                         
                         <!-- Salario esperado -->
-                        <div class="row">
+                        <div class="row mt-4">
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Salario esperado (EUR/año)</div>
-                                <input type="number" 
-                                       class="form-control" 
-                                       name="expectedSalary"
-                                       min="15000" 
-                                       max="150000" 
-                                       step="1000"
-                                       placeholder="45000">
-                                <div class="field-help">Rango entre €15,000 y €150,000</div>
+                                <label for="expectedSalary">Salario esperado (EUR/año)</label>
+                                <input
+                                    type="number"
+                                    id="expectedSalary"
+                                    name="expectedSalary"
+                                    class="form-control"
+                                    min="15000"
+                                    max="150000"
+                                    step="1000"
+                                    placeholder="45000"
+                                    aria-describedby="salaryHelp"
+                                >
+                                
+                                <div id="salaryHelp" class="field-help">Rango entre €15,000 y €150,000</div>
                             </div>
-                            
-                            <!-- Disponibilidad -->
-                            <div class="col-md-6 mb-3">
-                                <div class="form-label required-field">Disponibilidad para trabajar</div>
-                                <!-- PROBLEMA: Radio buttons sin fieldset -->
-                                <div class="radio-group">
-                                    <div>
-                                        <!-- PROBLEMA: Radio buttons sin labels apropiados -->
-                                        <input type="radio" name="availability" value="immediate" style="margin-right: 0.5rem;">
-                                        Inmediata
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="availability" value="2weeks" style="margin-right: 0.5rem;">
-                                        2 semanas
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="availability" value="1month" style="margin-right: 0.5rem;">
-                                        1 mes
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="availability" value="negotiable" style="margin-right: 0.5rem;">
-                                        Negociable
-                                    </div>
+                        </div>    
+                        <!-- Disponibilidad -->
+                        <fieldset class="col-md-6 mb-3">
+                            <legend id="availabilityLegend" class="required-field">Disponibilidad para trabajar</legend>
+                            <!-- Radio buttons con fieldset -->
+                            <div class="radio-group" role="radiogroup" aria-labelledby="availabilityLegend">
+                                <div>
+                                    <!-- Radio buttons con labels apropiados -->
+                                    <input type="radio" id="availability-immediate" name="availability" value="immediate" style="margin-right: 0.5rem;">
+                                    <label for="availability-immediate">Inmediata</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="availability-2weeks" name="availability" value="2weeks" style="margin-right: 0.5rem;">
+                                    <label for="availability-2weeks">2 semanas</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="availability-1month" name="availability" value="1month" style="margin-right: 0.5rem;">
+                                    <label for="availability-1month">1 mes</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="availability-negotiable" name="availability" value="negotiable" style="margin-right: 0.5rem;">
+                                    <label for="availability-negotiable">Negociable</label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                            
+                        </fieldset>
+                    </fieldset>
                     
-                    <!-- Sección 3: Preferencias y Configuración - PROBLEMAS -->
-                    <div class="form-section">
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <!-- Sección 3: Preferencias y Configuración -->
+                    <fieldset class="form-section">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             ⚙️ Preferencias y Configuración
-                        </div>
+                        </legend>
                         
                         <div class="row">
                             <!-- Idioma preferido -->
                             <div class="col-md-4 mb-3">
-                                <div class="form-label">Idioma preferido</div>
-                                <select class="form-select" name="preferredLanguage">
+                                <label for="preferredLanguage">Idioma preferido</label>
+                                <select id="preferredLanguage" class="form-select" name="preferredLanguage">
                                     <option value="es" selected>Español</option>
                                     <option value="en">English</option>
                                     <option value="fr">Français</option>
@@ -385,11 +447,12 @@
                                     <option value="pt">Português</option>
                                 </select>
                             </div>
-                            
+                        </div>
+                        <div class="row">    
                             <!-- Zona horaria -->
                             <div class="col-md-4 mb-3">
-                                <div class="form-label">Zona horaria</div>
-                                <select class="form-select" name="timezone">
+                                <label for="timezone">Zona horaria</label>
+                                <select id="timezone" class="form-select" name="timezone">
                                     <option value="">Detectar automáticamente</option>
                                     <option value="Europe/Madrid">Europa/Madrid (CET)</option>
                                     <option value="America/Mexico_City">América/Ciudad_de_México</option>
@@ -397,192 +460,235 @@
                                     <option value="America/Los_Angeles">América/Los_Ángeles (PST)</option>
                                 </select>
                             </div>
-                            
+                        </div>
+                        <div class="row">    
                             <!-- Tema preferido -->
                             <div class="col-md-4 mb-3">
-                                <div class="form-label">Tema de interfaz</div>
-                                <!-- PROBLEMA: Radio buttons inline sin estructura -->
-                                <div style="margin-top: 0.5rem;">
-                                    <input type="radio" name="theme" value="light" checked style="margin-right: 0.5rem;">
-                                    Claro
-                                    <input type="radio" name="theme" value="dark" style="margin-left: 1rem; margin-right: 0.5rem;">
-                                    Oscuro
-                                    <input type="radio" name="theme" value="auto" style="margin-left: 1rem; margin-right: 0.5rem;">
-                                    Automático
-                                </div>
+                                <fieldset>
+                                    <legend>Tema de interfaz</legend>
+                                    <!-- Radio buttons inline con estructura -->
+                                    <div style="margin-top: 0.5rem;">
+                                        <input type="radio" id="themeLight" name="theme" value="light" checked style="margin-right: 0.5rem;">
+                                        <label for="themeLight">Claro</label>
+                                        <input type="radio" id="themeDark" name="theme" value="dark" style="margin-left: 1rem; margin-right: 0.5rem;">
+                                        <label for="themeDark">Oscuro</label>
+                                        <input type="radio" id="themeAuto" name="theme" value="auto" style="margin-left: 1rem; margin-right: 0.5rem;">
+                                        <label for="themeAuto">Automático</label>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
                         
-                        <!-- Notificaciones - PROBLEMA: Sin fieldset -->
-                        <div class="mb-3">
-                            <div class="form-label">Preferencias de notificaciones</div>
+                        <!-- Notificaciones -->
+                        <fieldset class="mb-3">
+                            <legend>Preferencias de notificaciones</legend>
                             <div class="checkbox-group">
                                 <div class="mb-2">
-                                    <input type="checkbox" name="notifications" value="email" checked style="margin-right: 0.5rem;">
-                                    Recibir notificaciones por email
+                                    <input type="checkbox" id="notificationsEmail" name="notifications" value="email" checked style="margin-right: 0.5rem;">
+                                    <label for="notificationsEmail">Recibir notificaciones por email</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" name="notifications" value="sms" style="margin-right: 0.5rem;">
-                                    Recibir notificaciones por SMS
+                                    <input type="checkbox" id="notificationsSms" name="notifications" value="sms" style="margin-right: 0.5rem;">
+                                    <label for="notificationsSms">Recibir notificaciones por SMS</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" name="notifications" value="push" checked style="margin-right: 0.5rem;">
-                                    Recibir notificaciones push
+                                    <input type="checkbox" id="notificationsPush" name="notifications" value="push" checked style="margin-right: 0.5rem;">
+                                    <label for="notificationsPush">Recibir notificaciones push</label>
                                 </div>
                                 <div class="mb-2">
-                                    <input type="checkbox" name="notifications" value="newsletter" checked style="margin-right: 0.5rem;">
-                                    Suscribirse al newsletter semanal
+                                    <input type="checkbox" id="notificationsNewsletter" name="notifications" value="newsletter" checked style="margin-right: 0.5rem;">
+                                    <label for="notificationsNewsletter">Suscribirse al newsletter semanal</label>
                                 </div>
                             </div>
-                        </div>
+                        </fieldset>
                         
                         <!-- Bio/Descripción -->
                         <div class="mb-3">
-                            <div class="form-label">Biografía o descripción personal</div>
-                            <!-- PROBLEMA: Textarea sin aria-describedby -->
-                            <textarea class="form-control" 
-                                      name="bio"
-                                      rows="4"
-                                      maxlength="500"
-                                      placeholder="Cuéntanos un poco sobre ti, tus intereses profesionales y objetivos..."></textarea>
-                            <div class="character-counter">0/500 caracteres</div>
-                            <div class="field-help">
+                            <label for="bio">Biografía o descripción personal</label>
+                            <!-- Textarea con aria-describedby -->
+                            <textarea 
+                                id="bio"
+                                class="form-control" 
+                                name="bio"
+                                rows="4"
+                                maxlength="500"
+                                placeholder="Cuéntanos un poco sobre ti, tus intereses profesionales y objetivos..."
+                                aria-describedby="bioHelp charCountBio"
+                            ></textarea>
+                            <div id="charCountBio" class="character-counter">0/500 caracteres</div>
+                            <div id="bioHelp" class="field-help">
                                 Esta información aparecerá en tu perfil público
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                     
-                    <!-- Sección 4: Documentos y Archivos - PROBLEMAS CRÍTICOS -->
-                    <div class="form-section">
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <!-- Sección 4: Documentos y Archivos -->
+                    <fieldset class="form-section">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             📎 Documentos y Archivos
-                        </div>
+                        </legend>
                         
                         <!-- CV/Currículum -->
                         <div class="mb-4">
-                            <div class="form-label">Currículum Vitae (CV)</div>
-                            <!-- PROBLEMA: File input sin accesibilidad -->
-                            <div class="file-upload-area" onclick="document.getElementById('cvFile').click()">
+                            <label for="cvFile" class="form-label">Currículum Vitae (CV)</label>
+                            <!-- File input con accesibilidad -->
+                            <input
+                                type="file"
+                                id="cvFile"
+                                name="cv"
+                                accept=".pdf,.doc,.docx"
+                                style="opacity:0; position:absolute; width:1px; height:1px;"
+                                aria-describedby="cvFormats cvHelp"
+                            >
+
+                            <div class="file-upload-area" tabindex="0" role="button" aria-label="Subir Currículum Vitae" onclick="document.getElementById('cvFile').click()" onkeypress="if(event.key==='Enter'){document.getElementById('cvFile').click();}">
                                 <div style="font-size: 2rem; margin-bottom: 1rem;">📄</div>
                                 <div style="font-weight: 500;">Haz clic para subir tu CV</div>
-                                <div class="subtle-text" style="margin-top: 0.5rem;">
+                                <div id="cvFormats" class="subtle-text" style="margin-top: 0.5rem;">
                                     Formatos admitidos: PDF, DOC, DOCX (máx. 5MB)
                                 </div>
-                                <input type="file" 
-                                       id="cvFile"
-                                       name="cv"
-                                       accept=".pdf,.doc,.docx"
-                                       style="display: none;">
                             </div>
-                            <div class="field-help">
+
+                            <div id="cvHelp" class="field-help">
                                 Tu CV nos ayuda a entender mejor tu experiencia profesional
                             </div>
+                            <div id="cvStatus" aria-live="polite"></div>
                         </div>
                         
                         <!-- Foto de perfil -->
                         <div class="mb-4">
-                            <div class="form-label">Foto de perfil (opcional)</div>
-                            <div class="file-upload-area" onclick="document.getElementById('profilePhoto').click()">
+                            <label for="profilePhoto" class="form-label">Foto de perfil (opcional)</label>
+                            <!-- File input con aria-describedby -->
+                            <input
+                                type="file"
+                                id="profilePhoto"
+                                name="profilePhoto"
+                                accept="image/*"
+                                style="opacity:0; position:absolute; width:1px; height:1px;"
+                                aria-describedby="photoFormats photoHelp"
+                            >
+                            <div class="file-upload-area" tabindex="0" role="button" aria-label="Subir foto de perfil" onclick="document.getElementById('profilePhoto').click();" onkeypress="if(event.key==='Enter'){document.getElementById('profilePhoto').click();}">
                                 <div style="font-size: 2rem; margin-bottom: 1rem;">📷</div>
                                 <div style="font-weight: 500;">Subir foto de perfil</div>
-                                <div class="subtle-text" style="margin-top: 0.5rem;">
+                                <div id="photoFormats" class="subtle-text" style="margin-top: 0.5rem;">
                                     JPG, PNG (máx. 2MB, recomendado: 400x400px)
                                 </div>
-                                <!-- PROBLEMA: File input sin aria-describedby -->
-                                <input type="file" 
-                                       id="profilePhoto"
-                                       name="profilePhoto"
-                                       accept="image/*"
-                                       style="display: none;">
                             </div>
+                            <div id="photoHelp" class="field-help">
+                            La foto debe ser clara y reciente.
+                            </div>
+                            <div id="photoStatus" aria-live="polite"></div>
                         </div>
                         
                         <!-- Portfolio/Enlaces -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Portfolio web</div>
-                                <input type="url" 
-                                       class="form-control" 
-                                       name="portfolio"
-                                       placeholder="https://tu-portfolio.com">
-                                <div class="field-help">
+                                <label for="portfolio">Portfolio web</label>
+                                <input 
+                                    type="url"
+                                    id="portfolio"
+                                    class="form-control" 
+                                    name="portfolio"
+                                    placeholder="https://tu-portfolio.com"
+                                    aria-describedby="portfolioHelp"
+                                >
+                                <div id="portfolioHelp" class="field-help">
                                     Enlace a tu portfolio o sitio web personal
                                 </div>
                             </div>
-                            
+                        </div>
+                        <div class="row">                            
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Perfil de LinkedIn</div>
-                                <input type="url" 
-                                       class="form-control" 
-                                       name="linkedin"
-                                       placeholder="https://linkedin.com/in/tu-perfil">
+                                <label for="linkedin">Perfil de LinkedIn</label>
+                                <input 
+                                    type="url"
+                                    id="linkedin"
+                                    class="form-control" 
+                                    name="linkedin"
+                                    placeholder="https://linkedin.com/in/tu-perfil"
+                                    aria-describedby="linkedinHelp"
+                                >
+                                <div id="linkedinHelp" class="field-help">
+                                    Enlace a tu perfil de LinkedIn
+                                </div>
                             </div>
                         </div>
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">GitHub/GitLab</div>
-                                <input type="url" 
-                                       class="form-control" 
-                                       name="github"
-                                       placeholder="https://github.com/tu-usuario">
+                                <label for="github" class="form-label">GitHub/GitLab</label>
+                                <input 
+                                    type="url"
+                                    id="github"
+                                    class="form-control" 
+                                    name="github"
+                                    placeholder="https://github.com/tu-usuario"
+                                    aria-describedby="githubHelp"
+                                >
+                                <div id="githubHelp" class="field-help">
+                                    Enlace a tu perfil de GitHub o GitLab
+                                </div>
                             </div>
-                            
+                        </div>
+                        <div class="row">    
                             <div class="col-md-6 mb-3">
-                                <div class="form-label">Otro enlace relevante</div>
-                                <input type="url" 
-                                       class="form-control" 
-                                       name="otherLink"
-                                       placeholder="https://...">
+                                <label for="otherLink" class="form-label">Otro enlace relevante</label>
+                                <input 
+                                    type="url" 
+                                    id="otherLink"
+                                    class="form-control" 
+                                    name="otherLink"
+                                    placeholder="https://..."
+                                    aria-describedby="otherLinkHelp"
+                                >
+                                <div id="otherLinkHelp" class="field-help">
+                                    Enlace a otro sitio relevante (blog, proyecto, etc.)
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                     
-                    <!-- Sección 5: Términos y Confirmación - PROBLEMAS -->
-                    <div class="form-section">
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <!-- Sección 5: Términos y Confirmación -->
+                    <fieldset class="form-section">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             ✅ Confirmación y Términos
-                        </div>
+                        </legend>
                         
-                        <!-- PROBLEMA: Checkboxes legales sin fieldset -->
-                        <div class="mb-3">
-                            <div class="checkbox-group">
-                                <div class="mb-3">
-                                    <!-- PROBLEMA: Checkbox requerido sin indicación -->
-                                    <input type="checkbox" name="agreeTerms" required style="margin-right: 0.5rem;">
-                                    <span>
-                                        Acepto los 
-                                        <!-- PROBLEMA: Links sin indicar nueva ventana -->
-                                        <a href="#" target="_blank">términos y condiciones de uso</a> 
-                                        del servicio
-                                    </span>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <input type="checkbox" name="agreePrivacy" required style="margin-right: 0.5rem;">
-                                    <span>
-                                        He leído y acepto la 
-                                        <a href="#" target="_blank">política de privacidad</a>
-                                    </span>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <input type="checkbox" name="agreeMarketing" style="margin-right: 0.5rem;">
-                                    <span>
-                                        Acepto recibir comunicaciones comerciales y marketing 
-                                        (opcional)
-                                    </span>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <input type="checkbox" name="confirmAge" required style="margin-right: 0.5rem;">
-                                    <span>
-                                        Confirmo que soy mayor de 18 años
-                                    </span>
-                                </div>
+                        <!-- Checkboxes legales con fieldset -->
+                        <fieldset>
+                            <legend>Consentimientos legales</legend>
+                            <div class="mb-3">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required aria-required="true" style="margin-right:0.5rem;">
+                                <label for="agreeTerms">
+                                    Acepto los 
+                                    <a href="#" target="_blank" aria-label="Abrir términos y condiciones en nueva ventana">términos y condiciones de uso</a> 
+                                    del servicio
+                                </label>
                             </div>
-                        </div>
-                        
+                            <div class="mb-3">
+                                <input type="checkbox" id="agreePrivacy" name="agreePrivacy" required aria-required="true" style="margin-right:0.5rem;">
+                                <label for="agreePrivacy">
+                                    He leído y acepto la 
+                                    <a href="#" target="_blank" aria-label="Abrir política de privacidad en nueva ventana">política de privacidad</a>
+                                </label>
+                            </div>  
+                                    
+                            <div class="mb-3">
+                                <input type="checkbox" id="agreeMarketing" name="agreeMarketing" style="margin-right: 0.5rem;">
+                                <label for="agreeMarketing">
+                                    Acepto recibir comunicaciones comerciales y marketing 
+                                    (opcional)
+                                </label>
+                            </div>
+                                    
+                            <div class="mb-3">
+                                <input type="checkbox" id="confirmAge" name="confirmAge" required aria-required="true" style="margin-right:0.5rem;">
+                                <label for="confirmAge">
+                                    Confirmo que soy mayor de 18 años
+                                </label>
+                            </div>
+                        </fieldset>
+                            
                         <!-- Verificación final -->
                         <div class="mb-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid #007bff;">
                             <div style="font-weight: 500; margin-bottom: 0.5rem;">
@@ -596,135 +702,173 @@
                         
                         <!-- Botones de acción - PROBLEMA -->
                         <div style="display: flex; gap: 1rem; justify-content: end;">
-                            <button type="button" class="btn btn-outline-secondary">
+                            <button type="button" class="btn btn-outline-secondary" aria-label="Limpiar todo el formulario">
                                 Limpiar formulario
                             </button>
-                            <button type="button" class="btn btn-secondary">
+                            <button type="button" class="btn btn-secondary" aria-label="Guardar el formulario como borrador">
                                 Guardar como borrador
                             </button>
                             <!-- PROBLEMA: Botón submit sin indicar proceso -->
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" aria-label="Completar el registro. El proceso puede tardar unos segundos.">
                                 Completar registro
                             </button>
                         </div>
-                    </div>
+                    </fieldset>
                 </form>
             </div>
         </div>
     </div>
     
-    <!-- PROBLEMA: Loading overlay sin accesibilidad -->
-    <div id="submitOverlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 9999;">
+    <!-- Loading overlay con accesibilidad -->
+    <div id="submitOverlay" role="dialog" aria-modal="true" aria-label="Procesando registro" tabindex="-1" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 9999;">
         <div style="background: white; padding: 2rem; border-radius: 10px; text-align: center;">
-            <div class="spinner-border text-primary mb-3"></div>
-            <div>Procesando registro...</div>
+            <div class="spinner-border text-primary mb-3" aria-hidden="true"></div>
+            <div id="loadingStatus" aria-live="assertive">Procesando registro...</div>
             <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.5rem;">
                 Esto puede tomar unos segundos
             </div>
         </div>
     </div>
     
-    <!-- PROBLEMA: Mensajes no accesibles -->
-    <div id="messageArea" style="position: fixed; top: 20px; right: 20px; z-index: 10000; max-width: 400px;"></div>
+    <!-- Mensajes accesibles -->
+    <div id="messageArea" aria-live="polite" style="position: fixed; top: 20px; right: 20px; z-index: 10000; max-width: 400px;"></div>
     
     <script src="{{ url_for('static', filename='js/portal.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
-    <script>
-        // PROBLEMAS INTENCIONADOS EN EL JAVASCRIPT
-        
+    <script>        
         let formProgress = 25;
         let isSubmitting = false;
         
-        // PROBLEMA: Contador de caracteres sin accesibilidad
+        // Contador de caracteres con accesibilidad
         function updateCharacterCounter(input, maxLength) {
             const counter = input.parentNode.querySelector('.character-counter');
             if (counter) {
                 const currentLength = input.value.length;
                 counter.textContent = `${currentLength}/${maxLength} caracteres`;
-                
-                // PROBLEMA: No anuncia cuando se acerca al límite
+                counter.setAttribute('aria-live', 'polite');
+                counter.setAttribute('role', 'status');
+
+                // Anuncia cuando se acerca al límite
                 if (currentLength >= maxLength * 0.9) {
                     counter.style.color = '#dc3545';
+                    counter.textContent += ' — Cerca del límite';
                 } else {
                     counter.style.color = '#6c757d';
                 }
             }
         }
         
-        // PROBLEMA: Validación de email sin feedback accesible
+        // Validación de email con feedback accesible
         function validateEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
+            const field = document.querySelector('[name="email"]');
+            const validationDiv = field.parentNode.querySelector('.validation-message');
+            const isValid = emailRegex.test(email);
+
+            if (validationDiv) {
+                validationDiv.style.display = 'block';
+                validationDiv.id = 'emailValidationMsg';
+                validationDiv.textContent = isValid ? 'Email válido' : 'Formato de email incorrecto';
+                validationDiv.setAttribute('role', 'alert');
+                field.setAttribute('aria-describedby', validationDiv.id);
+                field.setAttribute('aria-invalid', (!isValid).toString());
+            }
+            return isValid;
         }
         
-        // PROBLEMA: Validación en tiempo real problemática
+        // Validación en tiempo real 
         function showFieldValidation(fieldName, isValid, message) {
             const field = document.querySelector(`[name="${fieldName}"]`);
             const validationDiv = field.parentNode.querySelector('.validation-message');
             
             if (validationDiv) {
                 validationDiv.style.display = 'block';
+                validationDiv.id = fieldName + 'ValidationMsg';
                 validationDiv.className = `validation-message ${isValid ? 'success' : 'error'}`;
                 validationDiv.textContent = message;
-                
-                // PROBLEMA: No usa aria-invalid
-                // PROBLEMA: No asocia el mensaje con el campo
+
+                // usa aria-invalid
+                // asocia el mensaje con el campo
+                validationDiv.setAttribute('role', 'alert');
+                field.setAttribute('aria-invalid', (!isValid).toString());
+                field.setAttribute('aria-describedby', validationDiv.id);
             }
         }
         
-        // PROBLEMA: Actualizar progreso sin accesibilidad
+        // Actualizar progreso con accesibilidad
         function updateProgress(percentage) {
             const progressBar = document.querySelector('.progress-fill');
             progressBar.style.width = percentage + '%';
             
-            // PROBLEMA: No anuncia el cambio de progreso
+            // Anuncia el cambio de progreso
+            let progressStatus = document.getElementById('progressStatus');
+            if (!progressStatus) {
+                progressStatus = document.createElement('div');
+                progressStatus.id = 'progressStatus';
+                progressStatus.setAttribute('role', 'status');
+                progressStatus.setAttribute('aria-live', 'polite');
+                progressBar.parentNode.appendChild(progressStatus);
+            }
+            progressStatus.textContent = `Progreso del formulario: ${percentage}% completado`;
         }
         
-        // PROBLEMA: Manejo de archivos sin accesibilidad
+        // Manejo de archivos con accesibilidad
         function handleFileUpload(input, maxSize) {
             const file = input.files[0];
             if (!file) return;
             
             const uploadArea = input.parentNode;
+            const statusId = input.id + "Status";
+            let statusDiv = document.getElementById(statusId);
+            
+            if (!statusDiv) {
+                statusDiv = document.createElement('div');
+                statusDiv.id = statusId;
+                uploadArea.appendChild(statusDiv);
+            }
             
             if (file.size > maxSize) {
-                // PROBLEMA: Error no accesible
-                alert('El archivo es muy grande');
+                // Error accesible
                 input.value = '';
+                statusDiv.textContent = 'Error: el archivo es muy grande (máx. permitido: ' + (maxSize / 1024 / 1024) + ' MB)';
+                statusDiv.setAttribute('role', 'alert');
+                statusDiv.setAttribute('aria-live', 'assertive');
+                uploadArea.style.background = '#f8d7da'; // Fondo de error
                 return;
             }
             
-            // PROBLEMA: Cambio visual sin anuncio
+            // Cambio visual con anuncio
             uploadArea.style.background = '#d4edda';
             uploadArea.querySelector('div').innerHTML = `✅ ${file.name}`;
+            statusDiv.textContent = `Archivo "${file.name}" subido correctamente`;
+            statusDiv.setAttribute('role', 'status');
+            statusDiv.setAttribute('aria-live', 'polite');
         }
         
-        // PROBLEMA: Mostrar mensajes no accesibles
+        // Mostrar mensajes accesibles
         function showMessage(message, type = 'success') {
             const messageArea = document.getElementById('messageArea');
-            const messageDiv = document.createElement('div');
             
+            const messageDiv = document.createElement('div');
             messageDiv.className = `alert alert-${type} alert-dismissible`;
+            messageDiv.setAttribute('role', 'alert');
             messageDiv.innerHTML = `
                 ${message}
-                <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+                <button type="button" class="btn-close" onclick="this.parentElement.remove()" aria-label="Cerrar mensaje"></button>
             `;
-            
             messageArea.appendChild(messageDiv);
-            
-            // PROBLEMA: No se anuncia a lectores de pantalla
-            
+
             setTimeout(() => {
                 messageDiv.remove();
             }, 5000);
         }
         
-        // Configuración del formulario - MÚLTIPLES PROBLEMAS
+        // Configuración del formulario
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('registrationForm');
             
-            // PROBLEMA: Listeners sin manejo de accesibilidad
+            // Listeners con manejo de accesibilidad
             
             // Contadores de caracteres
             document.querySelectorAll('input[maxlength], textarea[maxlength]').forEach(input => {
@@ -736,7 +880,7 @@
                 });
             });
             
-            // Validación de email en tiempo real - PROBLEMÁTICA
+            // Validación de email en tiempo real
             const emailField = document.querySelector('[name="email"]');
             emailField.addEventListener('blur', function() {
                 const isValid = validateEmail(this.value);
@@ -746,16 +890,17 @@
                 }
             });
             
-            // Range slider - PROBLEMA: Sin descripción accesible
+            // Range slider
             const experienceRange = document.querySelector('[name="experience"]');
             const experienceValue = document.getElementById('experienceValue');
             
             experienceRange.addEventListener('input', function() {
                 experienceValue.textContent = `${this.value} años`;
-                // PROBLEMA: No anuncia el cambio de valor
+                experienceValue.setAttribute('role', 'status');
+                experienceValue.setAttribute('aria-live', 'polite');
             });
             
-            // File inputs - PROBLEMAS DE ACCESIBILIDAD
+            // File inputs
             document.getElementById('cvFile').addEventListener('change', function() {
                 handleFileUpload(this, 5 * 1024 * 1024); // 5MB
             });
@@ -764,45 +909,49 @@
                 handleFileUpload(this, 2 * 1024 * 1024); // 2MB
             });
             
-            // Envío del formulario - MÚLTIPLES PROBLEMAS
+            // Envío del formulario
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
-                if (isSubmitting) return;
-                
-                // PROBLEMA: Validación básica sin accesibilidad
+                if (window.isSubmitting) return;
                 const requiredFields = form.querySelectorAll('[required], .required-field ~ input, .required-field ~ select');
                 let hasErrors = false;
+                let firstError = null;
+                
                 
                 requiredFields.forEach(field => {
                     if (!field.value.trim()) {
-                        // PROBLEMA: Error no accesible
+                        // accesible
                         field.style.borderColor = '#dc3545';
-                        hasErrors = true;
+                        field.setAttribute('aria-invalid', 'true');
+                        if (!firstError) firstError = field;
+                            hasErrors = true;
                     } else {
                         field.style.borderColor = '';
+                        field.removeAttribute('aria-invalid');
                     }
                 });
                 
                 if (hasErrors) {
-                    // PROBLEMA: No enfoca el primer error
+                    // Enfoca el primer error
                     showMessage('Por favor completa todos los campos requeridos', 'danger');
+                    if (firstError) firstError.focus();
                     return;
                 }
                 
-                // PROBLEMA: Loading sin accesibilidad
-                isSubmitting = true;
+                // Loading con accesibilidad
+                window.isSubmitting = true;
                 document.getElementById('submitOverlay').style.display = 'flex';
+                document.getElementById('submitOverlay').focus();
                 
                 // Simular envío
                 setTimeout(() => {
                     document.getElementById('submitOverlay').style.display = 'none';
-                    isSubmitting = false;
+                    window.isSubmitting = false;
                     
                     if (Math.random() > 0.2) {
                         showMessage('¡Registro completado exitosamente! Te hemos enviado un email de confirmación.', 'success');
                         setTimeout(() => {
-                            window.location.href = '/';
+                        window.location.href = '/';
                         }, 3000);
                     } else {
                         showMessage('Error al procesar el registro. Inténtalo de nuevo.', 'danger');
@@ -810,11 +959,12 @@
                 }, 3000);
             });
             
-            // PROBLEMA: Botones sin manejo de teclado apropiado
+            // Botones con manejo de teclado apropiado
             document.querySelector('.btn-outline-secondary').addEventListener('click', function() {
                 if (confirm('¿Estás seguro de que quieres limpiar el formulario?')) {
                     form.reset();
-                    // PROBLEMA: No anuncia que se limpió
+                    showMessage('El formulario se ha limpiado correctamente.', 'info');
+                    // anuncia que se limpió
                 }
             });
         });
