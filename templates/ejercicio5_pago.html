@@ -531,51 +531,72 @@
                                 </div>
                             </div>
                             
-                            <!-- PASO 3: Método de Pago - PROBLEMAS CRÍTICOS -->
+                            <!-- Método de Pago -->
                             <div class="step-panel" data-panel="3">
                                 
-                                <div class="form-section">
-                                    <div class="section-title">
-                                        💳 Método de Pago
-                                    </div>
+                                <fieldset class="form-section">
+                                    <legend class="section-title">💳 Método de Pago</legend>
                                     
-                                    <!-- PROBLEMA: Métodos de pago sin fieldset -->
-                                    <div style="margin-bottom: 2rem;">
+                                    <!-- Métodos de pago con fieldset -->
+                                    <fieldset>
+                                        <legend>Método</legend>
+                                        <div role="radiogroup" aria-labelledby="paymentMethodLegend">
+                                            <span id="paymentMethodLegend" class="visually-hidden">Selecciona un método de pago</span>
                                         
-                                        <!-- Tarjeta de crédito -->
-                                        <div class="payment-method" onclick="selectPaymentMethod('card')">
-                                            <!-- PROBLEMA: Radio sin label -->
-                                            <input type="radio" name="paymentMethod" value="card" style="margin-right: 0.5rem;">
-                                            <strong>💳 Tarjeta de Crédito/Débito</strong>
-                                            <div style="font-size: 0.9rem; color: #6c757d;">
-                                                Visa, Mastercard, American Express
+                                            <!-- Tarjeta de crédito -->
+                                            <div class="payment-method" onclick="selectPaymentMethod('card')">
+                                                <input 
+                                                    type="radio" 
+                                                    id="payment-card" 
+                                                    name="paymentMethod" 
+                                                    value="card" 
+                                                    style="margin-right: 0.5rem;"
+                                                >
+                                                <label for="payment-card">
+                                                    💳 Tarjeta de Crédito/Débito
+                                                    <span class="visually-hidden">Visa, Mastercard, American Express</span>
+                                                </label>
+                                                <div style="font-size: 0.9rem; color: #6c757d;">Visa, Mastercard, American Express</div>
                                             </div>
-                                        </div>
                                         
-                                        <!-- PayPal -->
-                                        <div class="payment-method" onclick="selectPaymentMethod('paypal')">
-                                            <input type="radio" name="paymentMethod" value="paypal" style="margin-right: 0.5rem;">
-                                            <strong>🔵 PayPal</strong>
-                                            <div style="font-size: 0.9rem; color: #6c757d;">
-                                                Paga de forma segura con tu cuenta PayPal
+                                            <!-- PayPal -->
+                                            <div class="payment-method" onclick="selectPaymentMethod('paypal')">
+                                                <input 
+                                                    type="radio" 
+                                                    id="payment-paypal" 
+                                                    name="paymentMethod" 
+                                                    value="paypal" 
+                                                    style="margin-right: 0.5rem;"
+                                                >
+                                                <label for="payment-paypal">
+                                                    🔵 PayPal
+                                                </label>
+                                                <div style="font-size: 0.9rem; color: #6c757d;">Paga de forma segura con tu cuenta PayPal</div>
                                             </div>
-                                        </div>
-                                        
-                                        <!-- Transferencia -->
-                                        <div class="payment-method" onclick="selectPaymentMethod('transfer')">
-                                            <input type="radio" name="paymentMethod" value="transfer" style="margin-right: 0.5rem;">
-                                            <strong>🏦 Transferencia Bancaria</strong>
-                                            <div style="font-size: 0.9rem; color: #6c757d;">
-                                                Recibirás las instrucciones por email
+                                            
+                                            <!-- Transferencia -->
+                                            <div class="payment-method" onclick="selectPaymentMethod('transfer')">
+                                                <input 
+                                                    type="radio" 
+                                                    id="payment-transfer" 
+                                                    name="paymentMethod" 
+                                                    value="transfer" 
+                                                    style="margin-right: 0.5rem;"
+                                                >
+                                                <label for="payment-transfer">
+                                                    🏦 Transferencia Bancaria
+                                                </label>
+                                                <div style="font-size: 0.9rem; color: #6c757d;">Recibirás las instrucciones por email</div>                                                
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div>    
+                                    </fieldset>
                                     
-                                    <!-- PROBLEMA: Sección tarjeta sin accesibilidad -->
-                                    <div id="cardDetails" style="display: none;">
-                                        
-                                        <!-- Vista previa de tarjeta - PROBLEMA: Solo visual -->
-                                        <div class="card-preview">
+                                    <!-- Sección tarjeta con accesibilidad -->
+                                    <fieldset id="cardDetails" style="display: none;">
+                                        <legend>Detalles de la Tarjeta</legend>
+
+                                        <!-- Vista previa de tarjeta -->
+                                        <div class="card-preview" aria-hidden="true">
                                             <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                                                 <span>BANCO EJEMPLO</span>
                                                 <span id="cardType">VISA</span>
@@ -597,56 +618,74 @@
                                         
                                         <div class="row">
                                             <div class="col-12 mb-3">
-                                                <!-- PROBLEMA: Campo tarjeta sin descripción accesible -->
-                                                <div class="form-label required">Número de tarjeta</div>
-                                                <input type="text" 
-                                                        class="form-control" 
-                                                        name="cardNumber"
-                                                        placeholder="1234 5678 9012 3456"
-                                                        maxlength="19"
-                                                        autocomplete="cc-number"
-                                                        oninput="formatCardNumber(this)">
-                                                <div class="field-error" style="display: none;"></div>
+                                                <!-- Campo tarjeta con descripción accesible -->
+                                                <label for="cardNumber" class="form-label required">Número de tarjeta</label>
+                                                <input 
+                                                    type="text"
+                                                    id="cardNumber"
+                                                    class="form-control"
+                                                    name="cardNumber"
+                                                    placeholder="1234 5678 9012 3456"
+                                                    maxlength="19"
+                                                    autocomplete="cc-number"
+                                                    oninput="formatCardNumber(this)"
+                                                    aria-describedby="cardNumberHelp"
+                                                >
+                                                <div id="cardNumberHelp" class="field-help">Introduce los 16 dígitos de tu tarjeta.</div>
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-8 mb-3">
-                                                <div class="form-label required">Nombre del titular</div>
-                                                <input type="text" 
-                                                        class="form-control" 
-                                                        name="cardHolder"
-                                                        placeholder="Como aparece en la tarjeta"
-                                                        autocomplete="cc-name"
-                                                        oninput="updateCardPreview()">
-                                                <div class="field-error" style="display: none;"></div>
+                                                <label for="cardHolder" class="form-label required">Nombre del titular</label>
+                                                <input 
+                                                    type="text" 
+                                                    id="cardHolder"
+                                                    class="form-control" 
+                                                    name="cardHolder"
+                                                    placeholder="Como aparece en la tarjeta"
+                                                    autocomplete="cc-name"
+                                                    oninput="updateCardPreview()"
+                                                    aria-describedby="cardHolderHelp"
+                                                >
+                                                <div id="cardHolderHelp" class="field-help">Tal como aparece en la tarjeta.</div>
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                             
                                             <div class="col-md-4 mb-3">
-                                                <!-- PROBLEMA: CVV sin explicación accesible -->
-                                                <div class="form-label required">
+                                                <!-- CVV con explicación accesible -->
+                                                <label for="cvv" class="form-label required">
                                                     CVV
-                                                    <!-- PROBLEMA: Icono de ayuda sin accesibilidad -->
-                                                    <span style="cursor: help; color: #007bff;" onclick="showCVVHelp()">ℹ️</span>
-                                                </div>
-                                                <input type="password" 
-                                                        class="form-control" 
-                                                        name="cvv"
-                                                        placeholder="123"
-                                                        maxlength="4"
-                                                        autocomplete="cc-csc">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    <button type="button" onclick="showCVVHelp()" aria-label="¿Qué es el CVV?" style="background:none; border:none; color:#007bff;">ℹ️</button>
+                                                </label>
+                                                <input 
+                                                    type="password"
+                                                    id="cvv"
+                                                    class="form-control"
+                                                    name="cvv"
+                                                    placeholder="123"
+                                                    maxlength="4"
+                                                    autocomplete="cc-csc"
+                                                    aria-describedby="cvvHelp"
+                                                >
+                                                <div id="cvvHelp" class="field-help">Tres o cuatro dígitos al reverso de tu tarjeta.</div>
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <div class="form-label required">Mes de expiración</div>
-                                                <!-- PROBLEMA: Select sin opciones accesibles -->
-                                                <select class="form-select" 
-                                                        name="expiryMonth" 
-                                                        autocomplete="cc-exp-month"
-                                                        onchange="updateCardPreview()">
+                                                <label for="expiryMonth" class="form-label required">Mes de expiración</label>
+                                                <!-- Select con opciones accesibles -->
+                                                <select 
+                                                    class="form-select" 
+                                                    id="expiryMonth"
+                                                    name="expiryMonth" 
+                                                    autocomplete="cc-exp-month"
+                                                    aria-describedby="expiryMonthHelp"
+                                                    onchange="updateCardPreview()"                                                    
+                                                    >
                                                     <option value="">Mes</option>
                                                     <option value="01">01</option>
                                                     <option value="02">02</option>
@@ -661,15 +700,20 @@
                                                     <option value="11">11</option>
                                                     <option value="12">12</option>
                                                 </select>
-                                                <div class="field-error" style="display: none;"></div>
+                                                <div id="expiryMonthHelp" class="field-help">Selecciona el mes de expiración.</div>
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                             
                                             <div class="col-md-6 mb-3">
-                                                <div class="form-label required">Año de expiración</div>
-                                                <select class="form-select" 
-                                                        name="expiryYear" 
-                                                        autocomplete="cc-exp-year"
-                                                        onchange="updateCardPreview()">
+                                                <label for="expiryYear" class="form-label required">Año de expiración</label>
+                                                <select 
+                                                    class="form-select" 
+                                                    id="expiryYear"
+                                                    name="expiryYear" 
+                                                    autocomplete="cc-exp-year"
+                                                    aria-describedby="expiryYearHelp"
+                                                    onchange="updateCardPreview()"
+                                                    >
                                                     <option value="">Año</option>
                                                     <option value="2024">2024</option>
                                                     <option value="2025">2025</option>
@@ -679,34 +723,42 @@
                                                     <option value="2029">2029</option>
                                                     <option value="2030">2030</option>
                                                 </select>
-                                                <div class="field-error" style="display: none;"></div>
+                                                <div id="expiryYearHelp" class="field-help">Selecciona el año de expiración.</div>
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                         </div>
                                         
-                                        <!-- PROBLEMA: Checkbox guardar tarjeta sin contexto -->
+                                        <!-- Checkbox guardar tarjeta con contexto -->
                                         <div class="mb-3">
-                                            <input type="checkbox" name="saveCard" style="margin-right: 0.5rem;">
-                                            <span>Guardar esta tarjeta para futuras compras</span>
+                                            <input type="checkbox" id="saveCard" name="saveCard" style="margin-right: 0.5rem;">
+                                            <label for="saveCard">Guardar esta tarjeta para futuras compras</label>
                                             <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">
                                                 Tus datos se almacenarán de forma segura y encriptada
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </fieldset>
                                 
-                                <!-- Botones de navegación -->
-                                <div style="display: flex; justify-content: space-between;">
-                                    <button type="button" 
+                                
+                                    <!-- Botones de navegación -->
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <button 
+                                            type="button" 
                                             onclick="prevStep()"
-                                            class="btn btn-outline-secondary btn-lg">
-                                        ← Anterior
-                                    </button>
-                                    <button type="button" 
+                                            class="btn btn-outline-secondary btn-lg"
+                                            aria-label="Volver al paso anterior: Envío y Facturación"                                        
+                                            >
+                                            ← Anterior
+                                        </button>
+                                        <button 
+                                            type="button" 
                                             onclick="nextStep()"
-                                            class="btn btn-primary btn-lg">
-                                        Revisar Pedido →
-                                    </button>
-                                </div>
+                                            class="btn btn-primary btn-lg"
+                                            aria-label="Ir al siguiente paso: Revisar el pedido"
+                                            >
+                                            Revisar Pedido →
+                                        </button>
+                                    </div>
+                                </fieldset>
                             </div>
                             
                             <!-- PASO 4: Confirmación - PROBLEMAS -->
