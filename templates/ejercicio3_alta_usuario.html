@@ -60,7 +60,7 @@
         
         .field-help {
             font-size: 0.8rem;
-            color: #6c757d;
+            color: #42494fff;
             margin-top: 0.25rem;
         }
         
@@ -75,7 +75,7 @@
         }
         
         .file-upload-area {
-            border: 2px dashed #dee2e6;
+            border: 2px dashed #42494fff;
             border-radius: 8px;
             padding: 2rem;
             text-align: center;
@@ -93,20 +93,20 @@
             display: flex;
             justify-content: space-between;
             font-size: 0.8rem;
-            color: #6c757d;
+            color: #42494fff;
             margin-top: 0.25rem;
         }
         
         .character-counter {
             text-align: right;
             font-size: 0.8rem;
-            color: #6c757d;
+            color: #42494fff;
             margin-top: 0.25rem;
         }
         
         /* Problemas de contraste intencionados */
         .subtle-text {
-            color: #ccc;
+            color: #424141ff;
         }
         
         .validation-message {
@@ -167,13 +167,13 @@
                 <!-- Progreso con accesibilidad -->
                 <div class="form-progress" role="region" aria-label="Progreso de registro de usuario">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <div style="font-weight: 500; font-size: 1.2rem;">Registro de Usuario</div>
-                        <div style="font-size: 0.9rem; color: #6c757d;" aria-live="polite">Paso 1 de 1</div>
+                        <h1>Registro de Usuario</h1>
+                        <div style="font-size: 0.9rem; color: #42494fff;" aria-live="polite">Paso 1 de 1</div>
                     </div>
                     <div class="progress-bar-custom" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" aria-label="Progreso del formulario 25%">
                         <div class="progress-fill" style="width: 25%"></div>
                     </div>
-                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #6c757d;" aria-live="polite">
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #42494fff;" aria-live="polite">
                         Completando información personal...
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                 <!-- Formulario con estructura semántica apropiada -->
                 <form id="registrationForm" novalidate style="padding: 0;">
                     <fieldset class="form-section">
-                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             📝 Información Personal
                         </legend>
                         
@@ -279,7 +279,7 @@
                     
                     <!-- Sección 2: Información Profesional-->
                     <fieldset class="form-section">
-                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             💼 Información Profesional
                         </legend>
                         
@@ -431,7 +431,7 @@
                     
                     <!-- Sección 3: Preferencias y Configuración -->
                     <fieldset class="form-section">
-                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             ⚙️ Preferencias y Configuración
                         </legend>
                         
@@ -524,7 +524,7 @@
                     
                     <!-- Sección 4: Documentos y Archivos -->
                     <fieldset class="form-section">
-                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             📎 Documentos y Archivos
                         </legend>
                         
@@ -646,53 +646,49 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                     
-                    <!-- Sección 5: Términos y Confirmación - PROBLEMAS -->
-                    <div class="form-section">
-                        <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #007bff;">
+                    <!-- Sección 5: Términos y Confirmación -->
+                    <fieldset class="form-section">
+                        <legend style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1.5rem; color: #004a98ff;">
                             ✅ Confirmación y Términos
-                        </div>
+                        </legend>
                         
-                        <!-- PROBLEMA: Checkboxes legales sin fieldset -->
-                        <div class="mb-3">
-                            <div class="checkbox-group">
-                                <div class="mb-3">
-                                    <!-- PROBLEMA: Checkbox requerido sin indicación -->
-                                    <input type="checkbox" name="agreeTerms" required style="margin-right: 0.5rem;">
-                                    <span>
-                                        Acepto los 
-                                        <!-- PROBLEMA: Links sin indicar nueva ventana -->
-                                        <a href="#" target="_blank">términos y condiciones de uso</a> 
-                                        del servicio
-                                    </span>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <input type="checkbox" name="agreePrivacy" required style="margin-right: 0.5rem;">
-                                    <span>
-                                        He leído y acepto la 
-                                        <a href="#" target="_blank">política de privacidad</a>
-                                    </span>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <input type="checkbox" name="agreeMarketing" style="margin-right: 0.5rem;">
-                                    <span>
-                                        Acepto recibir comunicaciones comerciales y marketing 
-                                        (opcional)
-                                    </span>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <input type="checkbox" name="confirmAge" required style="margin-right: 0.5rem;">
-                                    <span>
-                                        Confirmo que soy mayor de 18 años
-                                    </span>
-                                </div>
+                        <!-- Checkboxes legales con fieldset -->
+                        <fieldset>
+                            <legend>Consentimientos legales</legend>
+                            <div class="mb-3">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required aria-required="true" style="margin-right:0.5rem;">
+                                <label for="agreeTerms">
+                                    Acepto los 
+                                    <a href="#" target="_blank" aria-label="Abrir términos y condiciones en nueva ventana">términos y condiciones de uso</a> 
+                                    del servicio
+                                </label>
                             </div>
-                        </div>
-                        
+                            <div class="mb-3">
+                                <input type="checkbox" id="agreePrivacy" name="agreePrivacy" required aria-required="true" style="margin-right:0.5rem;">
+                                <label for="agreePrivacy">
+                                    He leído y acepto la 
+                                    <a href="#" target="_blank" aria-label="Abrir política de privacidad en nueva ventana">política de privacidad</a>
+                                </label>
+                            </div>  
+                                    
+                            <div class="mb-3">
+                                <input type="checkbox" id="agreeMarketing" name="agreeMarketing" style="margin-right: 0.5rem;">
+                                <label for="agreeMarketing">
+                                    Acepto recibir comunicaciones comerciales y marketing 
+                                    (opcional)
+                                </label>
+                            </div>
+                                    
+                            <div class="mb-3">
+                                <input type="checkbox" id="confirmAge" name="confirmAge" required aria-required="true" style="margin-right:0.5rem;">
+                                <label for="confirmAge">
+                                    Confirmo que soy mayor de 18 años
+                                </label>
+                            </div>
+                        </fieldset>
+                            
                         <!-- Verificación final -->
                         <div class="mb-4 p-3" style="background: #f8f9fa; border-radius: 8px; border-left: 4px solid #007bff;">
                             <div style="font-weight: 500; margin-bottom: 0.5rem;">
@@ -706,135 +702,173 @@
                         
                         <!-- Botones de acción - PROBLEMA -->
                         <div style="display: flex; gap: 1rem; justify-content: end;">
-                            <button type="button" class="btn btn-outline-secondary">
+                            <button type="button" class="btn btn-outline-secondary" aria-label="Limpiar todo el formulario">
                                 Limpiar formulario
                             </button>
-                            <button type="button" class="btn btn-secondary">
+                            <button type="button" class="btn btn-secondary" aria-label="Guardar el formulario como borrador">
                                 Guardar como borrador
                             </button>
                             <!-- PROBLEMA: Botón submit sin indicar proceso -->
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" aria-label="Completar el registro. El proceso puede tardar unos segundos.">
                                 Completar registro
                             </button>
                         </div>
-                    </div>
+                    </fieldset>
                 </form>
             </div>
         </div>
     </div>
     
-    <!-- PROBLEMA: Loading overlay sin accesibilidad -->
-    <div id="submitOverlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 9999;">
+    <!-- Loading overlay con accesibilidad -->
+    <div id="submitOverlay" role="dialog" aria-modal="true" aria-label="Procesando registro" tabindex="-1" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 9999;">
         <div style="background: white; padding: 2rem; border-radius: 10px; text-align: center;">
-            <div class="spinner-border text-primary mb-3"></div>
-            <div>Procesando registro...</div>
+            <div class="spinner-border text-primary mb-3" aria-hidden="true"></div>
+            <div id="loadingStatus" aria-live="assertive">Procesando registro...</div>
             <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.5rem;">
                 Esto puede tomar unos segundos
             </div>
         </div>
     </div>
     
-    <!-- PROBLEMA: Mensajes no accesibles -->
-    <div id="messageArea" style="position: fixed; top: 20px; right: 20px; z-index: 10000; max-width: 400px;"></div>
+    <!-- Mensajes accesibles -->
+    <div id="messageArea" aria-live="polite" style="position: fixed; top: 20px; right: 20px; z-index: 10000; max-width: 400px;"></div>
     
     <script src="{{ url_for('static', filename='js/portal.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     
-    <script>
-        // PROBLEMAS INTENCIONADOS EN EL JAVASCRIPT
-        
+    <script>        
         let formProgress = 25;
         let isSubmitting = false;
         
-        // PROBLEMA: Contador de caracteres sin accesibilidad
+        // Contador de caracteres con accesibilidad
         function updateCharacterCounter(input, maxLength) {
             const counter = input.parentNode.querySelector('.character-counter');
             if (counter) {
                 const currentLength = input.value.length;
                 counter.textContent = `${currentLength}/${maxLength} caracteres`;
-                
-                // PROBLEMA: No anuncia cuando se acerca al límite
+                counter.setAttribute('aria-live', 'polite');
+                counter.setAttribute('role', 'status');
+
+                // Anuncia cuando se acerca al límite
                 if (currentLength >= maxLength * 0.9) {
                     counter.style.color = '#dc3545';
+                    counter.textContent += ' — Cerca del límite';
                 } else {
                     counter.style.color = '#6c757d';
                 }
             }
         }
         
-        // PROBLEMA: Validación de email sin feedback accesible
+        // Validación de email con feedback accesible
         function validateEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
+            const field = document.querySelector('[name="email"]');
+            const validationDiv = field.parentNode.querySelector('.validation-message');
+            const isValid = emailRegex.test(email);
+
+            if (validationDiv) {
+                validationDiv.style.display = 'block';
+                validationDiv.id = 'emailValidationMsg';
+                validationDiv.textContent = isValid ? 'Email válido' : 'Formato de email incorrecto';
+                validationDiv.setAttribute('role', 'alert');
+                field.setAttribute('aria-describedby', validationDiv.id);
+                field.setAttribute('aria-invalid', (!isValid).toString());
+            }
+            return isValid;
         }
         
-        // PROBLEMA: Validación en tiempo real problemática
+        // Validación en tiempo real 
         function showFieldValidation(fieldName, isValid, message) {
             const field = document.querySelector(`[name="${fieldName}"]`);
             const validationDiv = field.parentNode.querySelector('.validation-message');
             
             if (validationDiv) {
                 validationDiv.style.display = 'block';
+                validationDiv.id = fieldName + 'ValidationMsg';
                 validationDiv.className = `validation-message ${isValid ? 'success' : 'error'}`;
                 validationDiv.textContent = message;
-                
-                // PROBLEMA: No usa aria-invalid
-                // PROBLEMA: No asocia el mensaje con el campo
+
+                // usa aria-invalid
+                // asocia el mensaje con el campo
+                validationDiv.setAttribute('role', 'alert');
+                field.setAttribute('aria-invalid', (!isValid).toString());
+                field.setAttribute('aria-describedby', validationDiv.id);
             }
         }
         
-        // PROBLEMA: Actualizar progreso sin accesibilidad
+        // Actualizar progreso con accesibilidad
         function updateProgress(percentage) {
             const progressBar = document.querySelector('.progress-fill');
             progressBar.style.width = percentage + '%';
             
-            // PROBLEMA: No anuncia el cambio de progreso
+            // Anuncia el cambio de progreso
+            let progressStatus = document.getElementById('progressStatus');
+            if (!progressStatus) {
+                progressStatus = document.createElement('div');
+                progressStatus.id = 'progressStatus';
+                progressStatus.setAttribute('role', 'status');
+                progressStatus.setAttribute('aria-live', 'polite');
+                progressBar.parentNode.appendChild(progressStatus);
+            }
+            progressStatus.textContent = `Progreso del formulario: ${percentage}% completado`;
         }
         
-        // PROBLEMA: Manejo de archivos sin accesibilidad
+        // Manejo de archivos con accesibilidad
         function handleFileUpload(input, maxSize) {
             const file = input.files[0];
             if (!file) return;
             
             const uploadArea = input.parentNode;
+            const statusId = input.id + "Status";
+            let statusDiv = document.getElementById(statusId);
+            
+            if (!statusDiv) {
+                statusDiv = document.createElement('div');
+                statusDiv.id = statusId;
+                uploadArea.appendChild(statusDiv);
+            }
             
             if (file.size > maxSize) {
-                // PROBLEMA: Error no accesible
-                alert('El archivo es muy grande');
+                // Error accesible
                 input.value = '';
+                statusDiv.textContent = 'Error: el archivo es muy grande (máx. permitido: ' + (maxSize / 1024 / 1024) + ' MB)';
+                statusDiv.setAttribute('role', 'alert');
+                statusDiv.setAttribute('aria-live', 'assertive');
+                uploadArea.style.background = '#f8d7da'; // Fondo de error
                 return;
             }
             
-            // PROBLEMA: Cambio visual sin anuncio
+            // Cambio visual con anuncio
             uploadArea.style.background = '#d4edda';
             uploadArea.querySelector('div').innerHTML = `✅ ${file.name}`;
+            statusDiv.textContent = `Archivo "${file.name}" subido correctamente`;
+            statusDiv.setAttribute('role', 'status');
+            statusDiv.setAttribute('aria-live', 'polite');
         }
         
-        // PROBLEMA: Mostrar mensajes no accesibles
+        // Mostrar mensajes accesibles
         function showMessage(message, type = 'success') {
             const messageArea = document.getElementById('messageArea');
-            const messageDiv = document.createElement('div');
             
+            const messageDiv = document.createElement('div');
             messageDiv.className = `alert alert-${type} alert-dismissible`;
+            messageDiv.setAttribute('role', 'alert');
             messageDiv.innerHTML = `
                 ${message}
-                <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+                <button type="button" class="btn-close" onclick="this.parentElement.remove()" aria-label="Cerrar mensaje"></button>
             `;
-            
             messageArea.appendChild(messageDiv);
-            
-            // PROBLEMA: No se anuncia a lectores de pantalla
-            
+
             setTimeout(() => {
                 messageDiv.remove();
             }, 5000);
         }
         
-        // Configuración del formulario - MÚLTIPLES PROBLEMAS
+        // Configuración del formulario
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('registrationForm');
             
-            // PROBLEMA: Listeners sin manejo de accesibilidad
+            // Listeners con manejo de accesibilidad
             
             // Contadores de caracteres
             document.querySelectorAll('input[maxlength], textarea[maxlength]').forEach(input => {
@@ -846,7 +880,7 @@
                 });
             });
             
-            // Validación de email en tiempo real - PROBLEMÁTICA
+            // Validación de email en tiempo real
             const emailField = document.querySelector('[name="email"]');
             emailField.addEventListener('blur', function() {
                 const isValid = validateEmail(this.value);
@@ -856,16 +890,17 @@
                 }
             });
             
-            // Range slider - PROBLEMA: Sin descripción accesible
+            // Range slider
             const experienceRange = document.querySelector('[name="experience"]');
             const experienceValue = document.getElementById('experienceValue');
             
             experienceRange.addEventListener('input', function() {
                 experienceValue.textContent = `${this.value} años`;
-                // PROBLEMA: No anuncia el cambio de valor
+                experienceValue.setAttribute('role', 'status');
+                experienceValue.setAttribute('aria-live', 'polite');
             });
             
-            // File inputs - PROBLEMAS DE ACCESIBILIDAD
+            // File inputs
             document.getElementById('cvFile').addEventListener('change', function() {
                 handleFileUpload(this, 5 * 1024 * 1024); // 5MB
             });
@@ -874,45 +909,49 @@
                 handleFileUpload(this, 2 * 1024 * 1024); // 2MB
             });
             
-            // Envío del formulario - MÚLTIPLES PROBLEMAS
+            // Envío del formulario
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
-                if (isSubmitting) return;
-                
-                // PROBLEMA: Validación básica sin accesibilidad
+                if (window.isSubmitting) return;
                 const requiredFields = form.querySelectorAll('[required], .required-field ~ input, .required-field ~ select');
                 let hasErrors = false;
+                let firstError = null;
+                
                 
                 requiredFields.forEach(field => {
                     if (!field.value.trim()) {
-                        // PROBLEMA: Error no accesible
+                        // accesible
                         field.style.borderColor = '#dc3545';
-                        hasErrors = true;
+                        field.setAttribute('aria-invalid', 'true');
+                        if (!firstError) firstError = field;
+                            hasErrors = true;
                     } else {
                         field.style.borderColor = '';
+                        field.removeAttribute('aria-invalid');
                     }
                 });
                 
                 if (hasErrors) {
-                    // PROBLEMA: No enfoca el primer error
+                    // Enfoca el primer error
                     showMessage('Por favor completa todos los campos requeridos', 'danger');
+                    if (firstError) firstError.focus();
                     return;
                 }
                 
-                // PROBLEMA: Loading sin accesibilidad
-                isSubmitting = true;
+                // Loading con accesibilidad
+                window.isSubmitting = true;
                 document.getElementById('submitOverlay').style.display = 'flex';
+                document.getElementById('submitOverlay').focus();
                 
                 // Simular envío
                 setTimeout(() => {
                     document.getElementById('submitOverlay').style.display = 'none';
-                    isSubmitting = false;
+                    window.isSubmitting = false;
                     
                     if (Math.random() > 0.2) {
                         showMessage('¡Registro completado exitosamente! Te hemos enviado un email de confirmación.', 'success');
                         setTimeout(() => {
-                            window.location.href = '/';
+                        window.location.href = '/';
                         }, 3000);
                     } else {
                         showMessage('Error al procesar el registro. Inténtalo de nuevo.', 'danger');
@@ -920,11 +959,12 @@
                 }, 3000);
             });
             
-            // PROBLEMA: Botones sin manejo de teclado apropiado
+            // Botones con manejo de teclado apropiado
             document.querySelector('.btn-outline-secondary').addEventListener('click', function() {
                 if (confirm('¿Estás seguro de que quieres limpiar el formulario?')) {
                     form.reset();
-                    // PROBLEMA: No anuncia que se limpió
+                    showMessage('El formulario se ha limpiado correctamente.', 'info');
+                    // anuncia que se limpió
                 }
             });
         });
