@@ -115,7 +115,7 @@
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: #007bff;
+            color: #0069d9ff;
         }
         
         .payment-method {
@@ -179,6 +179,10 @@
             font-size: 2rem;
             color: white;
         }
+
+        .btn-outline-primary {
+            color: #0267d3ff;;
+        }
         
         /* PROBLEMAS INTENCIONADOS */
         .error-state {
@@ -209,180 +213,208 @@
 </head>
 
 <body>
-    <!-- PROBLEMA: Falta skip link -->
-    
-    <div class="checkout-container">
+    <!-- Skip link -->
+    <a href="#mainCheckout" class="skip-link" tabindex="0" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;">Saltar al checkout</a>
+
+    <!-- Añadido el main para el skip link y landmark principal -->
+    <main id="mainCheckout" class="checkout-container" tabindex="-1">    
         <div class="container">
             
             <!-- Navegación de regreso -->
-            <div class="mb-3">
+            <nav aria-label="Enlace de regreso">
+                <div class="mb-3">
                 <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
                     ← Volver al portal
                 </a>
-            </div>
+                </div>
+            </nav>
             
             <div class="checkout-card">
                 
-                <!-- PROBLEMA: Header de progreso sin accesibilidad -->
-                <div class="progress-header">
-                    <!-- PROBLEMA: Título sin estructura apropiada -->
-                    <div style="font-size: 1.8rem; font-weight: 300; margin-bottom: 2rem; text-align: center;">
+                <!-- Header de progreso con accesibilidad -->
+                <header class="progress-header">
+                    <!-- Título con estructura apropiada -->
+                    <h1 style="font-size: 1.8rem; font-weight: 300; margin-bottom: 2rem; text-align: center;">
                         Proceso de Pago Seguro
-                    </div>
+                    </h1>
                     
-                    <!-- PROBLEMA: Indicador de pasos sin accesibilidad -->
-                    <div class="step-indicator">
-                        <div class="step-connector"></div>
-                        
-                        <div class="step active" data-step="1">
-                            <div class="step-number">1</div>
-                            <div class="step-title">Información Personal</div>
-                        </div>
-                        
-                        <div class="step" data-step="2">
-                            <div class="step-number">2</div>
-                            <div class="step-title">Envío y Facturación</div>
-                        </div>
-                        
-                        <div class="step" data-step="3">
-                            <div class="step-number">3</div>
-                            <div class="step-title">Método de Pago</div>
-                        </div>
-                        
-                        <div class="step" data-step="4">
-                            <div class="step-number">4</div>
-                            <div class="step-title">Confirmación</div>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Indicador de pasos con accesibilidad -->
+                    <nav aria-label="Progreso de compra">
+                        <ol class="step-indicator" style="list-style:none;display:flex;justify-content:center;padding:0;">
+                            <li class="step" data-step="1" role="listitem" aria-current="step">
+                            <span class="step-number">1</span>
+                            <span class="step-title">Información Personal</span>
+                            </li>
+                            <li class="step" data-step="2" role="listitem">
+                            <span class="step-number">2</span>
+                            <span class="step-title">Envío y Facturación</span>
+                            </li>
+                            <li class="step" data-step="3" role="listitem">
+                            <span class="step-number">3</span>
+                            <span class="step-title">Método de Pago</span>
+                            </li>
+                            <li class="step" data-step="4" role="listitem">
+                            <span class="step-number">4</span>
+                            <span class="step-title">Confirmación</span>
+                            </li>
+                        </ol>
+                    </nav>
+
+                </header>
                 
-                <!-- PROBLEMA: Contenido principal sin landmark -->
+                <!-- Contenido principal con landmark -->
                 <div class="checkout-content">
                     <div class="row">
                         
                         <!-- Columna principal del formulario -->
                         <div class="col-lg-8">
                             
-                            <!-- PROBLEMA: Formulario sin estructura accesible -->
+                            <!-- Formulario con estructura accesible -->
                             <form id="checkoutForm" novalidate>
                                 
-                                <!-- PASO 1: Información Personal - MÚLTIPLES PROBLEMAS -->
+                                <!-- PASO 1: Información Personal -->
                                 <div class="step-panel active" data-panel="1">
-                                    <!-- PROBLEMA: Sin fieldset para agrupar -->
-                                    <div class="form-section">
-                                        <div class="section-title">
+                                    <!-- Fieldset para agrupar -->
+                                    <fieldset class="form-section">
+                                        <legend class="section-title">
                                             👤 Información Personal
-                                        </div>
+                                        </legend>
                                         
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <!-- PROBLEMA: Label sin asociación -->
-                                                <div class="form-label required">Nombre</div>
+                                                <!-- Label con asociación -->
+                                                <label for="firstName" class="form-label required">Nombre</label>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="firstName"
-                                                       placeholder="Tu nombre"
-                                                       autocomplete="given-name">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    id="firstName"
+                                                    class="form-control" 
+                                                    name="firstName"
+                                                    placeholder="Tu nombre"
+                                                    autocomplete="given-name"
+                                                    required
+                                                    aria-required="true"
+                                                >
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                             
                                             <div class="col-md-6 mb-3">
-                                                <div class="form-label required">Apellidos</div>
+                                                <label for="lastName" class="form-label required">Apellidos</label>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="lastName"
-                                                       placeholder="Tus apellidos"
-                                                       autocomplete="family-name">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    id="lastName"
+                                                    class="form-control" 
+                                                    name="lastName"
+                                                    placeholder="Tus apellidos"
+                                                    autocomplete="family-name"
+                                                    required
+                                                    aria-required="true"
+                                                >
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-8 mb-3">
-                                                <div class="form-label required">Correo electrónico</div>
+                                                <label for="email" class="form-label required">Correo electrónico</label>
                                                 <input type="email" 
-                                                       class="form-control" 
-                                                       name="email"
-                                                       placeholder="tu@email.com"
-                                                       autocomplete="email">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    id="email"
+                                                    class="form-control" 
+                                                    name="email"
+                                                    placeholder="tu@email.com"
+                                                    autocomplete="email"
+                                                    required
+                                                    aria-required="true"
+                                                >
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                             
                                             <div class="col-md-4 mb-3">
-                                                <div class="form-label required">Teléfono</div>
+                                                <label for="phone" class="form-label required">Teléfono</label>
                                                 <input type="tel" 
-                                                       class="form-control" 
-                                                       name="phone"
-                                                       placeholder="+34 600 000 000"
-                                                       autocomplete="tel">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    id="phone"
+                                                    class="form-control" 
+                                                    name="phone"
+                                                    placeholder="+34 600 000 000"
+                                                    autocomplete="tel"
+                                                    required
+                                                    aria-required="true"
+                                                >
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                         </div>
                                         
-                                        <!-- PROBLEMA: Checkbox sin estructura accesible -->
+                                        <!-- Checkbox con estructura accesible -->
                                         <div class="mb-3">
-                                            <input type="checkbox" name="createAccount" style="margin-right: 0.5rem;">
-                                            <span>Crear una cuenta para futuras compras más rápidas</span>
+                                            <input type="checkbox" id="createAccount" name="createAccount" style="margin-right: 0.5rem;">
+                                            <label for="createAccount">Crear una cuenta para futuras compras más rápidas</label>
                                         </div>
-                                    </div>
+                                    </fieldset>
                                     
-                                    <!-- Botones de navegación - PROBLEMAS -->
+                                    <!-- Botones de navegación -->
                                     <div style="display: flex; justify-content: end; gap: 1rem;">
-                                        <!-- PROBLEMA: Botón sin descripción de acción -->
+                                        <!-- Botón con descripción de acción -->
                                         <button type="button" 
                                                 onclick="nextStep()"
-                                                class="btn btn-primary btn-lg">
+                                                class="btn btn-primary btn-lg"
+                                                aria-label="Continuar al siguiente paso">
                                             Continuar →
                                         </button>
                                     </div>
                                 </div>
                                 
-                                <!-- PASO 2: Envío y Facturación - PROBLEMAS -->
+                                <!-- PASO 2: Envío y Facturación -->
                                 <div class="step-panel" data-panel="2">
                                     
                                     <!-- Dirección de envío -->
-                                    <div class="form-section">
-                                        <div class="section-title">
+                                    <fieldset class="form-section">
+                                        <legend class="section-title">
                                             🚚 Dirección de Envío
-                                        </div>
+                                        </legend>
                                         
                                         <div class="row">
                                             <div class="col-12 mb-3">
-                                                <div class="form-label required">Dirección</div>
+                                                <label for="address" class="form-label required">Dirección</label>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="address"
-                                                       placeholder="Calle, número, piso, puerta"
-                                                       autocomplete="street-address">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    class="form-control" 
+                                                    name="address"
+                                                    id="address"
+                                                    placeholder="Calle, número, piso, puerta"
+                                                    autocomplete="street-address"
+                                                    required
+                                                    aria-required="true">
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <div class="form-label required">Ciudad</div>
+                                                <label for="city" class="form-label required">Ciudad</label>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="city"
-                                                       placeholder="Tu ciudad"
-                                                       autocomplete="address-level2">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    class="form-control" 
+                                                    name="city"
+                                                    id="city"
+                                                    placeholder="Tu ciudad"
+                                                    autocomplete="address-level2"
+                                                    required
+                                                    aria-required="true">
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                             
                                             <div class="col-md-3 mb-3">
-                                                <div class="form-label required">Código Postal</div>
+                                                <label for="postalCode" class="form-label required">Código Postal</label>
                                                 <input type="text" 
-                                                       class="form-control" 
-                                                       name="postalCode"
-                                                       placeholder="28001"
-                                                       autocomplete="postal-code">
-                                                <div class="field-error" style="display: none;"></div>
+                                                    class="form-control" 
+                                                    name="postalCode"
+                                                    id="postalCode"
+                                                    placeholder="28001"
+                                                    autocomplete="postal-code"
+                                                    required
+                                                    aria-required="true">
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                             
                                             <div class="col-md-3 mb-3">
-                                                <!-- PROBLEMA: Select sin label apropiado -->
-                                                <div class="form-label required">País</div>
-                                                <select class="form-select" name="country" autocomplete="country">
+                                                <!-- Select con label apropiado -->
+                                                <label for="country" class="form-label required">País</label>
+                                                <select class="form-select" name="country" id="country" autocomplete="country" required aria-required="true">
                                                     <option value="">Selecciona país</option>
                                                     <option value="ES">España</option>
                                                     <option value="FR">Francia</option>
@@ -390,76 +422,95 @@
                                                     <option value="IT">Italia</option>
                                                     <option value="PT">Portugal</option>
                                                 </select>
-                                                <div class="field-error" style="display: none;"></div>
+                                                <div class="field-error" style="display: none;" aria-live="polite"></div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </fieldset>
                                     
-                                    <!-- Opciones de envío - PROBLEMAS -->
-                                    <div class="form-section">
-                                        <div class="section-title">
+                                    <!-- Opciones de envío -->
+                                    <fieldset class="form-section">
+                                        <legend class="section-title">
                                             📦 Opciones de Envío
-                                        </div>
+                                        </legend>
                                         
-                                        <!-- PROBLEMA: Radio buttons sin fieldset -->
+                                        <!-- Radio buttons con fieldset -->
                                         <div style="margin-bottom: 1rem;">
-                                            <!-- PROBLEMA: Radio sin label apropiado -->
-                                            <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;"
-                                                 onclick="selectShipping('standard')">
-                                                <input type="radio" name="shipping" value="standard" style="margin-right: 0.5rem;">
-                                                <strong>Envío Estándar (5-7 días)</strong> - Gratis
-                                                <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
-                                                    Entrega en horario laboral
-                                                </div>
+                                            <!-- Radio con label apropiado, y quitado el onclick para accesibilidad de teclado y cursor y añadido label y onchange-->
+                                            <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                                <input type="radio" 
+                                                    id="shippingStandard"
+                                                    name="shipping" 
+                                                    value="standard" 
+                                                    style="margin-right: 0.5rem;"
+                                                    onchange="updateShippingCost('standard')">
+                                                <label for="shippingStandard" style="cursor: pointer;">
+                                                    <strong>Envío Estándar (5-7 días)</strong> - Gratis
+                                                    <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
+                                                        Entrega en horario laboral
+                                                    </div>
+                                                </label>
                                             </div>
                                             
-                                            <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;"
-                                                 onclick="selectShipping('express')">
-                                                <input type="radio" name="shipping" value="express" style="margin-right: 0.5rem;">
-                                                <strong>Envío Express (2-3 días)</strong> - €9.99
-                                                <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
-                                                    Entrega garantizada en 2-3 días hábiles
-                                                </div>
+                                            <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                                <input type="radio" 
+                                                    id="shippingExpress" 
+                                                    name="shipping" 
+                                                    value="express" 
+                                                    style="margin-right: 0.5rem;"
+                                                    onchange="updateShippingCost('express')">
+                                                <label for="shippingExpress" style="cursor: pointer;">
+                                                    <strong>Envío Express (2-3 días)</strong> - €9.99
+                                                    <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
+                                                        Entrega garantizada en 2-3 días hábiles
+                                                    </div>
+                                                </label>
                                             </div>
                                             
-                                            <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;"
-                                                 onclick="selectShipping('overnight')">
-                                                <input type="radio" name="shipping" value="overnight" style="margin-right: 0.5rem;">
-                                                <strong>Envío 24h</strong> - €19.99
-                                                <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
-                                                    Entrega al día siguiente antes de las 12:00
-                                                </div>
+                                            <div style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                                <input type="radio" 
+                                                    id="shippingOvernight" 
+                                                    name="shipping" 
+                                                    value="overnight" 
+                                                    style="margin-right: 0.5rem;"
+                                                    onchange="updateShippingCost('overnight')">
+                                                <label for="shippingOvernight" style="cursor: pointer;">
+                                                    <strong>Envío 24h</strong> - €19.99
+                                                    <div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem;">
+                                                        Entrega al día siguiente antes de las 12:00
+                                                    </div>
+                                                </label>
                                             </div>
                                         </div>
-                                    </div>
+                                    </fieldset>
                                     
                                     <!-- Facturación -->
-                                    <div class="form-section">
-                                        <div class="section-title">
+                                    <fieldset class="form-section">
+                                        <legend class="section-title">
                                             🧾 Información de Facturación
-                                        </div>
+                                        </legend>
                                         
-                                        <!-- PROBLEMA: Checkbox sin accesibilidad -->
+                                        <!-- Checkbox con accesibilidad -->
                                         <div class="mb-3">
                                             <input type="checkbox" 
-                                                   name="sameAsShipping" 
-                                                   checked 
-                                                   onchange="toggleBillingAddress()"
-                                                   style="margin-right: 0.5rem;">
-                                            <span>La dirección de facturación es igual a la de envío</span>
+                                                id="sameAsShipping"
+                                                name="sameAsShipping" 
+                                                checked 
+                                                onchange="toggleBillingAddress()"
+                                                style="margin-right: 0.5rem;">
+                                            <label for="sameAsShipping" style="cursor: pointer;">La dirección de facturación es igual a la de envío</label>
                                         </div>
                                         
-                                        <!-- PROBLEMA: Sección colapsable sin accesibilidad -->
-                                        <div id="billingAddressSection" style="display: none;">
+                                        <!-- Sección colapsable con accesibilidad -->
+                                        <div id="billingAddressSection" style="display: none;" aria-hidden="true">
                                             <div class="row">
                                                 <div class="col-12 mb-3">
-                                                    <div class="form-label">Dirección de facturación</div>
-                                                    <input type="text" class="form-control" name="billingAddress">
+                                                    <label for="billingAddress" class="form-label">Dirección de facturación</label>
+                                                    <input type="text" class="form-control" name="billingAddress" id="billingAddress">
                                                 </div>
                                             </div>
                                             <!-- Más campos de facturación... -->
                                         </div>
-                                    </div>
+                                    </fieldset>
                                     
                                     <!-- Botones de navegación -->
                                     <div style="display: flex; justify-content: space-between;">
@@ -476,51 +527,73 @@
                                     </div>
                                 </div>
                                 
-                                <!-- PASO 3: Método de Pago - PROBLEMAS CRÍTICOS -->
+                                <!-- PASO 3: Método de Pago -->
                                 <div class="step-panel" data-panel="3">
                                     
-                                    <div class="form-section">
-                                        <div class="section-title">
+                                    <fieldset class="form-section">
+                                        <legend class="section-title">
                                             💳 Método de Pago
-                                        </div>
+                                        </legend>
                                         
-                                        <!-- PROBLEMA: Métodos de pago sin fieldset -->
+                                        <!-- Métodos de pago con fieldset -->
                                         <div style="margin-bottom: 2rem;">
                                             
                                             <!-- Tarjeta de crédito -->
-                                            <div class="payment-method" onclick="selectPaymentMethod('card')">
-                                                <!-- PROBLEMA: Radio sin label -->
-                                                <input type="radio" name="paymentMethod" value="card" style="margin-right: 0.5rem;">
-                                                <strong>💳 Tarjeta de Crédito/Débito</strong>
-                                                <div style="font-size: 0.9rem; color: #6c757d;">
-                                                    Visa, Mastercard, American Express
-                                                </div>
+                                            <div class="payment-method" style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                                <!-- Radio con label -->
+                                                <input type="radio" 
+                                                    id="paymentCard" 
+                                                    name="paymentMethod" 
+                                                    value="card" 
+                                                    style="margin-right: 0.5rem;"
+                                                    onchange="selectPaymentMethod('card')">
+                                                <label for="paymentCard" style="cursor: pointer;">
+                                                    <strong>💳 Tarjeta de Crédito/Débito</strong>
+                                                    <div style="font-size: 0.9rem; color: #6c757d;">
+                                                        Visa, Mastercard, American Express
+                                                    </div>
+                                                </label>
                                             </div>
                                             
                                             <!-- PayPal -->
-                                            <div class="payment-method" onclick="selectPaymentMethod('paypal')">
-                                                <input type="radio" name="paymentMethod" value="paypal" style="margin-right: 0.5rem;">
-                                                <strong>🔵 PayPal</strong>
-                                                <div style="font-size: 0.9rem; color: #6c757d;">
-                                                    Paga de forma segura con tu cuenta PayPal
-                                                </div>
+                                            <div class="payment-method" style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                                <input type="radio" 
+                                                    id="paymentPayPal"
+                                                    name="paymentMethod" 
+                                                    value="paypal" 
+                                                    style="margin-right: 0.5rem;"
+                                                    onchange="selectPaymentMethod('paypal')">
+                                                <label for="paymentPayPal" style="cursor: pointer;">
+                                                    <strong>🔵 PayPal</strong>
+                                                    <div style="font-size: 0.9rem; color: #6c757d;">
+                                                        Paga de forma segura con tu cuenta PayPal
+                                                    </div>
+                                                </label>
                                             </div>
                                             
                                             <!-- Transferencia -->
-                                            <div class="payment-method" onclick="selectPaymentMethod('transfer')">
-                                                <input type="radio" name="paymentMethod" value="transfer" style="margin-right: 0.5rem;">
-                                                <strong>🏦 Transferencia Bancaria</strong>
-                                                <div style="font-size: 0.9rem; color: #6c757d;">
-                                                    Recibirás las instrucciones por email
-                                                </div>
+                                            <div class="payment-method" style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                                <input type="radio" 
+                                                    id="paymentTransfer"
+                                                    name="paymentMethod" 
+                                                    value="transfer" 
+                                                    style="margin-right: 0.5rem;"
+                                                    onchange="selectPaymentMethod('transfer')">
+                                                <label for="paymentTransfer" style="cursor: pointer;">
+                                                    <strong>🏦 Transferencia Bancaria</strong>
+                                                    <div style="font-size: 0.9rem; color: #6c757d;">
+                                                        Recibirás las instrucciones por email
+                                                    </div>
+                                                </label>
                                             </div>
                                         </div>
                                         
-                                        <!-- PROBLEMA: Sección tarjeta sin accesibilidad -->
+                                        
+                                        <!-- Sección tarjeta con accesibilidad -->
                                         <div id="cardDetails" style="display: none;">
                                             
-                                            <!-- Vista previa de tarjeta - PROBLEMA: Solo visual -->
-                                            <div class="card-preview">
+                                            <!-- Vista previa de tarjeta -->
+                                            <div class="card-preview" aria-hidden="true">
                                                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                                                     <span>BANCO EJEMPLO</span>
                                                     <span id="cardType">VISA</span>
@@ -542,53 +615,68 @@
                                             
                                             <div class="row">
                                                 <div class="col-12 mb-3">
-                                                    <!-- PROBLEMA: Campo tarjeta sin descripción accesible -->
-                                                    <div class="form-label required">Número de tarjeta</div>
+                                                    <!-- Campo tarjeta con descripción accesible -->
+                                                    <label for="cardNumber" class="form-label required">Número de tarjeta</label>
                                                     <input type="text" 
-                                                           class="form-control" 
-                                                           name="cardNumber"
-                                                           placeholder="1234 5678 9012 3456"
-                                                           maxlength="19"
-                                                           autocomplete="cc-number"
-                                                           oninput="formatCardNumber(this)">
-                                                    <div class="field-error" style="display: none;"></div>
+                                                        id="cardNumber"
+                                                        class="form-control" 
+                                                        name="cardNumber"
+                                                        placeholder="1234 5678 9012 3456"
+                                                        maxlength="19"
+                                                        autocomplete="cc-number"
+                                                        oninput="formatCardNumber(this)"
+                                                        aria-describedby="cardNumberHelp">
+                                                    <div id="cardNumberHelp" class="field-help">Introduce los dígitos de tu tarjeta sin espacios.</div>
+                                                    <div class="field-error" style="display: none;" aria-live="polite"></div>
                                                 </div>
                                             </div>
                                             
                                             <div class="row">
                                                 <div class="col-md-8 mb-3">
-                                                    <div class="form-label required">Nombre del titular</div>
+                                                    <label for="cardHolder" class="form-label required">Nombre del titular</label>
                                                     <input type="text" 
-                                                           class="form-control" 
-                                                           name="cardHolder"
-                                                           placeholder="Como aparece en la tarjeta"
-                                                           autocomplete="cc-name"
-                                                           oninput="updateCardPreview()">
-                                                    <div class="field-error" style="display: none;"></div>
+                                                        id="cardHolder"
+                                                        class="form-control" 
+                                                        name="cardHolder"
+                                                        placeholder="Como aparece en la tarjeta"
+                                                        autocomplete="cc-name"
+                                                        oninput="updateCardPreview()"
+                                                        aria-describedby="cardHolderHelp">
+                                                    <div id="cardHolderHelp" class="field-help">Introduce el nombre completo tal como aparece en la tarjeta.</div>
+                                                    <div class="field-error" style="display: none;" aria-live="polite"></div>
                                                 </div>
                                                 
                                                 <div class="col-md-4 mb-3">
-                                                    <!-- PROBLEMA: CVV sin explicación accesible -->
-                                                    <div class="form-label required">
+                                                    <!-- CVV con explicación accesible -->
+                                                    <label for="cvv" class="form-label required">
                                                         CVV
                                                         <!-- PROBLEMA: Icono de ayuda sin accesibilidad -->
-                                                        <span style="cursor: help; color: #007bff;" onclick="showCVVHelp()">ℹ️</span>
-                                                    </div>
+                                                        <button type="button"
+                                                            onclick="showCVVHelp()"
+                                                            style="cursor: help; color: #007bff; background: none; border: none; padding: 0;"
+                                                            aria-label="¿Qué es el código CVV?">
+                                                            ℹ️
+                                                        </button>
+                                                    </label>
                                                     <input type="password" 
-                                                           class="form-control" 
-                                                           name="cvv"
-                                                           placeholder="123"
-                                                           maxlength="4"
-                                                           autocomplete="cc-csc">
+                                                        id="cvv"
+                                                        class="form-control" 
+                                                        name="cvv"
+                                                        placeholder="123"
+                                                        maxlength="4"
+                                                        autocomplete="cc-csc"
+                                                        aria-describedby="cvvHelp">
+                                                    <div id="cvvHelp" class="field-help">Código de 3 o 4 dígitos situado en el reverso de la tarjeta.</div>
                                                     <div class="field-error" style="display: none;"></div>
                                                 </div>
                                             </div>
                                             
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
-                                                    <div class="form-label required">Mes de expiración</div>
-                                                    <!-- PROBLEMA: Select sin opciones accesibles -->
+                                                    <label for="expiryMonth" class="form-label required" >Mes de expiración</label>
+                                                    <!-- Select con opciones accesibles -->
                                                     <select class="form-select" 
+                                                            id="expiryMonth"
                                                             name="expiryMonth" 
                                                             autocomplete="cc-exp-month"
                                                             onchange="updateCardPreview()">
@@ -606,12 +694,13 @@
                                                         <option value="11">11</option>
                                                         <option value="12">12</option>
                                                     </select>
-                                                    <div class="field-error" style="display: none;"></div>
+                                                    <div class="field-error" style="display: none;" aria-live="polite"></div>
                                                 </div>
                                                 
                                                 <div class="col-md-6 mb-3">
-                                                    <div class="form-label required">Año de expiración</div>
+                                                    <label for="expiryYear" class="form-label required">Año de expiración</label>
                                                     <select class="form-select" 
+                                                            id="expiryYear"
                                                             name="expiryYear" 
                                                             autocomplete="cc-exp-year"
                                                             onchange="updateCardPreview()">
@@ -624,20 +713,20 @@
                                                         <option value="2029">2029</option>
                                                         <option value="2030">2030</option>
                                                     </select>
-                                                    <div class="field-error" style="display: none;"></div>
+                                                    <div class="field-error" style="display: none;" aria-live="polite"></div>
                                                 </div>
                                             </div>
                                             
-                                            <!-- PROBLEMA: Checkbox guardar tarjeta sin contexto -->
+                                            <!-- Checkbox guardar tarjeta con contexto -->
                                             <div class="mb-3">
-                                                <input type="checkbox" name="saveCard" style="margin-right: 0.5rem;">
-                                                <span>Guardar esta tarjeta para futuras compras</span>
+                                                <input type="checkbox" name="saveCard" id="saveCard" style="margin-right: 0.5rem;">
+                                                <label for="saveCard">Guardar esta tarjeta para futuras compras</label>
                                                 <div style="font-size: 0.8rem; color: #6c757d; margin-top: 0.25rem;">
                                                     Tus datos se almacenarán de forma segura y encriptada
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </fieldset>
                                     
                                     <!-- Botones de navegación -->
                                     <div style="display: flex; justify-content: space-between;">
@@ -654,77 +743,110 @@
                                     </div>
                                 </div>
                                 
-                                <!-- PASO 4: Confirmación - PROBLEMAS -->
+                                <!-- PASO 4: Confirmación -->
                                 <div class="step-panel" data-panel="4">
                                     
-                                    <div class="form-section">
-                                        <div class="section-title">
+                                    <fieldset class="form-section">
+                                        <legend class="section-title">
                                             ✅ Confirmación de Pedido
-                                        </div>
+                                        </legend>
                                         
-                                        <!-- PROBLEMA: Resumen sin estructura accesible -->
-                                        <div style="background: white; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
+                                        <!-- Resumen con estructura accesible -->
+                                        <section id="orderSummary" aria-label="Resumen de pedido" style="background: white; border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
                                             
                                             <!-- Resumen de información personal -->
-                                            <div style="margin-bottom: 1.5rem;">
-                                                <div style="font-weight: 600; margin-bottom: 0.5rem; color: #007bff;">
+                                            <div id="personalSummaryContainer" class="summary-container" style="margin-bottom: 1.5rem;" aria-live="polite">
+                                                <h2 style="color: #007bff; font-size: 1.2rem; font-weight: bold;">
                                                     Información Personal
-                                                </div>
+                                                </h2>
                                                 <div id="personalSummary">
                                                     <!-- Se completará dinámicamente -->
                                                 </div>
                                             </div>
                                             
                                             <!-- Resumen de envío -->
-                                            <div style="margin-bottom: 1.5rem;">
-                                                <div style="font-weight: 600; margin-bottom: 0.5rem; color: #007bff;">
+                                            <div id="shippingSummaryContainer" class="summary-container" style="margin-bottom: 1.5rem;" aria-live="polite">
+                                                <h2 style="color: #007bff; font-size: 1.2rem; font-weight: bold;">
                                                     Dirección de Envío
-                                                </div>
+                                                </h2>
                                                 <div id="shippingSummary">
                                                     <!-- Se completará dinámicamente -->
                                                 </div>
                                             </div>
                                             
                                             <!-- Resumen de pago -->
-                                            <div style="margin-bottom: 1.5rem;">
-                                                <div style="font-weight: 600; margin-bottom: 0.5rem; color: #007bff;">
+                                            <div id="paymentSummaryContainer" class="summary-container" style="margin-bottom: 1.5rem;" aria-live="polite">
+                                                <h2 style="color: #007bff; font-size: 1.2rem; font-weight: bold;">
                                                     Método de Pago
-                                                </div>
+                                                </h2>
                                                 <div id="paymentSummary">
                                                     <!-- Se completará dinámicamente -->
                                                 </div>
                                             </div>
-                                        </div>
+                                        </section>
                                         
-                                        <!-- PROBLEMA: Términos finales sin accesibilidad -->
-                                        <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
-                                            <div style="font-weight: 500; margin-bottom: 0.5rem;">
+                                        <!-- Términos finales con accesibilidad -->
+                                        <section id="termsSection" aria-label="termsHeading" style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                                            <legend class="section-title">
                                                 ⚠️ Términos y Condiciones Finales
+                                            </legend>
+                                            <div class="mb-2">
+                                                <input type="checkbox" 
+                                                    id="acceptTerms"
+                                                    name="acceptTerms" 
+                                                    required 
+                                                    style="margin-right: 0.5rem;"
+                                                    aria-required="true"
+                                                    aria-describedby="termsHelp">
+                                                <div id="termsHelp" class="field-help" hidden>
+                                                    Debes aceptar los términos y condiciones para proceder con la compra.
+                                                </div>
+                                                <label for="acceptTerms">
+                                                    <span>
+                                                        Acepto los 
+                                                        <!-- Link indicar nueva ventana -->
+                                                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Abrir términos y condiciones de venta en una nueva ventana">términos y condiciones de venta</a>
+                                                    </span>
+                                                </label>
                                             </div>
                                             <div class="mb-2">
-                                                <input type="checkbox" name="acceptTerms" required style="margin-right: 0.5rem;">
-                                                <span>
-                                                    Acepto los 
-                                                    <!-- PROBLEMA: Link sin indicar nueva ventana -->
-                                                    <a href="#" target="_blank">términos y condiciones de venta</a>
-                                                </span>
+                                                <input type="checkbox" 
+                                                    id="acceptPrivacy"
+                                                    name="acceptPrivacy" 
+                                                    required 
+                                                    style="margin-right: 0.5rem;"
+                                                    aria-required="true"
+                                                    aria-describedby="privacyHelp">
+                                                <div id="privacyHelp" class="field-help" hidden>
+                                                    Debes aceptar la política de privacidad para proceder con la compra.
+                                                </div>
+                                                <label for="acceptPrivacy">
+                                                    <span>
+                                                        He leído la 
+                                                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Abrir política de privacidad en una nueva ventana">política de privacidad</a>
+                                                    </span>
+                                                </label>
                                             </div>
                                             <div class="mb-2">
-                                                <input type="checkbox" name="acceptPrivacy" required style="margin-right: 0.5rem;">
-                                                <span>
-                                                    He leído la 
-                                                    <a href="#" target="_blank">política de privacidad</a>
-                                                </span>
+                                                <input type="checkbox"
+                                                    id="acceptRefund" 
+                                                    name="acceptRefund" 
+                                                    required 
+                                                    style="margin-right: 0.5rem;"
+                                                    aria-required="true"
+                                                    aria-describedby="refundHelp">
+                                                <div id="refundHelp" class="field-help" hidden>
+                                                    Debes aceptar la política de devoluciones para proceder con la compra.
+                                                </div>
+                                                <label for="acceptRefund">
+                                                    <span>
+                                                        Entiendo la 
+                                                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Abrir política de devoluciones en una nueva ventana">política de devoluciones</a>
+                                                    </span>
+                                                </label>
                                             </div>
-                                            <div class="mb-2">
-                                                <input type="checkbox" name="acceptRefund" required style="margin-right: 0.5rem;">
-                                                <span>
-                                                    Entiendo la 
-                                                    <a href="#" target="_blank">política de devoluciones</a>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </section>
+                                    </fieldset>
                                     
                                     <!-- Botones finales -->
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -735,19 +857,21 @@
                                         </button>
                                         
                                         <div style="text-align: center;">
-                                            <!-- PROBLEMA: Total sin formato accesible -->
-                                            <div style="font-size: 1.1rem; color: #6c757d; margin-bottom: 0.5rem;">
+                                            <!-- Total con formato accesible -->
+                                            <h3 style="font-size: 1.1rem; color: #6c757d; margin-bottom: 0.5rem;">
                                                 Total a pagar:
-                                            </div>
-                                            <div style="font-size: 2rem; font-weight: bold; color: #007bff;">
+                                            </h3>
+                                            <h3 style="font-size: 2rem; font-weight: bold; color: #007bff;">
                                                 €1,848.96
-                                            </div>
+                                            </h3>
                                         </div>
                                         
-                                        <!-- PROBLEMA: Botón final sin indicar proceso -->
+                                        <!-- Botón final indicar proceso -->
                                         <button type="submit" 
-                                                class="btn btn-success btn-lg"
-                                                style="font-size: 1.2rem; padding: 1rem 2rem;">
+                                            id="confirmOrderButton"
+                                            class="btn btn-success btn-lg"
+                                            style="font-size: 1.2rem; padding: 1rem 2rem;"
+                                            aria-live="polite">
                                             💳 Realizar Pago
                                         </button>
                                     </div>
@@ -755,35 +879,36 @@
                             </form>
                         </div>
                         
-                        <!-- PROBLEMA: Sidebar resumen sin landmark -->
+                        <!-- Sidebar resumen con landmark -->
                         <div class="col-lg-4">
-                            <div class="order-summary">
-                                <!-- PROBLEMA: Resumen sin estructura semántica -->
-                                <div style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; text-align: center;">
+                            <aside class="order-summary" aria-labelledby="orderSummaryHeading">
+                                <!-- Resumen con estructura semántica -->
+                                <h2 id="orderSummaryHeading" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; text-align: center;">
                                     📋 Resumen del Pedido
-                                </div>
+                                </h2>
                                 
-                                <!-- Lista de productos - PROBLEMA: Sin estructura -->
-                                <div style="margin-bottom: 1.5rem;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #dee2e6;">
+                                <!-- Lista de productos -->
+                                <section aria-label="Lista de productos" style="margin-bottom: 1.5rem;">
+                                    <ul style="list-style: none; padding: 0; margin: 0;">
+                                        <li style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #dee2e6;">
                                         <div>
                                             <div style="font-weight: 500;">Laptop Gaming Pro X1</div>
-                                            <div style="font-size: 0.9rem; color: #6c757d;">Cantidad: 1</div>
+                                            <div style="font-size: 0.9rem; color: #434343ff;">Cantidad: 1</div>
                                         </div>
                                         <div style="font-weight: 500;">€1,299.99</div>
-                                    </div>
-                                    
-                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #dee2e6;">
+                                        </li>
+                                        <li style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #dee2e6;">
                                         <div>
                                             <div style="font-weight: 500;">Auriculares Wireless Pro</div>
-                                            <div style="font-size: 0.9rem; color: #6c757d;">Cantidad: 2</div>
+                                            <div style="font-size: 0.9rem; color: #434343ff;">Cantidad: 2</div>
                                         </div>
                                         <div style="font-weight: 500;">€399.98</div>
-                                    </div>
-                                </div>
+                                        </li>
+                                    </ul>
+                                </section>
                                 
-                                <!-- Totales - PROBLEMA: Sin estructura semántica -->
-                                <div style="border-top: 2px solid #dee2e6; padding-top: 1rem;">
+                                <!-- Totales -->
+                                <section aria-label="Totales" style="border-top: 2px solid #dee2e6; padding-top: 1rem;">
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                                         <span>Subtotal:</span>
                                         <span>€1,699.97</span>
@@ -798,86 +923,98 @@
                                     </div>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                                         <span>Descuento:</span>
-                                        <span style="color: #28a745;">-€208.00</span>
+                                        <span style="color: #1b742fff;">-€208.00</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; border-top: 2px solid #007bff; padding-top: 1rem;">
                                         <span>Total:</span>
                                         <span style="color: #007bff;">€1,848.96</span>
                                     </div>
-                                </div>
+                                </section>
                                 
-                                <!-- PROBLEMA: Código promocional sin accesibilidad -->
-                                <div style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
-                                    <div style="font-weight: 500; margin-bottom: 0.5rem;">¿Tienes un código promocional?</div>
+                                <!-- Código promocional con accesibilidad -->
+                                <section aria-label="Código promocional" style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+                                    <label for="promoCode" style="font-weight: 500; margin-bottom: 0.5rem; display:block;">
+                                        ¿Tienes un código promocional?
+                                    </label>
                                     <div style="display: flex; gap: 0.5rem;">
-                                        <!-- PROBLEMA: Input sin label -->
-                                        <input type="text" 
-                                               class="form-control" 
-                                               placeholder="Código promocional"
-                                               id="promoCode">
-                                        <button onclick="applyPromoCode()" class="btn btn-outline-primary">
-                                            Aplicar
+                                        <input type="text"
+                                            class="form-control"
+                                            id="promoCode"
+                                            name="promoCode"
+                                            placeholder="Código promocional">
+                                        <button type="button"
+                                                onclick="applyPromoCode()"
+                                                class="btn btn-outline-primary">
+                                        Aplicar
                                         </button>
                                     </div>
-                                </div>
+                                    <div id="promoMessage" aria-live="polite" class="field-error" style="display:none;"></div>
+                                </section>
                                 
                                 <!-- Garantías y seguridad -->
-                                <div style="margin-top: 1.5rem; font-size: 0.9rem; color: #6c757d; text-align: center;">
-                                    <div style="margin-bottom: 0.5rem;">🔒 Pago 100% seguro</div>
-                                    <div style="margin-bottom: 0.5rem;">📞 Soporte 24/7</div>
-                                    <div style="margin-bottom: 0.5rem;">📦 Garantía de 30 días</div>
-                                </div>
-                            </div>
+                                <section aria-label="Garantías y seguridad" style="margin-top: 1.5rem; font-size: 0.9rem; color: #6c757d; text-align: center;">
+                                    <p style="margin-bottom: 0.5rem; color: #434343ff;">🔒 Pago 100% seguro</p>
+                                    <p style="margin-bottom: 0.5rem; color: #434343ff;">📞 Soporte 24/7</p>
+                                    <p style="margin-bottom: 0.5rem; color: #434343ff;">📦 Garantía de 30 días</p>
+                                </section>
+                            </aside>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     
-    <!-- PROBLEMA: Overlays sin accesibilidad -->
-    <div class="loading-overlay" id="processingOverlay">
-        <div class="loading-content">
-            <div class="spinner-border text-primary mb-3" style="width: 4rem; height: 4rem;"></div>
-            <div style="font-size: 1.2rem; font-weight: 500; margin-bottom: 0.5rem;">
+    <!-- Overlays con accesibilidad -->
+    <div class="loading-overlay" id="processingOverlay" role="dialog" aria-modal="true" aria-labelledby="processingTitle" aria-describedby="processingDescription processingStep" style="display:none;">
+        <div class="loading-content" tabindex="-1">
+            <div class="spinner-border text-primary mb-3" style="width: 4rem; height: 4rem;" aria-hidden="true"></div>
+
+            <div id="processingTitle" style="font-size: 1.2rem; font-weight: 500; margin-bottom: 0.5rem;">
                 Procesando pago...
             </div>
-            <div style="color: #6c757d;">
+
+            <div id="processingDescription" style="color: #6c757d;">
                 Por favor, no cierres esta ventana
             </div>
-            <!-- PROBLEMA: Progreso sin información accesible -->
+
             <div style="margin-top: 1.5rem;">
                 <div style="background: #e9ecef; height: 4px; border-radius: 2px; overflow: hidden;">
-                    <div id="processingProgress" style="background: #007bff; height: 100%; width: 0%; transition: width 0.5s ease;"></div>
+                    <div id="processingProgress" style="background: #007bff; height: 100%; width: 0%; transition: width 0.5s ease;" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
                 </div>
-                <div id="processingStep" style="margin-top: 0.5rem; font-size: 0.9rem; color: #6c757d;">
-                    Validando información...
-                </div>
+                <div id="processingStep" style="margin-top: 0.5rem; font-size: 0.9rem; color: #6c757d;" aria-live="polite">Validando información... </div>
             </div>
         </div>
     </div>
-    
-    <!-- PROBLEMA: Modal éxito sin accesibilidad -->
-    <div class="loading-overlay" id="successOverlay" style="display: none;">
-        <div class="loading-content">
-            <div class="success-checkmark">
-                ✓
-            </div>
-            <div style="font-size: 1.5rem; font-weight: 500; margin-bottom: 1rem; color: #28a745;">
+
+    <!-- Modal de éxito con accesibilidad -->
+    <div class="loading-overlay" id="successOverlay" role="dialog" aria-modal="true" aria-labelledby="successTitle" aria-describedby="successMessage orderNumberDescription" style="display: none;">
+        <div class="loading-content" tabindex="-1">
+            <div class="success-checkmark" aria-hidden="true">✓</div>
+
+            <div id="successTitle" style="font-size: 1.5rem; font-weight: 500; margin-bottom: 1rem; color: #28a745;">
                 ¡Pago Completado!
             </div>
-            <div style="color: #6c757d; margin-bottom: 1.5rem;">
+
+            <div id="successMessage" style="color: #6c757d; margin-bottom: 1.5rem;" aria-live="assertive">
                 Tu pedido ha sido procesado exitosamente
             </div>
+
             <div style="background: #f8f9fa; padding: 1rem; border-radius: 5px; margin-bottom: 1.5rem;">
-                <div style="font-size: 0.9rem; color: #6c757d;">Número de pedido:</div>
-                <div style="font-family: monospace; font-size: 1.1rem; font-weight: bold;">#TH-2025-001234</div>
+                <div id="orderNumberDescription" style="font-size: 0.9rem; color: #6c757d;">
+                    Número de pedido:
+                </div>
+                <div style="font-family: monospace; font-size: 1.1rem; font-weight: bold;">
+                    #TH-2025-001234
+                </div>
             </div>
-            <button onclick="closeSuccess()" class="btn btn-primary">
+
+            <button type="button" onclick="closeSuccess()" class="btn btn-primary">
                 Continuar
             </button>
         </div>
     </div>
+
     
     <script src="{{ url_for('static', filename='js/portal.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -1046,31 +1183,56 @@
             }
         }
         
-        // PROBLEMA: Seleccionar método de pago sin accesibilidad
+        // Seleccionar método de pago con accesibilidad
         function selectPaymentMethod(method) {
-            // Limpiar selecciones previas
+            // Quitar clase 'selected' de todos los métodos
             document.querySelectorAll('.payment-method').forEach(pm => {
                 pm.classList.remove('selected');
             });
-            
-            // Seleccionar método actual
-            const selectedMethod = document.querySelector(`[onclick="selectPaymentMethod('${method}')"]`);
-            selectedMethod.classList.add('selected');
-            
-            const radioButton = selectedMethod.querySelector('input[type="radio"]');
-            radioButton.checked = true;
-            
-            // PROBLEMA: Cambio no anunciado
-            
+
+            // Añadir 'selected' al contenedor del método actual
+            const selectedRadio = document.querySelector(`input[name="paymentMethod"][value="${method}"]`);
+            if (!selectedRadio) return;
+
+            const selectedMethodContainer = selectedRadio.closest('.payment-method');
+            if (selectedMethodContainer) {
+                selectedMethodContainer.classList.add('selected');
+            }
+
+            // Anunciar el cambio (si tienes una región aria-live)
+            const paymentStatus = document.getElementById('paymentStatus');
+            if (paymentStatus) {
+                paymentStatus.textContent = `Has seleccionado: ${metodoLegible(method)}`;
+            }
+
             // Mostrar/ocultar detalles de tarjeta
             const cardDetails = document.getElementById('cardDetails');
-            if (method === 'card') {
+            if (cardDetails) {
+                if (method === 'card') {
                 cardDetails.style.display = 'block';
-                // PROBLEMA: No enfoca primer campo de tarjeta
-            } else {
+                cardDetails.removeAttribute('aria-hidden');
+                // Enfocar primer campo de tarjeta
+                const firstCardField = document.getElementById('cardNumber');
+                if (firstCardField) {
+                    firstCardField.focus();
+                }
+                } else {
                 cardDetails.style.display = 'none';
+                cardDetails.setAttribute('aria-hidden', 'true');
+                }
             }
         }
+
+        // Opcional: para texto legible anunciado en aria-live
+        function metodoLegible(method) {
+        switch (method) {
+            case 'card': return 'Tarjeta de crédito o débito';
+            case 'paypal': return 'PayPal';
+            case 'transfer': return 'Transferencia bancaria';
+            default: return method;
+        }
+        }
+
         
         // PROBLEMA: Formateo de tarjeta sin accesibilidad
         function formatCardNumber(input) {
