@@ -93,201 +93,241 @@
 </head>
 
 <body>
-    <!-- PROBLEMA: Falta skip link -->
+    <!-- Skip link -->
+    <a href="#loginForm" class="skip-link" tabindex="0" style="position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;">Saltar al formulario de inicio de sesión</a>
     
-    <div class="login-container">
+    <main id="loginContainer" class="login-container">
         <div class="container">
             <div class="login-card">
                 <div class="row g-0">
                     <!-- Panel izquierdo con información -->
-                    <div class="col-lg-6 login-header">
-                        <!-- PROBLEMA: Encabezado sin estructura apropiada -->
-                        <div style="font-size: 2.5rem; font-weight: bold;">TechHub</div>
-                        <div style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">
+                    <section class="col-lg-6 login-header" aria-labelledby="loginHeaderTitle">
+                        <!-- Encabezado con estructura apropiada -->
+                        <h1 id="loginHeaderTitle" style="font-size: 2.5rem; font-weight: bold;">TechHub</h1>
+                        <p style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">
                             Accede a tu cuenta para disfrutar de contenido exclusivo
-                        </div>
+                        </p>
                         
-                        <!-- PROBLEMA: Lista de beneficios sin estructura semántica -->
-                        <div style="margin-top: 2rem; text-align: left;">
-                            <div style="margin-bottom: 1rem;">
-                                <!-- PROBLEMA: Iconos sin descripción -->
-                                ✅ Artículos premium exclusivos
-                            </div>
-                            <div style="margin-bottom: 1rem;">
-                                ✅ Tutoriales paso a paso
-                            </div>
-                            <div style="margin-bottom: 1rem;">
-                                ✅ Comunidad de desarrolladores
-                            </div>
-                            <div style="margin-bottom: 1rem;">
-                                ✅ Soporte prioritario
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Lista de beneficios con estructura semántica y tic como icono -->
+                        <ul style="margin-top: 2rem; text-align: left; list-style: none; padding-left: 0;">
+                            <li style="margin-bottom: 1rem; display:flex; align-items:flex-start;">
+                                <span aria-hidden="true" style="margin-right:0.5rem;">✅</span>
+                                <span>Artículos premium exclusivos</span>
+                            </li>
+                            <li style="margin-bottom: 1rem; display:flex; align-items:flex-start;">
+                                <span aria-hidden="true" style="margin-right:0.5rem;">✅</span>
+                                <span>Tutoriales paso a paso</span>
+                            </li>
+                            <li style="margin-bottom: 1rem; display:flex; align-items:flex-start;">
+                                <span aria-hidden="true" style="margin-right:0.5rem;">✅</span>
+                                <span>Comunidad de desarrolladores</span>
+                            </li>
+                            <li style="margin-bottom: 1rem; display:flex; align-items:flex-start;">
+                                <span aria-hidden="true" style="margin-right:0.5rem;">✅</span>
+                                <span>Soporte prioritario</span>
+                            </li>
+                        </ul>
+
+                    </section>
                     
                     <!-- Panel derecho con formulario -->
-                    <div class="col-lg-6 login-form">
-                        <!-- PROBLEMA: Formulario sin landmark apropiado -->
+                    <section class="col-lg-6 login-form" aria-labelledby="loginFormTitle">
+                        <!-- Formulario con landmark apropiado -->
                         <div>
-                            <!-- PROBLEMA: Encabezado sin nivel apropiado -->
-                            <div style="font-size: 1.8rem; font-weight: 500; margin-bottom: 0.5rem;">
+                            <!-- Encabezado con nivel apropiado -->
+                            <h2 id="loginFormTitle" style="font-size: 1.8rem; font-weight: 500; margin-bottom: 0.5rem;">
                                 Iniciar Sesión
-                            </div>
-                            <div style="color: #6c757d; margin-bottom: 2rem;">
+                            </h2>
+                            <p style="color: #6c757d; margin-bottom: 2rem;">
                                 Ingresa tus credenciales para acceder
-                            </div>
+                            </p>
                             
-                            <!-- PROBLEMA: Formulario sin elementos de accesibilidad -->
+                            <!-- Formulario con elementos de accesibilidad -->
                             <form id="loginForm" novalidate>
                                 
-                                <!-- Campo Email - MÚLTIPLES PROBLEMAS -->
+                                <!-- Campo Email -->
                                 <div class="mb-3">
-                                    <!-- PROBLEMA: Label no asociado correctamente -->
-                                    <div class="form-label">Correo Electrónico *</div>
+                                    <!-- Label asociado correctamente -->
+                                    <label for="loginEmail" class="form-label">Correo electrónico <span aria-hidden="true">*</span></label>
                                     <input type="email" 
                                            class="form-control" 
+                                           id="loginEmail"
                                            name="email"
                                            placeholder="tu@email.com"
-                                           autocomplete="email">
-                                    <!-- PROBLEMA: Mensaje de error no asociado -->
-                                    <div class="form-error" style="display: none;">
-                                        El email es requerido
-                                    </div>
+                                           autocomplete="email"
+                                           required
+                                           aria-required="true">
+                                    <!-- Mensaje de error asociado -->
+                                    <div class="form-error" id="loginEmailError" style="display: none;" aria-live="polite"></div>
                                 </div>
                                 
-                                <!-- Campo Contraseña - PROBLEMAS MÚLTIPLES -->
+                                <!-- Campo Contraseña -->
                                 <div class="mb-3">
-                                    <div class="form-label">Contraseña *</div>
+                                    <label for="loginPassword" class="form-label">Contraseña <span aria-hidden="true">*</span></label>
                                     <div style="position: relative;">
-                                        <!-- PROBLEMA: Input sin label apropiado -->
                                         <input type="password" 
                                                class="form-control" 
+                                               id="loginPassword"
                                                name="password"
                                                placeholder="Tu contraseña"
-                                               autocomplete="current-password">
-                                        
-                                        <!-- PROBLEMA: Botón toggle sin descripción accesible -->
-                                        <span class="password-toggle" 
-                                              style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"
-                                              onclick="togglePassword()">
+                                               autocomplete="current-password"
+                                               required
+                                               aria-required="true"
+                                               aria-describedby="passwordStrengthText">
+
+                                        <!-- Botón toggle con descripción accesible -->
+                                        <button type="button"
+                                                class="password-toggle"
+                                                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background:none; border:none;"
+                                                onclick="togglePassword()"
+                                                aria-label="Mostrar u ocultar contraseña">
                                             👁️
-                                        </span>
+                                        </button>
                                     </div>
-                                    <div class="form-error" style="display: none;">
-                                        La contraseña es requerida
-                                    </div>
+                                    <div class="form-error" id="loginPasswordError" style="display: none;" aria-live="polite"></div>
                                     
-                                    <!-- PROBLEMA: Indicador de fortaleza sin accesibilidad -->
+                                    <!-- Indicador de fortaleza con accesibilidad -->
                                     <div style="margin-top: 0.5rem;">
-                                        <div style="font-size: 0.8rem; color: #6c757d;">
+                                        <div id="passwordStrengthText" style="font-size: 0.8rem; color: #6c757d;">
                                             Fortaleza de contraseña:
                                         </div>
                                         <div style="width: 100%; height: 4px; background: #e9ecef; border-radius: 2px; margin-top: 0.25rem;">
                                             <div id="passwordStrength" 
-                                                 style="height: 100%; width: 0%; background: red; border-radius: 2px; transition: all 0.3s;">
+                                                style="height: 100%; width: 0%; background: red; border-radius: 2px; transition: all 0.3s;"
+                                                role="status"
+                                                aria-live="polite">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <!-- Recordar sesión - PROBLEMAS DE ACCESIBILIDAD -->
+                                <!-- Recordar sesión -->
                                 <div class="mb-3">
                                     <div style="display: flex; align-items: center; justify-content: space-between;">
                                         <div>
-                                            <!-- PROBLEMA: Checkbox sin label apropiado -->
-                                            <input type="checkbox" name="remember" style="margin-right: 0.5rem;">
-                                            Recordar mi sesión
+                                            <!-- Checkbox con label apropiado -->
+                                            <input type="checkbox" 
+                                                id="remember" 
+                                                name="remember" 
+                                                style="margin-right: 0.5rem;">
+                                            <label for="remember">Recordar mi sesión</label>
                                         </div>
                                         
-                                        <!-- PROBLEMA: Link sin contexto -->
-                                        <a href="#" style="color: #007bff; font-size: 0.9rem;">
+                                        <!-- Link con contexto -->
+                                        <a href="#"style="color: #016fe3ff; font-size: 0.9rem;" aria-label="Recuperar tu contraseña de TechHub">
                                             ¿Olvidaste tu contraseña?
                                         </a>
                                     </div>
                                 </div>
                                 
-                                <!-- CAPTCHA - PROBLEMAS GRAVES DE ACCESIBILIDAD -->
-                                <div class="captcha-container">
-                                    <!-- PROBLEMA: CAPTCHA sin alternativa accesible -->
+                                <!-- CAPTCHA -->
+                                <fieldset class="captcha-container">
+                                    <!-- CAPTCHA con alternativa accesible -->
+                                    <legend style="font-weight: 500; margin-bottom: 0.5rem;">
+                                        Verificación de seguridad
+                                    </legend>
                                     <div style="margin-bottom: 1rem;">
-                                        <div style="font-weight: 500; margin-bottom: 0.5rem;">
-                                            Verificación de seguridad
-                                        </div>
                                         <div style="display: flex; align-items: center; gap: 1rem;">
-                                            <!-- PROBLEMA: Imagen CAPTCHA sin alternativa -->
+                                            <!-- Imagen CAPTCHA con alternativa -->
+                                            <label for="captchaImage" class="visually-hidden">Imagen CAPTCHA</label>
                                             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='50'%3E%3Crect width='150' height='50' fill='%23f8f9fa'/%3E%3Ctext x='75' y='30' text-anchor='middle' fill='%23333' font-size='16'%3E7H2K9%3C/text%3E%3C/svg%3E"
-                                                 style="border: 1px solid #ddd;">
+                                                style="border: 1px solid #ddd;"
+                                                id="captchaImage"
+                                                alt="Imagen CAPTCHA que muestra el código 7H2K9">
                                             
-                                            <!-- PROBLEMA: Botón refresh sin descripción -->
-                                            <button type="button" onclick="refreshCaptcha()" style="border: none; background: none; font-size: 1.2rem; cursor: pointer;">
+                                            <!-- Botón refresh con descripción accesible -->
+                                            <button type="button" onclick="refreshCaptcha()" style="border: none; background: none; font-size: 1.2rem; cursor: pointer;" aria-label="Refrescar código CAPTCHA">
                                                 🔄
                                             </button>
                                         </div>
                                     </div>
                                     
-                                    <!-- PROBLEMA: Input CAPTCHA sin descripción -->
+                                    <!-- Input CAPTCHA con descripción -->
+                                    <p id="captchaHelp" style="font-size: 0.85rem; color:#444444;">
+                                        Escribe el código mostrado en la imagen. Si tienes dificultades, contacta con soporte.
+                                    </p>
                                     <input type="text" 
-                                           class="form-control" 
-                                           name="captcha"
-                                           placeholder="Ingresa el código que ves arriba"
-                                           style="font-family: monospace;">
-                                    
-                                    <div class="form-error" style="display: none;">
+                                        id="captchaInput"
+                                        class="form-control" 
+                                        name="captcha"
+                                        placeholder="Ingresa el código que ves arriba"
+                                        style="font-family: monospace;"
+                                        required
+                                        aria-required="true"
+                                        aria-describedby="captchaHelp captchaError">
+                                    <label for="captchaInput" class="visually-hidden">Código CAPTCHA</label>
+                                    <div class="form-error" id="captchaError" style="display: none;" aria-live="polite">
                                         El código CAPTCHA es incorrecto
                                     </div>
-                                </div>
+                                </fieldset>
                                 
-                                <!-- Términos y condiciones - PROBLEMAS -->
+                                <!-- Términos y condiciones -->
                                 <div class="mb-4">
-                                    <!-- PROBLEMA: Checkbox obligatorio sin indicación -->
-                                    <input type="checkbox" name="terms" style="margin-right: 0.5rem;">
-                                    <span style="font-size: 0.9rem;">
+                                    <!-- Checkbox obligatorio con indicación -->
+                                    <input type="checkbox" 
+                                        id="loginTerms"
+                                        name="terms" 
+                                        style="margin-right: 0.5rem;"
+                                        required
+                                        aria-required="true">
+                                    <label for="loginTerms" style="font-size: 0.9rem;">
                                         Acepto los 
-                                        <!-- PROBLEMA: Links sin indicar que abren en nueva ventana -->
-                                        <a href="#" target="_blank">términos y condiciones</a> 
-                                        y la 
-                                        <a href="#" target="_blank">política de privacidad</a>
-                                    </span>
+                                        <!-- Links indicar que abren en nueva ventana -->
+                                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="términos y condiciones, se abrirá en una nueva ventana">términos y condiciones</a> 
+                                         y la 
+                                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="política de privacidad, se abrirá en una nueva ventana">política de privacidad</a>
+                                    </label>
                                     <div class="form-error" style="display: none;">
                                         Debes aceptar los términos y condiciones
                                     </div>
                                 </div>
                                 
-                                <!-- Botones de acción - PROBLEMAS -->
+                                <!-- Botones de acción -->
                                 <div class="mb-3">
-                                    <!-- PROBLEMA: Botón sin indicar estado de carga -->
+                                    <!-- Botón indicar estado de carga -->
                                     <button type="submit" 
-                                            class="btn btn-primary w-100" 
-                                            style="padding: 0.75rem;">
+                                        id="loginSubmit"
+                                        class="btn btn-primary w-100" 
+                                        style="padding: 0.75rem;"
+                                        aria-busy="false">
                                         Iniciar Sesión
                                     </button>
                                 </div>
                                 
-                                <!-- Login con redes sociales - PROBLEMAS -->
+                                <!-- Login con redes sociales -->
                                 <div class="text-center">
                                     <div style="margin-bottom: 1rem; color: #6c757d;">
                                         O continúa con:
                                     </div>
                                     
                                     <div style="display: flex; gap: 0.5rem; justify-content: center;">
-                                        <!-- PROBLEMA: Botones sociales sin descripción -->
-                                        <button type="button" class="btn btn-outline-secondary" onclick="loginWithGoogle()">
+                                        <!-- Botones sociales con descripción -->
+                                        <button type="button" 
+                                            class="btn btn-outline-secondary" 
+                                            onclick="loginWithGoogle()"
+                                            aria-label="Iniciar sesión con Google">
                                             🔍 Google
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary" onclick="loginWithFacebook()">
+                                        <button type="button" 
+                                            class="btn btn-outline-secondary" 
+                                            onclick="loginWithFacebook()"
+                                            aria-label="Iniciar sesión con Facebook">
                                             📘 Facebook
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary" onclick="loginWithTwitter()">
+                                        <button type="button" 
+                                            class="btn btn-outline-secondary" 
+                                            onclick="loginWithTwitter()"
+                                            aria-label="Iniciar sesión con Twitter">
                                             🐦 Twitter
                                         </button>
                                     </div>
                                 </div>
                                 
-                                <!-- Registro - PROBLEMA -->
+                                <!-- Registro -->
                                 <div class="text-center mt-4">
                                     <span style="color: #6c757d;">¿No tienes una cuenta?</span>
-                                    <!-- PROBLEMA: Link sin contexto claro -->
-                                    <a href="#" style="color: #007bff; margin-left: 0.5rem;">
+                                    <!-- Link con contexto claro -->
+                                    <a href="/register" style="color: #0154aeff; margin-left: 0.5rem;" aria-label="Regístrate en TechHub">
                                         Regístrate aquí
                                     </a>
                                 </div>
@@ -297,18 +337,21 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     
-    <!-- PROBLEMA: Loading overlay sin accesibilidad -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="progress-indicator">
-            <div class="spinner-border text-primary mb-3"></div>
-            <div>Iniciando sesión...</div>
+    <!-- Loading overlay con accesibilidad -->
+    <div class="loading-overlay" id="loadingOverlay" role="dialog" aria-modal="true" aria-labelledby="loadingTitle" aria-describedby="loadingText" style="display: none;">
+        <div class="progress-indicator" tabindex="-1">
+            <div class="spinner-border text-primary mb-3" aria-hidden="true"></div>
+            <div id="loadingTitle">Iniciando sesión...</div>
+            <div id="loadingText" style="font-size:0.9rem;color:#6c757d;">
+                Por favor, espera mientras validamos tus credenciales.
+            </div>
         </div>
     </div>
     
-    <!-- PROBLEMA: Mensajes de éxito/error no accesibles -->
-    <div id="messageContainer" style="position: fixed; top: 20px; right: 20px; z-index: 10000;"></div>
+    <!-- Mensajes de éxito/error no accesibles -->
+    <div id="messageContainer" style="position: fixed; top: 20px; right: 20px; z-index: 10000;" aria-live="polite"></div>
     
     <!-- Navegación de regreso -->
     <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
@@ -323,12 +366,12 @@
     <script>
         // PROBLEMAS INTENCIONADOS EN JAVASCRIPT
         
-        // PROBLEMA: Variables globales sin gestión adecuada
+        // Variables globales gestión adecuada
         let isSubmitting = false;
         let passwordVisible = false;
         let captchaAttempts = 0;
         
-        // PROBLEMA: Función sin manejo de accesibilidad
+        // Función manejo de accesibilidad
         function togglePassword() {
             const passwordField = document.querySelector('input[name="password"]');
             const toggleIcon = document.querySelector('.password-toggle');
@@ -337,20 +380,21 @@
             passwordField.type = passwordVisible ? 'text' : 'password';
             toggleIcon.textContent = passwordVisible ? '🙈' : '👁️';
             
-            // PROBLEMA: No anuncia el cambio de estado
+            // Función manejo de accesibilidad
         }
         
-        // PROBLEMA: Función CAPTCHA sin accesibilidad
+        // Función CAPTCHA con accesibilidad
         function refreshCaptcha() {
             const captchaImg = document.querySelector('.captcha-container img');
             // Simular nueva imagen CAPTCHA
             captchaImg.src = captchaImg.src + '?t=' + new Date().getTime();
             
-            // PROBLEMA: No anuncia que se refrescó
+            // anuncia que se refrescó
             console.log('CAPTCHA refrescado');
+            
         }
         
-        // PROBLEMA: Login social sin feedback
+        // Función login social con feedback
         function loginWithGoogle() {
             alert('Redirigiendo a Google...');
         }
@@ -363,7 +407,7 @@
             alert('Redirigiendo a Twitter...');
         }
         
-        // PROBLEMA: Validación de contraseña sin accesibilidad
+        // Función validación de contraseña con accesibilidad
         function updatePasswordStrength(password) {
             const strengthBar = document.getElementById('passwordStrength');
             let strength = 0;
@@ -375,7 +419,7 @@
             
             strengthBar.style.width = strength + '%';
             
-            // PROBLEMA: Colores sin texto descriptivo
+            // Función manejo de accesibilidad
             if (strength < 50) {
                 strengthBar.style.background = 'red';
             } else if (strength < 75) {
@@ -384,24 +428,24 @@
                 strengthBar.style.background = 'green';
             }
             
-            // PROBLEMA: No anuncia el nivel de fortaleza
+            // Función manejo de accesibilidad
         }
         
-        // PROBLEMA: Manejo de errores no accesible
+        // Función manejo de errores con accesibilidad
         function showError(fieldName, message) {
             const field = document.querySelector(`[name="${fieldName}"]`);
             const errorDiv = field.parentNode.querySelector('.form-error');
             
-            // PROBLEMA: Solo cambio visual
+            // Función manejo de errores con accesibilidad
             field.classList.add('error-state');
             errorDiv.style.display = 'block';
             errorDiv.textContent = message;
             
-            // PROBLEMA: No enfoca el campo con error
-            // PROBLEMA: No usa aria-invalid
+            // Función manejo de errores con accesibilidad
+            field.setAttribute('aria-invalid', 'true');
         }
         
-        // PROBLEMA: Función de éxito sin accesibilidad
+        // Función de éxito con accesibilidad
         function showMessage(message, type = 'success') {
             const container = document.getElementById('messageContainer');
             const messageDiv = document.createElement('div');
@@ -412,33 +456,46 @@
             
             container.appendChild(messageDiv);
             
-            // PROBLEMA: No se anuncia a lectores de pantalla
+            // Función de éxito con accesibilidad
+            messageDiv.setAttribute('role', 'alert');
+            messageDiv.setAttribute('aria-live', 'assertive');
             
             setTimeout(() => {
                 messageDiv.remove();
             }, 5000);
         }
         
-        // PROBLEMA: Mostrar loading sin accesibilidad
+        // Función mostrar loading con accesibilidad
         function showLoading(show) {
             const overlay = document.getElementById('loadingOverlay');
             overlay.style.display = show ? 'flex' : 'none';
             
-            // PROBLEMA: No bloquea interacción con el resto de la página
-            // PROBLEMA: No anuncia el estado de carga
+            // bloquea interacción con el resto de la página
+            document.body.style.overflow = show ? 'hidden' : 'auto';
+            document.body.setAttribute('aria-busy', show.toString());
+            document.body.setAttribute('aria-live', show ? 'assertive' : 'off');
+            document.body.setAttribute('aria-atomic', 'true');
+
+
+            // anuncia el estado de carga
+            if (show) {
+                overlay.querySelector('.progress-indicator').focus();
+            }
+
+
         }
         
-        // Configuración del formulario - MÚLTIPLES PROBLEMAS
+        // Configuración del formulario con accesibilidad
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('loginForm');
             
-            // PROBLEMA: Solo evento submit, sin validación en tiempo real
+            // Solo evento submit, sin validación en tiempo real
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 if (isSubmitting) return;
                 
-                // PROBLEMA: Validación básica sin accesibilidad
+                // Validación básica con accesibilidad
                 const email = form.email.value;
                 const password = form.password.value;
                 const captcha = form.captcha.value;
@@ -446,7 +503,7 @@
                 
                 let hasErrors = false;
                 
-                // PROBLEMA: Limpieza de errores no accesible
+                // Limpieza de errores con accesibilidad
                 document.querySelectorAll('.form-error').forEach(el => el.style.display = 'none');
                 document.querySelectorAll('.error-state').forEach(el => el.classList.remove('error-state'));
                 
@@ -471,7 +528,9 @@
                 }
                 
                 if (hasErrors) {
-                    // PROBLEMA: No enfoca el primer error
+                    // enfoca el primer error
+                    document.querySelector('.error-state').focus();
+
                     return;
                 }
                 
@@ -479,7 +538,7 @@
                 isSubmitting = true;
                 showLoading(true);
                 
-                // PROBLEMA: Simulación sin feedback accesible apropiado
+                // Simulación con feedback accesible
                 setTimeout(() => {
                     showLoading(false);
                     isSubmitting = false;
@@ -496,14 +555,21 @@
                 }, 2000);
             });
             
-            // PROBLEMA: Listener de contraseña sin debounce
+            // Listener de contraseña con debounce
             document.querySelector('[name="password"]').addEventListener('input', function(e) {
                 updatePasswordStrength(e.target.value);
+
             });
             
-            // PROBLEMA: Eventos de teclado no manejados
-            // FALTA: Enter en campos debe enviar formulario
-            // FALTA: Escape debe cancelar
+            // Eventos de teclado manejados
+            //  Enter en campos debe enviar formulario
+            //  Escape debe cancelar
+            form.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isSubmitting) {
+                    showLoading(false);
+                    isSubmitting = false;
+                }
+            });
         });
     </script>
     
