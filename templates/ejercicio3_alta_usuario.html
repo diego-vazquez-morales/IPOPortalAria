@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ titulo }}</title>
+    <title>Registro Usuario - TechHub: Portal de Tecnología</title>
     <meta name="description" content="{{ descripcion }}">
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -83,6 +83,13 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+
+        .file-upload-area:focus {
+            outline: 2px solid #0d6efd !important;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        }
+
         
         .file-upload-area:hover {
             border-color: #007bff;
@@ -104,7 +111,7 @@
             margin-top: 0.25rem;
         }
         
-        /* Problemas de contraste intencionados */
+        /*  contraste  */
         .subtle-text {
             color: #424141ff;
         }
@@ -120,15 +127,14 @@
 
         
         .skip-link:focus {
-            position: static;
-            width: auto;
-            height: auto;
-            left: 0;
-            background-color: #000;
-            color: #fff;
-            padding: 0.5rem;
-            z-index: 1000;
-            text-decoration: none;
+            position: absolute !important;
+            left: 10px !important;
+            top: 10px !important;
+            background: #000 !important;
+            color: #fff !important;
+            padding: 0.75rem 1rem !important;
+            z-index: 10000 !important;
+            border-radius: 4px !important;
         }
 
         .sr-only {
